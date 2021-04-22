@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">가비지 컬렉션 튜닝</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px;">
+      <pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">
+이번에는 <a href="https://krr-b.github.io/posts/java-garbage-collection.html" target="_blank" style="color:#5F00FF;">가비지 컬렉션</a> 튜닝과 모니터링 하는 것에 대한 내용을 기록해보려고 한다.
+아직 많이 부족하기 때문에 운영중인 서비스에 직접 튜닝을 할 수 없고 기회도 없겠지만, 미리 튜닝 방법 및 흐름을 이해함으로써 앞으로 올 수 있는 기회에 대비하자는 마음으로 기록해보려고 한다.
+
+<font style="color:#5F00FF;">다른 포스트들과 다르게 인용한 문구가 많다. 목표는 공부하면서 토이 프로젝트와 실제 서비스에 적용해보며 나만의 방식대로 튜닝을 해보고 그 방식을 현재 인용한 문구를 대체하는 것이다.</font>
+
+튜닝에 앞서 JVM 이 효율적으로 GC 를 수행하는지 파악하고 추가적인 GC 튜닝 작업이 필요한지 확인하기 위해서는 모니터링이 필요하기 때문에 모니터링 방법을 먼저 알아보도록 하겠다.
+
+GC 를 모니터링하는 방법에는 여러 가지 방법이 있지만, GC 수행 정보를 사용자에게 보여 주는 방법만 다르다. GC는 JVM이 수행하는 것이고 GC 모니터링 도구는 JVM이 제공하는 GC 정보를 받아 사용자에게 보여 주는 것이기 때문에, 어떤 방법을 사용하든 동일한 결과를 얻을 수 있다.
+
+모니터링 도구의 종류와 사용방법에 대해서는 <a href="https://d2.naver.com/helloworld/6043" target="_blank" style="color:#5F00FF;">여기</a> 를 참고하면 된다.
+
+<hr>
+GC 튜닝의 목적은 두 가지로 나눈다. <font style="color:#5F00FF;">Old 영역으로 넘어가는 객체의 수를 최소화하는 것과 Full GC의 실행 시간을 줄이는 것</font>이다.
+
+<font style="font-size: 33pt;">Old 영역으로 넘어가는 객체의 수 최소화하기</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">JDK 7부터 본격적으로 사용할 수 있는 G1 GC를 제외한, Oracle JVM에서 제공하는 모든 GC는 Generational GC이다. 즉, Eden 영역에서 객체가 처음 만들어지고, Survivor 영역을 오가다가, 끝까지 남아 있는 객체는 Old 영역으로 이동한다. 간혹 Eden 영역에서 만들어지다가 크기가 커져서 Old 영역으로 바로 넘어가는 객체도 있긴 하다. Old 영역의 GC는 New 영역의 GC에 비하여 상대적으로 시간이 오래 소요되기 때문에 Old 영역으로 이동하는 객체의 수를 줄이면 Full GC가 발생하는 빈도를 많이 줄일 수 있다. Old 영역으로 넘어가는 객체의 수를 줄인다는 말을 잘못 이해하면 객체를 마음대로 New 영역에만 남길 수 있다고 생각할 수 있지만, 그렇게는 할 수는 없다. 하지만 New 영역의 크기를 잘 조절함으로써 큰 효과를 볼 수는 있다.</blockquote>
+적용예시
+<pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all; color: #FFF; background-color: #5D5D5D">
+
+  @TODO
+
+</pre>
+<font style="font-size: 33pt;">Full GC 시간 줄이기</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">Full GC의 실행 시간은 상대적으로 Minor GC에 비하여 길다. 그래서 Full GC 실행에 시간이 오래 소요되면(1초 이상) 연계된 여러 부분에서 타임아웃이 발생할 수 있다. 그렇다고 Full GC 실행 시간을 줄이기 위해서 Old 영역의 크기를 줄이면 자칫 OutOfMemoryError가 발생하거나 Full GC 횟수가 늘어난다. 반대로 Old 영역의 크기를 늘리면 Full GC 횟수는 줄어들지만 실행 시간이 늘어난다. Old 영역의 크기를 적절하게 '잘' 설정해야 한다.</blockquote>
+적용예시
+<pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all; color: #FFF; background-color: #5D5D5D">
+
+  @TODO
+
+</pre>
+<font style="font-size: 33pt;">GC의 성능을 결정하는 옵션</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">서비스마다 생성되는 객체의 크기도 다르고 살아있는 기간도 다르다.
+
+이런 저런 옵션을 많이 설정한다고 시스템의 GC 수행 속도가 월등히 빨라지진 않는다. 오히려 더 느려질 확률이 높다. 두 대 이상의 서버에 GC 옵션을 다르게 적용해서 비교해 보고, 옵션을 추가한 서버의 성능이나 GC 시간이 개선된 때에만 옵션을 추가하는 것이 GC 튜닝의 기본 원칙다.
+
+다음 표는 성능에 영향을 주는 GC 옵션 중 메모리 크기와 관련된 옵션이다.
+
+<table style="width: 100%;" border="1">  
+ <tbody>
+  <tr>
+   <td>구분</td>
+   <td>옵션</td>
+   <td>설명</td>
+  </tr>
+  <tr>
+   <td>힙(heap) 영역 크기</td>
+   <td>-Xms</td>
+   <td>JVM 시작 시 힙 영역 크기</td>
+  </tr>
+  <tr>
+   <td></td>
+   <td>-Xmx</td>
+   <td>최대 힙 영역 크기</td>
+  </tr>
+  <tr>
+   <td>New 영역의 크기</td>
+   <td>-XX:NewRatio</td>
+   <td>New영역과 Old 영역의 비율</td>
+  </tr>
+  <tr>
+   <td></td>
+   <td>-XX:NewSize</td>
+   <td>New영역의 크기</td>
+  </tr>
+  <tr>
+   <td></td>
+   <td>-XX:SurvivorRatio</td>
+   <td>Eden 영역과 Survivor 영역의 비율</td>
+  </tr>
+ </tbody>
+</table>
+-Xms 옵션과 -Xmx 옵션은 필수로 지정해야 하는 옵션이다.
+NewRatio 옵션을 어떻게 설정하느냐에 따라서 GC 성능에 많은 차이가 발생한다.
+
+Perm 영역의 크기는 OutOfMemoryError가 발생하고, 그 문제의 원인이 Perm 영역의 크기 때문일 때에만 -XX:PermSize 옵션과 -XX:MaxPermSize 옵션으로 지정해도 큰 문제는 없다.
+
+GC의 성능에 많은 영향을 주는 또 다른 옵션은 GC 방식이다. 다음 표는 GC 방식에 따라서 지정할 수 있는 옵션이다. (JDK 6.0 기준).
+
+<table style="width: 100%;" border="1">  
+ <tbody>
+  <tr>
+   <td>구분</td>
+   <td>옵션</td>
+   <td>비고</td>
+  </tr>
+  <tr>
+   <td>Serial GC</td>
+   <td>-XX:+UseSerialGC</td>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td>Parallel GC</td>
+   <td>-XX:+UseParallelGC <br> -XX:ParallelGCThreads=value</td>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td>Parallel Compacting GC</td>
+   <td>-XX:+UseParallelOldGC </td>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td>CMS GC</td>
+   <td> -XX:+UseConcMarkSweepGC <br> -XX:+UseParNewGC<br> -XX:+CMSParallelRemarkEnabled<br> -XX:CMSInitiatingOccupancyFraction=value <br> -XX:+UseCMSInitiatingOccupancyOnly</td>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td>G1</td>
+   <td>-XX:+UnlockExperimentalVMOptions<br> -XX:+UseG1GC</td>
+   <td>JDK 6에서는 두 옵션을 반드시 같이 사용해야 함</td>
+  </tr>
+ </tbody>
+</table>
+
+G1 GC를 제외하고는, 각 GC 방식의 첫 번째 줄에 있는 옵션을 지정하면 GC 방식이 변경된다. 
+GC 방식 중에서 특별히 신경쓸 필요가 없는 방식은 Serial GC다. Serial GC는 클라이언트 장비에 최적화되어 있기 때문이다.
+
+이 외에도 GC의 성능에 영향을 주는 옵션은 많이 있다. 하지만 여기에 명시한 옵션만 제대로 지정하더라도 큰 효과를 볼 수 있다. 옵션이 많다고 GC 수행 시간이 좋아지는 것은 절대 아니다.
+</blockquote>
+적용예시
+<pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all; color: #FFF; background-color: #5D5D5D">
+
+  @TODO
+
+</pre>
+<font style="font-size: 33pt;">GC 튜닝의 절차</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">
+1. GC 상황 모니터링
+GC 상황을 모니터링하며 현재 운영되는 시스템의 GC 상황을 확인해야 한다.
+
+2. 모니터링 결과 분석 후 GC 튜닝 여부 결정
+GC 상황을 확인한 후에는, 결과를 분석하고 GC 튜닝 여부를 결정해야 한다. 
+분석한 결과를 확인했는데 GC 수행에 소요된 시간이 0.1~0.3초 밖에 안 된다면 굳이 GC 튜닝에 시간을 낭비할 필요는 없다. 
+하지만 GC 수행 시간이 1~3초, 심지어 10초가 넘는 상황이라면 GC 튜닝을 진행해야 한다.
+
+그런데, 만약 Java의 메모리를 10GB 정도로 할당해서 사용하고 있고 메모리의 크기를 줄일 수 없다면 필자가 GC 튜닝에 대해서 안내해 줄 수 있는 방법이 없다. GC 튜닝 전에 시스템의 메모리를 왜 높게 잡아야 하는지에 생각해 봐야만 한다. 만약 메모리를 1GB나 2GB로 지정했을 때 OutOfMemoryError가 발생한다면, 힙 덤프를 떠서 그 원인을 확인하고, 문제점을 제거해야만 한다.
+
+힙 덤프는 현재 Java 메모리에 어떤 객체와 어떤 데이터가 있는지 확인하기 위한 메모리의 단면 파일이라고 생각하면 된다. 이 파일은 JDK에 포함되어 있는 jmap이라는 명령으로 생성할 수 있으다. 파일을 생성하는 도중에는 Java 프로세스가 멈추기 때문에 시스템을 운영하고 있을 때에는 이 파일을 생성하면 안 된다.
+
+3. GC 방식/메모리 크기 지정
+GC 튜닝을 진행하기로 결정했다면 GC 방식을 선정하고 메모리의 크기를 지정한다. 이때 서버가 여러 대이면 여러 대의 서버에 GC 옵션을 서로 다르게 지정해서 GC 옵션에 따른 차이를 확인하는 것이 중요하다.
+
+4. 결과 분석
+GC 옵션을 지정하고 적어도 24시간 이상 데이터를 수집한 후에 분석을 실시한다. 운이 좋으면 해당 시스템에 가장 적합한 GC 옵션을 찾을 수 있다. 그렇지 않다면 로그를 분석해 메모리가 어떻게 할당되는지 확인해야 한다. 그 다음에 GC 방식/메모리 크기를 변경해 가면서 최적의 옵션을 찾아 나간다.
+
+5. 결과가 만족스러울 경우 전체 서버에 반영 및 종료
+GC 튜닝 결과가 만족스러우면 전체 서버의 GC 옵션을 적용하고 마무리 한다.
+
+GC가 수행되는 시간을 확인했을 때 결과가 다음의 조건에 모두 부합한다면 GC 튜닝이 필요 없다.
+
+- Minor GC 의 처리시간이 빠르다 (50ms내외).
+- Minor GC 주기가 빈번하지 않다 (10초내외).
+- Full GC 의 처리시간이 빠르다 (보통1초이내).
+- Full GC 주기가 빈번하지 않다 (10분에 1회).
+
+한 가지 주의할 점은, GC 상황을 확인 할 때 Minor GC와 Full GC의 시간만 보면 안 된다는 점이다. GC가 수행되는 횟수도 확인해야 한다. 만약 New 영역의 크기가 너무 작게 잡혀 있다면 Minor GC가 발생하는 빈도도 매우 높을 뿐만 아니라(1초에 한번 이상인 경우도 있음), Old 영역으로 넘어가는 객체의 개수도 증가하게 되어 Full GC 횟수도 증가한다. 따라서 jstat명령의 –gccapacity 옵션을 적용하여 각 영역을 얼마나 점유하여 사용하는지도 확인해야 한다.
+</blockquote>
+적용예시
+<pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all; color: #FFF; background-color: #5D5D5D">
+
+  @TODO
+
+</pre>
+<font style="font-size: 33pt;">GC 방식/메모리 크기 지정</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">
+GC 방식은 Oracle JVM을 기준으로 총 5가지가 있다. 그러나 JDK 7이 아니라면 Parallel GC, Parallel Compacting GC, CMS GC의 3개 중에 하나를 선택해야 한다. 이 중에서 어떤 방식을 선택해야 한다는 공식이나 원칙은 없다.
+
+그렇다면, 어떻게 정해야 할까? 가장 좋은 방법은 3가지를 다 적용해 보는 것이다. 하지만, 한가지 확실한 것은 CMS GC가 다른 Parallel GC보다 빠르다는 것이다. 그렇다면 그냥 CMS GC만 적용하면 되겠지만, CMS GC가 항상 빠른 것은 아니다. 일반적인 CMS GC의 Full GC는 빠르지만, Concurrent mode failure가 발생하면 다른 Parallel GC보다 느리다.
+
+운영 중인 시스템 특성에 따라 적합한 GC 방식이 다르므로 해당 시스템에 가장 적합한 방식을 찾아야 한다.
+
+<b>메모리 크기 지정</b>
+
+메모리 크기와 GC 발생 횟수, GC 수행 시간의 관계는 다음과 같다.
+
+메모리크기가크면
+    - GC 발생횟수는줄어든다.
+    - GC 수행시간은길어진다.
+메모리크기가작으면
+    - GC 수행시간은적어진다.
+    - GC 발생횟수는증가한다.
+
+메모리 크기를 크게 설정할 것인지, 작게 설정할 것인지에 대한 정답 역시 없다. 서버 자원이 좋은 시스템이라 메모리를 10GB로 설정해도 Full GC가 1초 이내에 끝난다면 10 GB로 지정해도 된다. 하지만, 대부분의 서버는 그렇지 못하다. 메모리를 10GB 정도로 설정하면 Full GC 시간이 10~30초 정도 소요된다. 물론 이 시간은 객체의 크기가 어떻게 되어 있느냐에 따라서 달라진다.
+
+그렇다면 메모리 크기를 얼떻게 설정해야 할까? 필자는 보통 500MB로 설정하라고 이야기한다. 그렇다고 WAS의 메모리를 –Xms500m 옵션과 –Xmx500m 옵션으로 지정하라는 이야기는 절대 아니다. GC 튜닝 이전에 현재 상황을 모니터링한 결과를 바탕으로 Full GC가 발생한 이후에 남아 있는 메모리의 크기를 봐야 한다. 만약 Full GC 후에 남아 있는 메모리가 300MB 정도라면 300MB(기본 사용) + 500MB(Old 영역용 최소) + 200 MB(여유 메모리)를 감안하여 1GB 정도로 지정하는 것이 좋다. 즉, Old 영역을 위해서 500MB 이상 여유가 있는 공간을 지정해야 한다는 말이다. 그래서 3대 정도의 운영 서버가 있다면, 서버 한대는 1GB로, 다른 한대는 1.5 GB로, 또 다른 한대는 2GB 정도로 지정한 후 결과를 지켜 본 다음 결정한다.
+
+이렇게 지정하면, 이론적으로 생각 했을 때에는 당연히 1GB > 1.5GB > 2GB 순서로 GC가 빠르고, 결국 1GB일 때 GC가 제일 빠를 것이다. 하지만 그렇다고 1GB일 때 Full GC가 1초 걸리고, 2GB일 때 2초 걸린다고 보장할 수 없다. 서버의 성능에 따라 다르고 객체의 크기에 따라서 시간이 달라지기 때문이다. 그러므로 측정 데이터 셋을 최대한 많이 만들어 모니터링을 통해서 확인하는 것이 가장 좋은 방법이다.
+
+메모리 크기를 지정할 때 지정해야 하는 것이 한 가지 더 있다. 바로 NewRatio다. NewRatio는 New 영역과 Old 영역의 비율이다. –XX:NewRatio=1로 지정하면 New 영역:Old 영역이 1:1이 된다. 만약 1GB라면 New 영역:Old 영역은 500MB:500MB가 된다. NewRatio가 2이면 New 영역:Old 영역이 1:2가 된다. 즉, 값이 커지면 커질수록 Old 영역의 크기가 커지고 New 영역의 크기가 작아진다.
+
+별 것이 아닌 것처럼 생각할 수 있지만, NewRatio 값은 GC의 전반적인 성능에 많은 영향을 준다. New 영역의 크기가 작으면 Old 영역으로 넘어가는 메모리의 양이 많아져서 Full GC도 잦아지고 시간도 오래 걸린다.
+
+단순하게 생각해서 NewRatio 값을 1로 주면 최고의 상황이 될 수 있다고 볼 수도 있지만, 꼭 그렇지만은 않다. 오히려 NewRatio의 값이 2나 3일 때의 전반적인 GC 상황이 좋을 수 있다. 필자의 경험으로도 그렇다.
+
+GC 튜닝을 가장 빨리 진행하는 방법은 무엇일까? 성능 테스트로 결과를 비교하는 것이 가장 빠른 검토 결과를 얻을 수 있는 방법이다. 운영 서버마다 옵션을 다르게 지정하고 상황을 모니터링하려면, 적어도 하루에서 이틀 정도 데이터가 쌓인 후에 보는 것이 바람직하다. 하지만 성능 테스트를 통해서 GC 튜닝을 할 때는 운영 상황과 동일하게 부하를 주도록 준비하는 과정이 필요하다. 그리고 부하를 주는 URL과 같은 요청 비율도 운영과 동일해야 한다. 그러나 이렇게 정확하게 부하를 주는 것은 전문 성능 테스터도 쉽지 않고, 준비하는 데 오히려 더 많은 시간이 소요될 수 있다. 시간이 오래 걸리더라도 운영에 적용하고 기다리는 것이 더 간단하고 편하다.
+</blockquote>
+<font style="font-size: 33pt;">GC튜닝 결과 분석</font>
+<blockquote cite="https://d2.naver.com/helloworld/37111">
+GC 옵션을 적용하고, -verbosegc 옵션을 지정한 다음에 tail 명령어로 로그가 제대로 쌓이고 있는지 확인해야 한다. 만약 옵션을 잘못 지정해서 로그가 안 쌓이면, 시간만 허비하기 때문이다. 로그가 잘 쌓이고 있다면, 하루 혹은 이틀 정도의 데이터가 축적된 후 결과를 확인해 보자. 로그를 로컬 PC로 옮긴 다음에 HPJMeter로 분석하는 것이 가장 쉽다.
+
+분석할 때에는 다음의 사항을 중심으로 살펴보는 것이 좋다. 순서는 필자 나름의 기준에 따른 우선 순위다. GC 옵션을 결정하는 데 가장 큰 비중을 차지하는 것은 1번 항목인 Full GC 수행 시간이다.
+
+- Full GC 수행시간
+- Minor GC 수행시간
+- Full GC 수행간격
+- Minor GC 수행간격
+- 전체 Full GC 수행시간
+- 전체 Minor GC 수행시간
+- 전체 GC 수행시간
+- Full GC 수행횟수
+- Minor GC 수행횟수
+
+운이 좋아서 한 번에 가장 적합한 GC 옵션을 찾으면 좋지만, 그렇지 못한 경우가 대부분이다. 한 번에 끝내려다가 잘못하면 서비스에 OutOfMemoryError가 발생할 수 있으니 조심해서 GC 튜닝을 진행하는 것이 좋다.
+</blockquote>
+지금까지 GC 모니터링과 튜닝 방법에 대해서 알아보았다. 이제 토이 프로젝트에 적용해보고 그 과정과 결과를 적어보고자 한다.
+실제 서비스에도 적용한 과정과 결과 또한 업로드 할 수 있도록 꾸준히 공부를 해야겠다.
+<pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all; color: #FFF; background-color: #5D5D5D">
+
+  @TODO
+
+</pre>
+
+	  </pre>
+    </div>
+</section>
+</body>
+</html>

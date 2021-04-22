@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="https://krr-b.github.io/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://krr-b.github.io/css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(https://krr-b.github.io/notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">스프링 배치</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px;">
+      <pre style="font-family: 'Yeon Sung', cursive; font-size: 14pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">
+
+<b style="color: #5F00FF">하나</b>
+
+
+<span>스프링 배치</span>
+  
+    대용량 배치처리에 필요한 구조와 기능들을 제공하는 프로젝트로 배치업무에 특화된 프로그래밍 모델을 제공함
+
+    <a target="_blank" style="color: #5F00FF" href="http://docs.spring.io/spring-batch/trunk/reference/html/domain.html">Reference</a>
+
+<hr>
+<span>주요 기능</span>
+  
+    프로그래밍 모델 (Chunk based processing)
+    실행관리 (트랜잭션, 시작/중단/재시작, 재시도/건너뛰기)
+    관리기능 (로깅/추적, 통계, 모니터링)
+
+<hr>
+<span>주요 개념</span>
+
+<img src="https://dzone.com/storage/temp/9913540-spribatch.png" style="width: 100%;">
+
+<span class="title">Job</span>
+
+하나의 배치 작업을 정의하는 개념 
+예를 들어 "API 서버의 사용로그 테이블의 데이터를 로그 분석 시스템으로 옮기는 배치"
+
+여러 개의 Step을 포함하고 있는 객체 
+
+
+<span class="title">Job Instance</span>
+
+Job의 실행에 대한 논리적인 개념
+
+배치가 실제 실행되면, 각각의 실행을 Instance 라고 한다.
+예를 들어 Batch Job 이 매주 한번씩 수행된다고 할때, 각각의 수행되는 Batch Job 을 Batch Instance 라고 한다.
+
+JobInstance 는 다수의 JobExecution 을 가진다.
+동일한 JobParameters 를 가진 JobInstance 는 생성불가
+
+
+<span class="title">Job Execution</span>
+
+각 배치의 실행시 실제 수행된 Execution 을 정의한다.
+예를 들어 BatchJob 이 월요일 오전에 수행이 되었을때, 첫번째 실패하고 두번째 Retry에 의해 성공되었다면 이는 각각의 다른 Job Execution 이 되고 같은 작업을 시도하였기 때문에 같은 Job Instance 가 된다.
+
+Job 에 대한 시도 결과 (FAILED,COMPLETED) 를 가진다.
+
+
+<span class="title">Job Parameters</span>
+
+매번 배치 작업이 수행될때마다 전달되는 Parameter 이다. 
+예를 들어 매주 수행되는 배치가 있을때 시작 시간, 데이터를 읽을 범위 등을 지정하여 Batch Job Instance 를 생성한다면 이렇게 넘어가는 인자가 JobParameter 이다.
+
+JobInstance = Job + JobParameters
+
+
+<img src="https://t1.daumcdn.net/cfile/tistory/99AF814E5B6094451A" style="width: 100%">
+
+
+<span class="title">Step</span>
+
+배치 작업(Job)에 대한 순차적인 처리 단계를 의미함
+단순하거나 복잡(병렬,파티션,플로우 방식 등)하게도 구성할 수 있다. 
+
+
+<span class="title">Step Execution</span>
+
+한번의 Step 실행 시도를 의미함
+Step이 실행될 때, 새로운 StepExecution이 생성된다.
+
+
+<span class="title">Tasklet</span>
+
+각 Step 에서 수행되는 로직이다.
+개발자가 Custom Logic 을 만들수도 있지만 보통 Batch 의 경우 데이터 ETL(Extract, Transform, Loading)하는 형태이기 때문에 Spring Batch 에서 미리 정의해놓은 Reader, Processor, Writer Interface 를 사용할 수 있다.
+
+  1) ItemReader
+  Step 의 처리대상이 되는 데이터를 조회하는 역할
+
+  2) ItemProcessor
+  Step 의 ItemReader 를 통해서 전달된 하나의 아이템에 대한 비즈니스로직을 처리하는 역할
+
+  3) ItemWriter
+  Step 의 처리결과를 기록(저장)하는 역할
+
+
+<span class="title">Execution Context</span>
+
+Step, Job Execution 구동 중 발생하는 정보를 저장하는 컬렉션
+Job 재시작시에 사용되는 정보를 담는다.
+Json 형태로 저장이 되면 최대 2500 byte를 저장하므로 단순한 값만 저장한다.
+
+<hr>
+<span>실행 프로세스</span>
+
+
+<img src="https://t1.daumcdn.net/cfile/tistory/99100A455B6093F92E" style="width: 100%">
+
+
+
+<img src="https://t1.daumcdn.net/cfile/tistory/99BB94425B60940834" style="width: 100%">
+
+
+<hr>
+<span>배치 프로젝트 예제</span>
+
+
+
+
+
+
+      </pre>
+  </div>
+  </section>
+
+  <a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
+<script src="../js/jquery.js"></script>
+<script src="../js/jquery.scrollTo.js"></script>
+<script src="../js/jquery.nav.js"></script>
+<script src="../js/jquery.localscroll-1.2.7-min.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/jquery.prettyPhoto.js"></script>
+<script src="../js/isotope.js"></script>
+<script src="../js/jquery.flexslider.js"></script>
+<script src="../js/inview.js"></script>
+<script src="../js/animate.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/custom.js"></script>
+<script src="../contactform/contactform.js"></script>
+
+</body>
+</html>

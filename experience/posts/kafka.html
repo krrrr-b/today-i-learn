@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+    .code {
+      background-color: #5d5d5d;
+      color: #FFF;
+
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">KAFKA?</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+      <h4>kafka reference: <a href="https://kafka.apache.org/" target="_blank">https://kafka.apache.org/</a></h4><br/>
+      <<b><a href="http://www.yes24.com/Product/Goods/59789254" target="_blank">카프카, 데이터 플랫폼의 최강자</a></b>> 라는 책을 읽고 정리하며 동시에 실제 KAFKA 서버를 토이 프로젝트에 운용해보았고,<br/>
+      이 과정에서 배우게 된 점, 주의해야하는 부분 등을 기록해보고자 한다.
+      <br/><br/><br/>
+
+      <h4>카프카란</h4>
+      <br/>
+      <blockquote cite="http://www.yes24.com/Product/Goods/59789254">
+        대용량, 대규모 메세지 데이터를 빠르게 처리하도록 개발된 메세징 플랫폼.<br/>
+        비즈니스 중심의 소셜 네트워크 서비스를 하는 링크드인 Linkedin 에서 출발해 2011년 초 아파치 공식 오픈소스로 세상에 공개되었습니다.<br/>
+
+        모든 시스템으로 데이터를 전송할 수 있고, 실시간 처리도 가능하며, 급속도로 성장하는 서비스를 위해 확장이 용이한 시스템<br/><br/>
+         <b>- 프로듀서와 컨슈머의 분리<br/>
+          - 메시징 시스템과 같이 영구 메세지 데이터를 여러 컨슈머에게 허용<br/>
+          - 높은 처리량을 위한 메시지 최적화<br/>
+          - 데이터가 증가함에 따라 스케일아웃이 가능한 시스템</b><br/><br/>
+
+        <img src="../assets/images/kafka-1.png"><br/><br/>
+
+        개발 입장에서도 이전에는 데이터 스토어 백엔드 관리와 백엔드에 따른 포맷, 별도의 앱 개발을 해야 했는데,<br/>
+        이젠 카프카에만 데이터를 전달하면 나머지는 필요한 곳 또는 다른 서비스들이 각자 가져갈 수 있어서 자신들 본연의 업무에만 집중할 수 있게 되었습니다.<br/><br/>
+
+        <img src="../assets/images/kafka-2.png" width="700" height="700"><br/><br/>
+        
+        <h6>카프카의 동작 방식과 원리</h6><br/>
+        
+        <b>카프카는 기본적으로 메시징 서버</b>로 동작합니다.<br/>
+        메시지라고 불리는 데이터 단위를 보내는 측 (프로듀서) 에서 카프카에 토픽이라는 각각의 메시지 저장소에 데이터를 저장하면,<br/>
+        가져가는 측 (컨슈머) 이 원하는 토픽에서 데이터를 가져가게 되어 있습니다.<br/><br/>
+        <b>중앙에 메시징 시스템 서버를 두고 이렇게 메시지를 보내고 받는 형태의 통신을 펍/섭 모델</b>이라고 합니다.<br/>
+        (비동기 메시징 전송 방식으로서, 발신자의 메시지에는 수신자가 정해져 있지 않은 상태로 발행한다.)<br/><br/>
+        
+        <b>프로듀서가 메시지를 컨슈머에게 직접 전달하는게 아니라 중간에 메시징 시스템에 전달</b>합니다.<br/>
+        이때 메시지 데이터와 수신처_ID 를 포함시킵니다.<br/>
+        메시징 시스템의 교환기가 메시지의 수신처_ID 값을 확인한 다음 컨슈머들의 큐에 전달합니다.<br/>
+        <b>컨슈머는 자신들의 큐를 모니터링하고 있다가, 큐에 메시지가 전달되면 이 값을 가져갑니다.</b><br/><br/>
+
+        ∴ 시스템이 수신 불능 상태가 되었을 때에도 <b>메시징 시스템만 살아있다면 프로듀서에서 전달된 메시지가 유실되지 않습니다.</b><br/><br/>
+
+        <img src="../assets/images/messaging-with-kafka.svg"><br/><br/>
+        
+        기존 메시징 시스템이 사용하는 펍/섭 모델은 <b>간단한 이벤트 (수 KB 정도의 크기) 를 서버로 전송하는 데 주로 사용</b>되었다.<br/>
+        왜냐하면 기존의 메시징 시스템은 메시지의 보관, 교환, 전달 과정에서 신뢰성을 보장하는 것에 중점을 맞췄기 때문에 속도와 용량은 그렇게 중요시하지 않았습니다.<br/><br/>
+
+        카프카는 성능의 단점을 극복하기 위해 <b>메시지 교환 전달의 신뢰성 관리를 프로듀서와 컨슈머 쪽으로 넘기고, <br/>
+        부하가 많이 걸리는 교환기 기능 역시 컨슈머가 만들 수 있게 함</b>으로써 메시징 시스템 내에서의 작업량을 줄이고 <br/>
+        이렇게 절약한 작업량을 메시징 전달 성능에 집중시켜서 고성능 메시징 시스템을 만들어냈습니다.<br/><br/><br/>
+      <br/>
+      <h4>카프카 용어 정리</h4><br/>
+      
+      <b>브로커 </b>카프카 어플리케이션이 설치되어 있는 서버 또는 노드를 말합니다.
+      <br/><br/>
+
+      <b>토픽 </b>프로듀서와 컨슈머들이 카프카로 보낸 자신들의 메시지를 구분하기 위한 네임으로 사용합니다.
+      <br/><br/>
+
+      <b>파티션 </b>병렬처리가 가능하도록 토픽을 나눌 수 있고, 많은 양의 메시지 처리를 위해 파티션의 수를 늘려줄 수 있습니다.
+      <br/><br/>
+
+      <b>프로듀서 </b>메시지를 생산하여 브로커의 토픽 이름으로 보내는 서버 또는 어플리케이션 등을 말합니다.
+      <br/><br/>
+
+      <b>컨슈머 </b>브로커의 토픽 이름으로 저장된 메시지를 가져가는 서버 또는 어플리케이션 등을 말합니다.
+      <br/><br/><br/>
+<br/>
+      <h4>카프카의 특징</h4><br/>
+
+        카프카의 대표적인 특징이라 할만한 것들이 몇 가지 있다.<br/><br/>
+
+        <h6>프로듀서와 컨슈머의 분리</h6><br/>
+      
+        각각의 서비스 서버들은 모니터링이나 분석 시스템의 상태 유무와 관계없이 카프카로 메시지를 보내는 역할만 하면 되고,<br/>
+        마찬가지로 모니터링이나 분석 시스템들도 서비스 서버들의 상태 유무와 관계없이 카프카에 저장되어 있는 메시지만 가져오면 됩니다.<br/><br/>
+
+        이렇게 <b>역할이 완벽하게 분리되면서, 어느 한쪽 시스템에서 문제가 발생하더라도 연쇄작용이 발생할 확률은 매우 낮고,<br/>
+        웹 서버가 추가되더라도 카프카로만 보내면 되기 때문에 서버 추가에 대한 부담도 줄일 수 있는 장점</b>이 있다.<br/><br/>
+
+        <img src="../assets/images/how-organizations-handle-data-flow-1200x800px-2-1.png" width="800" height="500">
+        <br/>
+
+        <h6>멀티 프로듀서, 컨슈머</h6><br/>
+
+        하나의 <b>프로듀서가 하나의 토픽에만 메시지를 보내는 것이 아니라, 하나 또는 하나 이상의 토픽으로 메시지를 보낼 수</b> 있습니다.<br/>
+        <b>컨슈머 또한 마찬가지</b>이다.<br/><br/>
+
+        <h6>디스크에 메시지 저장</h6><br/>
+
+        일반적인 메시징 시스템들은 컨슈머가 메시지를 읽어가면 큐에서 바로 메시지를 삭제합니다.<br/>
+        하지만 카프카는 컨슈머가 메시지를 읽어가더라도 정해져 있는 보관 주기 동안 디스크에 메시지를 저장해둡니다.<br/>
+        <b>트래픽이 폭주해서 처리가 늦어지더라도 메시지가 디스크에 저장되어 있기 때문에 메시지 손실 없이 작업이 가능</b>합니다.
+        <br/><br/>
+
+        <h6>확장성</h6><br/>
+
+        <b>하나의 카프카 클러스터는 3대의 브로커로 시작해 수십 대의 브로커로 확장이 가능</b>합니다.<br/>
+        또한 <b>확장 작업은 카프카 서비스의 중단 없이 온라인 상태에서 작업이 가능</b>합니다.
+        <br/><br/>
+
+        <h6>높은 성능</h6><br/>
+
+        카프카는 <b>고성능을 유지하기 위해 내부적으로 분산, 배치 처리 등 다양한 기법을 사용</b>하고 있습니다.<br/>
+        2015년 8월 기준으로 링크드인에서는 1조 개의 메시지를 생산하고, 카프카를 이용해 하루에 1페타바이트 이상의 데이터를 처리했습니다.
+        <br/><br/><br/>
+      <br/>
+      <h4>카프카 주요 옵션</h4>
+      <br/>
+
+      <b>broker.id </b>브로커를 구분하기 위한 ID<br/><br/>
+      <b>delete.topic.enable </b>토픽 삭제 기능을 on/off (enable = 토픽 삭제 가능)<br/><br/>
+      <b>default.replication.facor </b>리플리케이션 팩터 옵션을 주지 않았을 경우의 기본값<br/><br/>
+      <b>min.insync.replicas </b>최소 리플리케이션 팩터<br/><br/>
+      <b>auto.create.topics.enable </b>존재하지 않는 토픽으로 메세지를 보냈을 때 자동으로 토픽 생성<br/><br/>
+
+      <b>offsets.topic.num.partitions</b> offsets 토픽의 파티션 수<br/><br/>
+      <b>offsets.topic.replication.factor </b>offsets 토픽의 리플리케이션 팩터<br/><br/>
+      <b>compression.type </b>토픽의 최종 압축형태 (gzip, snappy, lz4 등의 표준 압축 포맷 지원)<br/><br/>
+      <b>log.dirs </b>로그 저장 디렉토리<br/><br/>
+      <b>num.partitions </b>파티션 수 옵션을 주지 않았을 경우의 기본값<br/><br/>
+      <b>log.retention.hours </b>저장된 로그의 보관 주기<br/><br/>
+      <b>log.segment.bytes </b>저장되는 로그 파일 하나의 크기<br/><br/>
+      <b>log.retention.check.interval.ms </b>로그 보관주기 체크 시간<br/><br/>
+      <b>message.max.bytes </b>카프카에서 허용하는 가장 큰 메시지 크기<br/><br/>
+      <b>zookeeper.connect </b>주키퍼 접속 정보<br/><br/>
+      <b>zookeeper.session.timeout.ms </b>브로커와 주키퍼 사이의 최대 연결 대기 시간. 해당 시간 동안 주키퍼와 연결이 되지 않으면 타임아웃 발생<br/><br/>
+      <b>log.flush.interval.ms </b>메시지가 디스크로 플러시되기 전 메모리에 유지하는 시간<br/><br/>
+      <b>log.flush.interval.messages </b>메시지가 디스크로 플러시되기 전 누적 메시지 수<br/><br/>
+      <br/><br/>
+
+      <h4>주키퍼</h4>
+        <br/>
+
+        <b>서버 여러대를 앙상블 (클러스터) 로 구성하고, 분산 어플리케이션들이 각각 클라이언트가 되어 주키퍼 서버들과 커넥션을 맺은 후 상태 정보 등을 주고받게</b> 됩니다.<br/>
+        상태 정보들은 주키퍼의 지노드 (znode) 라 불리는 곳에 키-값 형태로 저장하고 이것을 이용하여 분산 어플리케이션들은 서로 데이터를 주고받게 됩니다.<br/>
+        
+        <br/>
+        <img src="../assets/images/Kafka2.png"><br/><br/>
+
+        일반적으로 지노드에 저장하는 데이터 크기는 바이트에서 킬로바이트 정도로 매우 작으며,<br/>
+        <b>지노드는 우리가 알고 있는 일반적인 디렉토리와 비슷한 형태로서 자식노드를 가지고 있는 계층형 구조로 구성</b>되어 있습니다.<br/><br/>
+        최상위 경로는 / 이고 그 하위 경로로 app1 과 app2 를 가지고 있습니다.<br/>
+        app1 의 하위 경로에는 p_1, p_2, p_3 이 있습니다.<br/>
+        즉, p_1 디렉토리는 최사우이 경로부터 순서대로 표시해서 /app1/p_1 로 표현합니다.<br/><br/><br/>
+        
+        <img src="../assets/images/zknamespace.jpg"><br/><br/>
+
+        <b>주키퍼의 각 지노드는 데이터 변경 등에 대한 유효성 검사 등을 위해 버전 번호를 관리</b>하게 되며,<br/>
+        <b>지노드의 데이터가 변경될 때마다 지노드의 버전 번호가 증가</b>합니다.<br/><br/>
+
+        <b>주키퍼에 저장되는 데이터는 모두 메모리에 저장되어 처리량이 매우 크고 속도 또한 빠릅니다.</b><br/>
+        또한 주키퍼는 좀 더 신뢰성 있는 서비스를 위해 클러스터라는 호스트 세트로 구성할 수도 있습니다.<br/>
+          
+        <br/>
+        <b>클러스터로 구성되어 있는 주키퍼는 과반수 방식에 따라 살아 있는 노드 수가 과반수 이상 유지된다면 지속적인 서비스가 가능</b>합니다.
+        <br/><br/><br/><br/>
+        <h4>카프카 디자인</h4>
+        <br/>
+
+        <h6>분산 시스템</h6><br/>
+
+        분산 시스템은 네트워크로 이루어진 컴퓨터들의 그룹으로서 시스템 전체가 공통의 목표를 가지고 있습니다.<br/>
+        다시 말해 같은 역할을 하는 여러 대의 서버로 이뤄진 서버 그룹을 분산 시스템이라고 합니다.<br/><br/>
+
+        이러한 분산 시스템의 장점은 다음과 같다.<br/><br/>
+        <ol><b>
+          <li>단일 시스템보다 더 높은 성능을 얻을 수 있다.</li>
+          <li>분산 시스템 중 하나의 서버 또는 노드 등이 장애가 발생하면 다른 서버 또는 노드가 대신 처리한다.</li>
+          <li>시스템 확장이 용이하다.</li>
+        </b></ol>
+        아파치 카프카 문서에 따르면, <b>링크드인에서 가장 사용량이 높은 클러스터의 경우 60대의 브로커를 운영</b>하고 있다고 한다.
+        <br/><br/>
+
+        <h6>페이지 캐시</h6>
+        <br/>
+        카프카는 처리량을 높이기 위한 기능을 몇 가지 추가했고 그 기능 중 하나가 페이지 캐시를 이용하는 것입니다.
+        <br/>
+        OS 는 물리적 메모리에 어플리케이션이 사용하는 부분을 할당하고 남은 잔여 메모리 일부를 페이지 캐시로 유지해 OS 의 전체적인 성능 향상을 높이게 됩니다.
+        <br/>이렇게 <b>잔여 메모리를 이용해 디스크에 읽고 쓰기를 하지 않고 페이지 캐시를 통해 읽고 쓰는 방식을 사용</b>하면 처리 속도가 매우 빠르기 때문에 전체적인 성능을 향상시킬 수 있습니다.<br/><br/>
+        페이지 캐시에 대한 자세한 내용은 <b><a href="https://en.wikipedia.org/wiki/Page_cache" target="_blank">위키피디아</a></b> 를 참고하기 바랍니다.<br/>
+        (이러한 장점 덕분에 <b>카프카를 구성할 때는 디스크 중에서 가격이 가장 저렴한 SATA 디스크를 사용해도 무방</b>하다.)
+        <br/><br/>
+        
+        <b>참고</b>
+        <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+          
+          <b>JVM 힙 사이즈</b>
+          
+          카프카는 자바 기반의 JVM 을 사용하는 어플리케이션으로서 
+          자바 기반 어플리케이션들은 시작할 때 메모리가 할당되는 영역인 힙(HEAP) 이 만들어집니다. 
+          카프카는 기본값으로 1GB 의 힙 메모리를 사용하도록 설정되고, 설정 파일에서 이 값을 변경할 수 있다.
+
+          컨플루언트 사의 도큐먼트에 따르면, 카프카는 초당 메시지 단위, 메가비트 단위를 처리함에 있어 5GB 의 힙 메모리면 충분하고,
+          남아있는 메모리는 페이지 캐시로 사용하기를 권장합니다. 또한 페이지 캐시를 서로 공유해야 하기 때문에 
+          하나의 시스템에 카프카를 다른 어플리케이션과 함께 실행하는 것은 권장하지 않습니다.
+        </pre>
+        <br/>
+        <h6>배치 전송 처리</h6>
+        <br/>
+        서버와 클라이언트 사이 또는 서버 내부적으로 데이터를 주고받는 과정에서는 I/O 가 발생하기 마련입니다.<br/>
+        작은 I/O 가 빈번하게 일어나게 되면 이 또한 속도를 저하시키는 원인이 될 수 있습니다.<br/>
+        따라서 카프카에서는 작은 I/O 들을 묶어서 처리할 수 있도록 배치 작업으로 처리합니다.<br/>
+        (통신 사이에서 <b>매우 작은 메시지를 한번에 하나씩 보내게 되면 그만큼 네트워크 왕복의 오버헤드가 발생</b>하게 된다.)
+        <br/><br/><br/><br/>
+
+        <h4>카프카 데이터 모델</h4>
+        각 데이터 모델에 대해 간략하게 살펴보겠다.
+        <br/><br/><br/>
+        <h6>토픽</h6><br/>
+        카프카 클러스터는 토픽이라 불리는 곳에 데이터를 저장합니다.<br/>
+        (우리가 많이 사용하는 메일 시스템과 비교하면, 토픽은 '메일주소' 라고 생각하면 쉬울 것이다.)<br/>
+        <br/>
+        즉, <b>카프카에서는 데이터를 구분하기 위한 단위로 토픽이라는 용어를 사용</b>한다.<br/>
+        토픽 이름은 249자 미만으로 영문, 숫자, ',', '_', '-' 를 조합하여 자유롭게 만들 수 있습니다.<br/>
+<br/>
+<b>
+        <ul>
+          <li>sbs-news  : sbs 에서 뉴스 용도로 사용하는 토픽</li>
+          <li>sbs-video : sbs 에서 동영상 용도로 사용하는 토픽</li>
+          <li>mbc-news  : mbc 에서 뉴스 용도로 사용하는 토픽</li>
+          <li>kbs-news  : kbs 에서 뉴스 용도로 사용하는 토픽</li>
+        </ul>
+        </b>
+        <br/>
+        <h6>파티션</h6><br/>
+        카프카에서는 토픽에 못지 않게 파티션이라는 용어가 자주 나옵니다.<br/>
+        <b>파티션이란 토픽을 분리(파티셔닝)</b>한 것 이다.
+        <br/><br/>
+        <img src="../assets/images/kafka_partition.png" width="700" height="500">
+        <br/><br/>
+        그림과 같이 하나의 메시지를 MyTopic 토픽으로 보내게 되면 MyTopic 은 3개의 파티션으로 분리되어 각각 메시지를 컨슘하게 된다. (3배 더 빠름)<br/>
+        (<b>빠른 전송을 위해서 토픽의 파티션 뿐만 아니라 그 수만큼 프로듀서 수도 늘려줘야 제대로된 효과를 볼 수 있다.</b>)<br/>
+        <br/>
+        파티션 수가 증가함에 따라 빠른 전송이 가능하다는 사실을 알게되었다.<br/>
+        그렇다면 무조건 파티션 수를 늘려줘야 할까? 답은 아니다.<br/><br/>
+        
+        그 이유는 아래와 같다.<br/><br/>
+        <b>1. 파일 핸들러의 낭비</b><br/>
+        각 파티션은 브로커의 디렉토리와 매핑되고, 저장되는 데이터마다 2개의 파일 (인덱스와 실제 데이터) 이 있습니다.<br/>
+        카프카에서는 모든 디렉토리의 파일들에 대해 파일 핸들을 열게 됩니다.<br/>
+        결국 파티션 수가 많을수록 파일 핸들 수 역시 많아지게 되어 리소스를 낭비하게 됩니다.<br/>
+        <br/>
+        <b>2. 장애 복구 시간 증가</b><br/>
+        카프카는 높은 가용성을 위해 리플리케이션을 지원합니다.<br/>
+        브로커에는 토픽이 있고, 토픽은 여러개의 파티션으로 나뉘어 있으므로, 브로커에는 여러개의 파티션이 존재한다.<br/>
+        또한, 각 파티션마다 리플리케이션이 동작하게 되며, 하나는 파티션의 리더이고 나머지는 파티션의 팔로워가 된다.<br/>
+        <br/>
+        이렇게 파티션 수가 많고 또 늘리다 보면 우리가 미처 생각하지 못한 문제들이 발생할 수 있다.<br/>
+        따라서 <b>무작정 파티션 수를 늘리기보다는 적절한 값으로 설정해 운영하는 편이 좋다.</b><br/>
+        <br/><br/>
+        <h6>내 토픽의 적절한 파티션 수는?</h6><br/>
+        프로듀서 입장에서 4개의 프로듀서를 통해 각각 초당 10개의 메시지를 카프카의 토픽으로 보낸다고 하면,<br/>
+        카프카의 토픽에서 초당 40개의 메시지를 받아줘야 한다.<br/>
+        만약 해당 토픽에서 파티션을 1로 했을 때 초당 10개의 메시지만 받아준다면 4로 늘려서 목표 처리량을 처리할 수 있도록 변경한다.<br/>
+        <br/>
+        하지만 카프카에서는 컨슈머도 있기 때문에 컨슈머의 입장도 고려해야 한다.<br/>
+        컨슈머 입장에서 8개의 컨슈머를 통해 각각 초당 5개의 메시지를 카프카의 토픽에서 가져올 수 있다고 한다면,<br/>
+        해당 토픽의 파티션 수는 컨슈머 수와 동일하게 8개로 맞추어 컨슈머마다 각각의 파티션에 접근할 수 있게 해야 한다.<br/>
+        <br/>
+        <b>이렇게 예상 목표치를 가지고 파티션 수를 할당하는 것이 가장 이상적인 방법</b>이다.<br/>
+        <br/>
+        <b>카프카에서 파티션 수의 증가는 필요한 경우 언제든지 변경이 가능하지만,<br/>
+        반대로 파티션의 수를 줄이는 방법은 제공하지 않는다.</b><br/>
+        결국 너무 과도하게 파티션 수를 늘려놓고 난 후에 파티션 수를 줄이고 싶은 상황이 생기면,<br/>
+        토픽을 삭제하는 방법 말고는 다른 해결책이 없다.<br/>
+        <br/><br/>
+        <h6>오프셋과 메시지 순서</h6><br/>
+        카프카에서는 <b>각 파티션마다 메시지가 저장되는 위치를 오프셋</b>이라고 부르고,<br/>
+        <b>오프셋은 파티션 내에서 유일하고 순차적으로 증가하는 숫자 (64비트 정수) 형태</b>로 되어있다.<br/>
+        <br/>
+        토픽 기준으로 오프셋이 0인 것을 찾아보면 전부 3개가 존재합니다.<br/>
+        하지만 0번 파티션 기준으로 보면 오프셋 0은 유일한 값이다. 파티션1과 파티션2에서도 동일하다.<br/>
+        카프카에서는 이 오프셋을 이용해 메시지의 순서를 보장한다.<br/>
+        만약 <b>컨슈머가 파티션 0에서 데이터를 가져간다고 가정하면, 오프셋 0, 1, 2, 3, 4, 5 순서대로만 가져갈 수 있다.</b><br/>
+        <b>절대로 오프셋 순서가 바뀐 상태로는 가져갈 수 없다.</b><br/>
+        <br/><br/><br/>
+        <h4>카프카의 고가용성과 리플리케이션</h4>
+        카프카는 분산 어플리케이션으로 서버의 물리적 장애가 발생하는 경우에도 높은 가용성을 보장한다.<br/>
+        이를 위해 카프카는 리플리케이션 기능을 제공한다.<br/>
+        <b>카프카의 리플리케이션은 토픽 자체를 리플리케이션하는 것이 아니라, 토픽을 이루는 각각의 파티션을 리플리케이션 하는 것</b>이다.<br/>
+        <br/>
+        <h6>리플리케이션 팩터와 리더, 팔로워의 역할</h6><br/>
+        카프카에서의 팩터 기본값 설정은 1로 되어있으며 이는 변경할 수 있다.<br/><br/>
+
+        <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+        
+        vi /usr/local/kafka/config/server.properties
+
+        설정 파일을 열고 난 후 default.replication.factor 값을 2 또는 3 등 원하는 숫자로 변경하면 된다.
+        이 설정 값은 아무런 옵션을 주지 않고 토픽을 생성할 때 적용되는 값이고, 각 토픽별로 다른 리플리케이션 팩터 값을 설정할 수도 있다.
+        </pre>
+
+        <br/>
+        <img src="../assets/images/2655FB425509181D07.png" width="600" height="300">
+        <br/><br/>
+
+        만약 <b>리플리케이션 팩터를 N으로 설정할 경우 N개의 replica 는 1개의 리더와 N-1개의 팔로워로 구성</b>된다.<br/>
+        위의 그림에서는 각 파티션마다 하나의 리더(붉은색)가 존재하며 2개의 팔로워(푸른색)가 존재한다.<br/>
+        <br/>
+        모든 토픽에 리플리케이션 팩터 3을 적용하여 운영하기 보다는, <br/>
+        해당 토픽에 <b>저장되는 데이터의 중요도에 따라 리플리케이션 팩터를 2 또는 3 으로 설정해 운영하는 것이 좀 더 효율적</b>이다.<br/>
+        <br/>
+        <h6>리더와 팔로워의 관리</h6>
+        <br/>
+        분산 어플리케이션은 각자의 방식으로 리플리케이션 작업을 처리한다.<br/>
+        카프카에서는 앞서 설명한 리더와 팔로워라 불리우는 구성으로 리더와 팔로워가 각자의 역할을 맡아 리플리케이션 작업을 처리한다.<br/>
+        <br/>
+        <b>리더는 모든 데이터의 읽기 쓰기에 대한 요청에 응답하면서 데이터를 저장해나가고,<br/>
+        팔로워는 리더를 주기적으로 보면서 자신에게 없는 데이터를 리더로부터 주기적으로 가져오는 방법으로 리플리케이션을 유지</b>한다.<br/>
+        <br/>
+        <b>리더가 다운되는 경우 팔로워가 새로운 리더로 승격되어야 하는데, 데이터가 일치하지 않으므로 큰 문제가 발생할 수도 있다.<br/>
+        카프카에서는 이러한 현상을 방지하고자 ISR (In Sync Replica) 라는 개념을 도입</b>했다.<br/>
+        <br/>
+        <b>ISR 이라는 것은 한마디로 표현하자면 현재 리플리케이션되고 있는 리플리케이션 그룹</b>이다.<br/>
+        ISR 에는 중요한 규칙이 하나 있다. 그 규칙은 <b>ISR 에 속해 있는 구성원만이 리더의 자격을 가질 수 있다.</b><br/>
+        <br/>
+        예를 들어 peter 토픽이 리플리케이션 팩터2로 구성되어 리더는 1번 브로커, 팔로워는 2번 브로커에 위치하고 있다면,<br/>
+        ISR 구성원은 1, 2 입니다. 그런데 갑작스러운 이유로 1번 브로커가 다운되면, ISR 의 구성원인 2번 브로커에 있는 팔로워가 새로운 리더로 승격할 수 있다.<br/><br/>
+        카프카에서는 이렇게 <b>리더가 자신의 역할을 하지 못하게 되는 경우 팔로워가 그 역할을 대신해야 하기 때문에 리더와의 데이터 동기화 작업을 매우 중요하게 처리하고 있으며 이것을 유지하는 것이 바로 ISR</b> 이다.<br/>
+        <br/>
+        즉, <b>ISR 이라는 그룹을 만들어 리플리케이션의 신뢰성을 높이고 있는 것</b>이다.<br/>
+
+      <br/><br/><br/>
+      <h4>카프카 프로듀서</h4>
+      메시지를 생산해서 카프카의 토픽으로 메시지를 보내는 역할을 하는 애플리케이션, 서버 등을 모두 프로듀서라고 부른다.<br/>
+      <b>프로듀서의 주요 기능은 각각의 메시지를 토픽 파티션에 매핑하고 파티션의 리더에 요청을 보내는 것</b>이다.<br/>
+      <br/>
+      키 값을 정해 해당 키를 가진 모든 메시지를 동일한 파티션으로 전송할 수 있다.<br/>
+      만약 키 값을 입력하지 않으면, 파티션은 Robin-Round 방식으로 파티션에 균등하게 분배된다.
+      <br/><br/>
+
+      @todo. kafka folder 의 sh 파일 역할 정리
+
+      <br/><br/>
+
+      <h6>메시지를 보내고 확인하지 않기</h6>
+      <br/>
+      프로듀서에서 서버로 메시지를 보내고 난 후에 성공적으로 도착했는지까지 확인하지는 않는다.<br/>
+      카프카가 항상 살아있는 상태이고 프로듀서가 자동으로 재전송하기 때문에 대부분의 경우 성공적으로 전송되지만, 일부 메시지는 손실될 수 있다.<br/>
+      (카프카 브로커에게 메시지를 보낸 후의 에러는 무시하지만, 보내기 전에 에러가 발생하면 예외를 처리할 수 있다.)<br/>
+      <br/>
+
+      <h6>동기 전송</h6>
+      <br/>
+      프로듀서는 메시지를 보내고 send() 메소드의 Future 객체를 리턴한다.<br/>
+      get() 메소드를 사용해 Future 를 기다린 후 send() 가 성공했는지 실패했는지 확인한다.<br/>
+      이러한 방법을 통해 메시지마다 브로커에게 전송한 메시지가 성공했는지 실패했는지 확인하여 더욱 신뢰성 있는 메시지 전송을 할 수 있다.<br/>
+      <br/>
+      카프카로 메시지를 보내기 전과 보내는 동안 에러가 나는 경우 예외가 발생한다.<br/>
+      예외는 두가지로 구분되는데, 재시도가 가능한 예외와 불가능한 예외로 구분되며 재시도가 가능한 에러는 다시 전송하여 해결할 수 있다.
+      <br/>
+      <br/>
+
+      <h6>비동기 전송</h6>
+      <br/>
+      프로듀서는 send() 메소드를 콜백과 같이 호출하고 카프카 브로커에서 응답을 받으면 콜백한다.<br/>
+      하지만 비동기적으로 전송한다면 응답을 기다리지 않기 때문에 더욱 빠른 전송이 가능하다.<br/>
+      또한 <b>메시지를 보내지 못했을 때 예외를 처리하게 해 에러를 기록하거나 향후 분석을 위해 에러 로그 등에 기록할 수 있다.</b><br/>
+      <br/>
+      <xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+        class CallBackEx implements CallBack {
+            public void onCompletion(RecordMetadata metadata, Exception exception) {
+                if (metadata != null) {
+                  System.out.println("Partition : " + metadata.partition() + ", Offset: " + metadata.offset());
+                }   else {
+                  exception.printStackTrace();
+                }
+            }
+        }
+
+        Producer<String, String> producer = new KafkaProducer<String, String>(props);
+
+        try {
+            producer.send(new ProducerRecord<String, String>("peter-topic", "Text-"), new CallBackEx());
+        } catch(Exception ex) {
+            exception.printStackTrace();
+        } finally {
+            producer.close();
+        }
+      </xmp>
+      
+      <br/>
+      <h6>프로듀서 주요 옵션</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+        
+        <b>bootstrap.servers</b>
+        카프카 클러스터는 클러스터 마스터라는 개념이 없기 때문에 클러스터 내 모든 서버가 클라이언트의 요청을 받을 수 있습니다.
+        해당 옵션은 카프카 클러스터에 처음 연결을 하기 위한 호스트와 포트 정보로 구성된 리스트 정보를 나타낸다.
+
+        호스트명은 kafka001:9092, kafka002:9092, kafka003:9092 와 같이 배열로 작성하면 된다.
+        (전체 카프카 리스트가 아닌 호스트 하나만 입력해 사용할 수 있지만 이 방법은 추천하지 않는다.)
+
+        만약 <b>주어진 리스트의 서버 중 하나에서 장애가 발생할 경우 클라이언트는 자동으로 다른 서버로 재접속을 시도</b>한다.
+
+        <b>acks</b>
+        프로듀서가 카프카 토픽의 리더에게 메시지를 보낸 후 요청을 완료하기 전 ack 의 수를 의미한다.
+        해당 옵션의 수가 작으면 성능이 좋지만, 메시지 손실 가능성이 있고,
+        반대로 수가 크면 성능이 좋지 않지만 메시지 손실 가능성도 줄어들거나 없어진다.
+        (<b>서비스, 데이터의 정합성/ 중요성에 따라서 0, 1, 2 로 구분하여 사용</b>)
+
+        <b>buffer.memory</b>
+        프로듀서가 카프카 서버로 데이터를 보내기 위해 잠시 대기할 수 있는 전체 메모리 바이트이다.
+
+        <b>compression.type</b>
+        프로듀서가 데이터를 압축해서 보낼 수 있는데, 어떤 타입으로 압축할지를 정할 수 있다.
+        옵션으로 none, gzip, snappy, lz4 같은 다양한 포맷 중 하나를 선택할 수 있다.
+
+        <b>retries</b>
+        일시적인 오류로 인해 전송에 실패한 데이터를 다시 보내는 횟수
+
+        <b>batch.size</b>
+        프로듀서는 같은 파티션으로 보내는 여러 데이터를 함께 배치로 보내려고 시도한다.
+        이러한 동작은 클라이언트와 서버 양쪽에 성능적인 측면에서 도움이 된다.
+
+        이 설정으로 배치 크기 바이트 단위를 조정할 수 있으며 정의된 크기보다 큰 데이터는 배치를 시도하지 않게 된다.
+
+        <b>linger.ms</b>
+        배치형태의 메시지를 보내기 전에 추가적인 메시지들을 위해 기다리는 시간을 조정한다.
+        카프카 프로듀서는 지정된 배치 사이즈에 도달하면 이 옵션과 관계없이 즉시 메시지를 전송하고, 
+        배치 사이즈에 도달하면 이 옵션과 관계없이 즉시 메시지를 전송하고, 
+        배치 사이즈에 도달하지 못한 상황에서 linger.ms 제한 시간에 도달했을 때 메시지를 전송한다.
+
+        0 이 기본값이며, 0보다 큰 값을 설정하면 지연 시간은 조금 발생하지만 처리량은 좋아진다.
+
+        <b>ms.request.size</b>
+        프로듀서가 보낼 수 있는 최대 메시지 바이트 사이즈이다. (기본값은 1MB)
+
+        그 외에 여러 프로듀서의 옵션은 <a href="https://kafka.apache.org/documentation/#producerconfigs">여기</a> 를 참고하자.
+      </pre>
+      <br/>
+        
+      <b>∴ 카프카에서는 손실 없는 메시지 전송을 위해 프로듀서의 acks=all 로 사용하는 경우 브로커의 min.insync.replicas=2 로 설정하고,<br/>
+      토픽의 리플리케이션 팩터는 3 으로 설정하기를 권장하고 있다.</b><br/>
+
+      <br/><br/>
+      <h4>카프카 컨슈머</h4>
+      프로듀서가 메시지를 생산해서 카프카의 토픽으로 메시지를 보내면 그 토픽의 메시지를 가져와서 소비하는 역할을 하는 애플리케이션, 서버 등을 지칭하여 컨슈머라고 한다. 컨슈머의 주요 기능은 특정 파티션을 관리하고 있는 파티션 리더에게 메시지 가져오기를 요청하는 것이다.<br/>
+      <br/>
+      각 요청은 로그의 오프셋을 명시하고 그 위치로부터 로그 메시지를 수신한다. 그래서 컨슈머는 가져올 메시지의 위치를 조정할 수 있고, 필요하다면 이미 가져온 데이터도 다시 가져올 수 있다.
+      <br/><br/>
+      <h6>카프카 주요 옵션</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+        
+        <b>boostrap.servers</b>
+        카프카 클러스터에 처음 연결을 하기 위한 호스트 포트 정보로 구성된 정보를 나타낸다.
+        (프로듀서의 bootstrap.servers 옵션과 동일)
+
+        <b>fetch.min.bytes</b>
+        한번에 가져올 수 있는 최소 데이터 사이즈이다.
+        만약 지정한 사이즈보다 작은 경우, 요청에 대해 응답하지 않고 데이터가 누적될 때까지 기다린다.
+
+        <b>group.id</b>
+        컨슈머가 속한 컨슈머 그룹을 식별하는 식별자다.
+
+        <b>enable.auto.commit</b>
+        백그라운드로 주기적으로 오프셋을 커밋한다. (자동커밋 옵션)
+
+        <b>auto.offset.reset</b>
+        카프카에서 초기 오프셋이 없거나 현재 오프셋이 더 이상 존재하지 않은 경우의 지정하는 옵션
+          - earliest: 가장 초기의 오프셋값으로 설정한다.
+          - latest: 가장 마지막의 오프셋값을 설정한다.
+          - none: 이전 오프셋값을 찾지 못하면 에러를 나타낸다.
+        
+        새 소비자 시작 (new group.id) :이 경우 커밋 된 오프셋이 없으므로 소비자는 매개 변수 설정 auto.offset.reset에 따라 읽기 시작합니다
+        소비자 다시 시작 (group.id 재사용) :이 경우 소비자는 중단 된 지점에서 다시 시작합니다. 파라미터 설정 auto.offset.reset는 무시됩니다.
+        따라서 시나리오 (1)의 경우 시작 위치 만 "구성"할 수 있습니다.
+        시나리오 (2)의 경우 시작 위치가 "고정"되어 (즉, 항상 마지막 커밋 된 오프셋) 구성을 통해 변경할 수 없습니다.
+        그러나 .seekToBeginning()를 처음 호출하기 전에 항상 .seekToEnd() 또는 poll()를 수행하고 전체 주제를 읽거나 주제의 끝에서 시작할 수 있습니다.
+        .seekXX()를 호출하면 마지막으로 커밋 된 오프셋을 "덮어 쓰고"원하는 오프셋에서 소비를 시작할 수 있습니다.
+        "offset parameter"를받는 seek()도 있으므로 소비를 시작하려는 오프셋을 지정할 수 있습니다.
+             
+        <b>fetch.max.bytes</b>
+        한번에 가져올 수 있는 최대 데이터 사이즈
+
+        <b>request.timeout.ms</b>
+        요청에 대해 응답을 기다리는 최대 시간
+
+        <b>session.timeout.ms</b>
+        컨슈머와 브로커 사이의 세션 타임 아웃 시간. (기본값 10초)
+        브로커가 컨슈머가 살아있는 것으로 판단하는 시간이다.
+
+        <b>heartbeat.interval.ms</b>
+        그룹 코디네이터에게 얼마나 자주 KafkaConsumer poll() 메소드로 하트비트를 보낼 것인지 조정한다. (기본값 3초)
+        <b>session.timeout.ms 와 밀접한 관계가 있으며 session.timeout.ms 보다 낮아야 한다. 일반적으로 3 분의 1 정도로 설정한다.</b>
+
+        <b>max.poll.records</b>
+        단일 호출 poll() 에 대한 최대 레코드 수를 조정한다.
+        이 옵션을 통해 어플리케이션이 폴링 루프에서 데이터 양을 조정할 수 있다.
+
+        <b>auto.commit.interval.ms</b>
+        주기적으로 오프셋을 커밋하는 시간
+
+        그 외에 여러 컨슈머의 옵션은 <a href="https://kafka.apache.org/documentation/#consumerconfigs">여기</a> 를 참고하자.
+      </pre>
+      <br/>
+      <h6>커밋과 오프셋</h6>
+      <br/>
+      컨슈머가 poll() 을 호출할 때마다 컨슈머 그룹은 카프카에 저장되어 있는 아직 읽지 않은 메시지를 가져온다.<br/>
+      이렇게 동작할 수 있는 것은 컨슈머 그룹이 메시지를 어디까지 가져갔는지를 알 수 있기 떄문이다.<br/>
+      <br/>
+      <b>컨슈머 그룹의 컨슈머들은 각각의 파티션에 자신이 가져간 메시지의 위치 정보(오프셋)을 기록</b>하고 있다.<br/>
+      각 파티션에 대해 현재 위치를 업데이트하는 동작을 커밋한다고 한다.<br/>
+      <br/>
+      카프카는 각 컨슈머 그룹의 파티션별로 오프셋 정보를 저장하기 위한 저장소가 별도로 필요하다.<br/>
+      <br/>
+      모든 컨슈머들이 살아있고, 잘 동작하고 있는 동안에는 아무런 영향이 없지만 만약 컨슈머가 갑자기 다운되거나 컨슈머 그룹에 새로운 컨슈머가 조인한다면 컨슈머 그룹 내에서 리밸런스가 일어나게 된다. <b>리밸런스가 일어난 후 각각의 컨슈머는 이전에 처리했던 토픽의 파티션이 아닌 다른 새로운 파티션에 할당되며 컨슈머는 새로운 파티션에 대해 가장 최근 커밋된 오프셋을 읽고 그 이후부터 메시지들을 가져오기 시작</b>한다.<br/><br/>
+
+      <h6>자동 커밋</h6>
+      <br/>
+      각 파티션에 대한 오프셋 정보 관리, 파티션 변경에 대한 관리 등을 직접 하지 않는다.<br/>
+      <b>enable.auto.commit = true 로 설정하면 5초마다 컨슈머는 poll() 를 호출할 때 가장 마지막 오프셋을 커밋</b>한다.<br/>
+      5초 주기는 기본값이며, auto.commit.interval.ms 옵션을 통해 조정이 가능하다.<br/>
+      <b>컨슈머는 poll 을 요청할 때마다 커밋할 시간인지 아닌지 체크하게 되고, poll 요청으로 가져온 마지막 오프셋을 커밋</b>한다.<br/>
+      <br/>
+      <h6>수동 커밋</h6>
+      <br/>
+      자동 커밋과 다르게 <b>사용자가 컨슈밍 한 뒤에 커밋하여 오프셋을 직접 저장 (업데이트) 하는 방법</b>이다.<br/>
+      (반드시 컨슈밍 해야하는 즉, 중요도가 높은 처리를 위한 방식으로 보인다. 매 요청마다 커밋을 하게되면 일정주기로 커밋하는 자동 커밋과 어느정도 성능 차이가 있을지는 확인해볼 필요가 있을 것 같다.)
+      <br/><br/><br/>
+      <h4>카프카 운영 가이드</h4>
+      카프카는 여러 대의 서버에서 분산되어 실행되고, 각 토픽은 여러 개의 파티션으로 분리되어 있으며 각 브로커에 복제되어 분산되어 저장되는 등 복잡하게 운영되는 어플리케이션이다. 따라서 카프카 클러스터를 운영하다 보면 다양한 이슈가 발생하게 되고, 이슈들에 대응하기 위해 토픽의 상태 정보, 토픽의 설정 변경 작업 등이 매우 빈번하게 발생한다. 이번 장에서는 이러한 운영 명령어에 대해서 알아보자
+      <br/><br/><br/>
+
+      <h6>토픽 생성</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>토픽 리스트 확인</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>토픽 상세보기</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>토픽 설정변경</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>토픽 파티션 수 변경</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>토픽 리플리케이션 팩터 변경</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>컨슈머 그룹 리스트 확인</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>컨슈머 그룹 리스트 확인</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>컨슈머 상태와 오프셋 확인</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+        
+      <h6>카프카 스케일 아웃</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <h6>주키퍼 스케일 아웃</h6>
+      <br/>
+      <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+      todo. 명령어
+      </pre>
+      <br/>
+
+      <br/>
+      <h4>카프카를 활용한 데이터 파이프라인 구축</h4>
+      ㄴㅇㄴㅇ
+    
+
+      <br/><br/>
+
+      </blockquote>
+
+      <br/><hr>
+      <br/>
+      마치며..<br/>
+      현재 재직중인 회사에서는 공동체 차원(?) 에서 카프카, 엘라스틱, 레디스 등의 인프라 구축을 관리해주다보니 구축 및 운영에 대한 경험을 쌓기가 매우 어려운 환경이다.<br/><br/>
+
+      그렇기 때문에 토이 프로젝트를 진행하며 구축 및 운영에 대한 경험을 쌓고자 하였다.<br/>
+      하지만 토이 프로젝트이다보니 트래픽이 RDB 로도 커버가 가능할 정도이다보니 아쉬운 부분이 많지만,<br/>
+      꾸준히 공부함으로써 좀 더 경험 및 지식을 늘릴 수 있도록 해야겠다!<br/>
+<br/>
+    </div>
+  </section>
+
+<a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.js"></script>
+
+</body>
+</html>

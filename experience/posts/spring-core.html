@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">스프링 레시피 5</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+스프링5 레시피 책을 읽고 관련 내용을 정리하고자 한다.<br/>
+이 글의 목적은 실무 프로젝트를 하며 빠르게 필요한 부분만 사용하기 위함이다.<br/><br/><br/>
+
+<h4>스프링 코어</h4>
+<br/>
+
+2장은 스프링의 주요 기능 <b>IOC [:Inversion of Control] (제어의 역전)</b> 에 대해서 정리되어있다.<br/>
+IOC 컨테이너는 <b>POJO [:Plain Old Java Object] (오래된 방식의 단순 자바 객체)</b> 를 구성하고 관리한다.<br/><br/>
+
+스프링 프레임워크의 가장 중요한 의의가 이 POJO 로 자바 애플리케이션을 개발하는 것이므로 스프링의 주요 기능은 대부분 IOC 컨테이너 안에서 POJO 를 구성 및 관리하는 일과 연관돼 있다. 스프링 문서에는 <b>'빈(Bean)' 과 'POJO 인스턴스' 는 모두 자바 클래스로 생성한 객체 인스턴스</b>를 가리키며, <b>'컴포넌트(Component)' 와 'POJO 클래스' 는 객체 인스턴스를 생성하는데 필요한 실제 자바 클래스</b>를 가리킨다.
+
+<br/><br/>아래는 스프링에서 주로 사용되는 애노테이션에 대해서 필요한 부분만 정리해보았다.<br/><br/>
+
+<h6>@Component</h6>
+· <b>쓰임새가 명확하지 않을 때 사용하는 것</b>이 좋다<br/>
+· 클래스에 @Component("빈 인스턴스 ID") 를 붙이면 스프링은 이 클래스를 이용해 POJO를 생성한다.<br/>
+· 빈 인스턴스 ID 값이 없다면 소문자로 시작하는 비 규격 클래스명을 빈 이름으로 기본 할당한다. <br/>
+<br/>
+<h6>@Repository</h6>
+· 발생한 예외를 DataAccessException 으로 감싸 던지므로 디버깅에 유리하다.
+<br/><br/>
+<h6>@Resource</h6>
+· JSR-250 (Common Annnotations for the Java Platform) 에 규정된 Annotation 으로 <b>이름으로</b> POJO 레퍼런스를 찾아 연결한다.<br/><br/>
+
+<h6>@Inject</h6>
+· JSR-330 (Standard Annotations for Injection) 에 규정된 Annotation 으로 <b>타입으로</b> POJO 레퍼런스를 찾아 연결한다.<br/><br/>
+
+<h6>@Autowired</h6>
+· <b>DAO 클래스로 등록해둔 필드를 자동으로 연결</b>해준다. <b>(타입 호환)</b><br/>
+· 필수 프로퍼티에 해당하는 빈을 찾지 못하면 예외를 던진다. 따라서 <b>선택적인 프로퍼티는 @Autowired 의 required 속성값을 false로 지정</b>해주면 스프링이 빈을 못 찾더라도 예외가 발생시키지 않는다.<br/>
+· 스프링 4.3 버전부터 생성자가 하나뿐인 클래스의 생성자는 자동 연결하는 것이 기본이므로 굳이 @Autowired 를 붙이지 않아도 된다.<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Autowired
+    private ClassDaoImpl classDao;
+
+    @Autowired
+    private ClassDaoImpl[] classDao;
+
+    @Autowired(required = false)
+    private List<ClassDaoImpl> classDao;
+
+    ----------------------------------------------------
+    private final ClassDaoImpl classDao;
+
+    @Autowired
+    public void setClassDaoImpl(ClassDaoImpl classDao) {
+        this.classDao = classDao;
+    }
+
+</xmp><br/>
+
+<h6>@Primary</h6>
+· <b>여러 빈이 자동 연결 대상일 때 특정한 빈에 우선권을 부여하기 위한 후보빈 처리</b>이다.
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Component 
+    @Primary
+    private class ClassDaoImpl implement ClassDao {}
+
+</xmp><br/>
+
+<h6>@Qualifier</h6>
+· 이름을 주어 후보 빈으로 명시해둘 수 있다.<br/>
+· 메서드 인수를 연결하는 쓰임새도 있다.
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Component 
+    @Qualifier("classDao")
+    private class ClassDaoImpl implement ClassDao () {}
+
+    @Component 
+    private class MyClassImpl implement myClass (@Qualifier("classDao") ClassDaoImpl ClassDao) {
+        this.ClassDao = ClassDao;
+    }
+
+</xmp><br/>
+
+<h6>@Scope</h6>
+· Bean 스코프를 지정하는 Annotation
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    singleton : IOC 컨테이너당 빈 인스턴스 하나를 생성한다. (기본값)
+    prototype : 요청할 때마다 빈 인스턴스를 하나씩 새로 만든다.
+    request   : HTTP 요청당 하나의 빈 인스턴스를 생선한다. 웹 어플리케이션 컨텍스트에만 해당된다.
+    session   : HTTP 세션당 하나의 빈 인스턴스를 생선한다. 웹 어플리케이션 컨텍스트에만 해당된다.
+    globalSession : 전역 HTTP 세션당 하나의 빈 인스턴스를 생선한다. 포털 어플리케이션 컨텍스트에만 해당된다.
+
+    @Component
+    @Scope("prototype")
+    public class ShoppingCart {}
+    
+</xmp><br/>
+
+<h6>@PostConstruct / @PreDestroy</h6>
+· POJO 클래스를 정의할 경우 <b>@PostConstruct / @PreDestroy 를 해당 클래스에 직접 붙여 초기화/폐기 메서드를 지정</b>합니다.
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Component
+    public class Cashier {
+        @PostConstruct
+        public void openFile() {}
+
+        @PreDestroy
+        public void closeFile() {}
+    }
+    
+</xmp><br/>
+
+<h6>@Lazy</h6>
+· 기본적으로 스프링은 모든 POJO 를 조급하게 초기화 시기키 때문에 <b>@Lazy 를 붙여 초기화 과정을 미룰 수 있다</b>.<br/>
+· 무거운 작업 (네트워크 작업, 파일 처리 등) 을 처리하는 POJO 의 경우 적합하다.
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Component
+    public class Cashier {
+        @PostConstruct
+        public void openFile() {}
+
+        @PreDestroy
+        public void closeFile() {}
+    }
+    
+</xmp><br/>
+
+<h6>@DependsOn</h6>
+· <b>어떤 POJO 가 다른 POJO 보다 먼저 초기화되도록 강제</b>해준다. (빈을 초기화 하는 순서를 보장해준다.)<br/>
+· 위 과정에서 에러가 나도 보기 쉬운 메세지를 돌려준다.
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Configuration
+    public class Cashier {
+        @Bean
+        @DependsOn("closeFile")
+        public void openFile() {}
+
+        @Bean
+        public void closeFile() {}
+    }
+    
+</xmp><br/>
+
+<h6>@Required</h6>
+· <b>특정 빈 프로퍼티가 설정되었는지 체크하고 싶은 경우에 붙이는 것이 적합</b>하다.<br/>
+· 스프링 빈 후처리기 RequirecAnnotationBeanPostProcessor 는 @Required 를 붙인 프로퍼티값이 설정됐는지 살힌다.<br/>
+(하지만 설정 여부만 체크할뿐 값의 타입 체크는 진행하지 않는다.)<br/>
+(설정된 값이 없을 경우 BeanInitializationException 예외를 던진다.)<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    public class MemberDto {
+        @Required
+        public void setMemberIdx(Integer memberIdx) {}
+
+        @Required
+        public void setMemberName(String memberName) {}
+    }
+    
+</xmp><br/>
+
+<h5><span style="font-weight: 700">AOP [:Aspect-Oriented Programming]</span></h4>
+Aspect 를 정의하려면 일단 자바 클래스에 <b>@Aspect 를 붙이고 메서드별로 적절한 애너테이션을 붙여 어드바이스로 만든다.</b><br/>
+어드바이스 애너테이션은 <b>@Before, @After, @AfterReturning, @AfterThrowing, @Around</b> 5개 중 하나를 쓸 수 있다.<br/><br/>
+
+IOC 컨테이너에서 Aspect 애너테이션 기능을 활성화 하려면 구성 클래스 중 하나에 <b>@EnableAspectJAutoProxy</b> 를 붙인다.<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    XML 을 통한 설정을 하였다면 아래와 같이 추가하면 된다.
+
+    pom.xml
+    <org.aspectj-version>version</org.aspectj-version>
+
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${org.aspectj-version}</version>
+    </dependency>
+     
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${org.aspectj-version}</version>
+    </dependency>
+     
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjtools</artifactId>
+        <version>${org.aspectj-version}</version>
+    </dependency>
+
+    -servlet.xml
+    <aop:aspectj-autoproxy/>
+    <bean id="loggerAspect" class="first.common.logger.LoggerAspect" />
+
+</xmp><br/>
+<h6>@Before</h6>
+· <b>특정 프로그램 실행 지점 이전의 공통 관심사를 처리하는 메서드</b>이다.<br/>
+· <b>포인트컷을 사용하여 편하게 활용</b>할 수 있다.<br/>
+(포인트컷의 * 는 모든 접근제한자를 허용한다는 의미이다.)<br/>
+(포인트컷의 .. 는 인수 개수는 몇 개라도 좋다는 의미이다.)<br/>
+(포인트컷의 표현식은 비교적 자유롭게 활용이 가능하다.)<br/>
+(포인트컷으로 매치한 실행 지점을 조인포인트 라고 한다.)<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @Before("execution(* OtherClass.run(..)) || otherMethod() && call(public OtherClass.run(..))")
+        public void run(JoinPoint joinPoint) {}
+    }
+    
+</xmp><br/>
+
+<h6>@After</h6>
+· <b>조인포인트가 끝나면 실행되는 메서드</b>이다.<br/>
+(조인포인트가 정상 실행되든, 도중에 예외가 발생하든 상관없이 실행된다.)<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @After("execution(* *.*(..))")
+        public void run(JoinPoint joinPoint) {}
+    }
+    
+</xmp><br/>
+
+<h6>@AfterReturning</h6>
+· <b>조인포인트 실행의 성공 여부와 상관없이 작동하는 메서드</b>이다.<br/>
+· 조인포인트가 반환한 결과값을 가져오려면 returning 속성을 추가로 지정한다.<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @After(
+          pointcut = "execution(* *.*(..))",
+          returning = "result"
+        )
+        public void run(JoinPoint joinPoint, Object result) {}
+    }
+    
+</xmp><br/>
+
+<h6>@AfterThrowing</h6>
+· <b>조인포인트 실행 도중 예외가 날 경우에만 실행되는 메서드</b>이다.<br/>
+· 특정 타입 또는 그 하위 타입의 예외만 받고 싶다면 Throwable 에 해당 예외 타입을 지정해준다.<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @After(
+          pointcut = "execution(* *.*(..))",
+          throwing = "e"
+        )
+        public void run(JoinPoint joinPoint, Throwable e) {}
+    }
+    
+</xmp><br/>
+
+<h6>@Around</h6>
+· <b>앞서 살펴본 어드바이스 모두 Around 어드바이스로 조합할 수 있다.</b><br/>
+· 원본 조인포인트를 언제 실행할지, 실행 자체를 할지 말지, 게속 실행할지의 여부까지 제어할 수 있다.<br/>
+(하지만, 최소한의 요건을 충족하면서도 가장 기능이 약한 어드바이스를 쓰는게 바람직하다.)<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @Around("execution(* *.*(..))")
+        public void run(ProceedingJoinPoint joinPoint) {}
+    }
+    
+</xmp><br/>
+어드바이스가 정확하게 작동하게 하기 위해 <b>조인포인트에 대한 세부 정보를 가져올 수 있다.</b>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    public class TestAspect {
+        @Around("execution(* *.*(..))")
+        public void run(JoinPoint joinPoint) {
+            jointPoint.getKind();
+            jointPoint.getSignature().getDeclaringTypeName();
+            jointPoint.getSignature().getName();
+            jointPoint.getArgs();
+            jointPoint.getTarget();
+            jointPoint.getThis();
+        }
+    }
+
+</xmp><br/>
+
+<h6>@Order</h6>
+· 같은 <b>조인포인트에 Aspect 를 여러개 적용할 경우, Aspect 간 우선순위</b>를 정할 수 있다.
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Aspect
+    @Component
+    @Order(0) 
+    public class TestAspect {
+        @Around("execution(* *.*(..))")
+        public void run(ProceedingJoinPoint joinPoint) {}
+    }
+    
+</xmp><br/>
+
+<!-- <h6>@Configurable</h6>
+·  TODO. 작성
+
+<h6>@EnableSpringConfigured</h6>
+·  TODO. 작성
+
+<h6>@EventListener</h6>
+· TODO. 간단한 한줄 정의 필요 (클래스/함수 이벤트 실행에 대한 알림?)
+· POJO 구현체가 아닌 인터페이스를 사용하여 결합도를 낮출 수 있다.
+· 스프링 4.2부터 ApplicationListener 인터페이스 없이 @EventListener 를 붙여 이벤트 리스너를 만들 수 있다.
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Component
+    public class CheckoutListener {
+        @EventListener
+        public void onApplicationEvent(CheckoutEvent checkoutEvent) {
+            // 체크아웃 시작으로 할 일 정의
+            System.out.println("Checkout event [" + checkoutEvent.getTime() + "]");
+        }
+    }
+
+    public class CheckoutEvent {}
+    
+</xmp><br/> -->
+
+<h4>스프링 MVC</h4><br/>
+<b>프론트 컨트롤러는 스프링 MVC의 중심 컴포넌트이다.</b><br/>
+보통 Dispatcher Servlet 이라고 일컷는 스프링 MVC 컨트롤러는 코어 자바 EE 디자인 패턴 중 하나인 프론트 컨트롤러 패턴을 구현한 것으로, <br/>
+MVC 프레임워크에서 모든 웹 요청은 반드시 Dispatcher Servlet 를 거쳐 처리됩니다.<br/><br/>
+
+컨트롤러 클래스는 뷰를 받고 View Resolver 를 이용해 논리 뷰 이름을 실제 뷰 구현체로 해석한다.<br/>
+ViewResolver 인터페이스를 구현한 뷰 리졸버는 웹 애플리케이션 컨텍스트에 빈으로 구성하며 논리 뷰 이름을 받아 (HTML, JSP, PDF 등의) 실제 뷰 구현체를 돌려준다.<br/><br/>
+
+<img src="https://1.bp.blogspot.com/-VTA7EvauZkk/VtE4Z7VNmxI/AAAAAAAAATU/jdzVVoKhghA/s1600/SpringMVCController.jpg">
+<br/><br/>
+<h6>@Controller</h6>
+· <b>애너테이션이 붙은 클래스에 요청이 들어오면 스프링이 적합한 핸들러 메서드를 찾아서 맵핑</b>시킨다.<br/>
+(적합한 메서드란 @RequestMapping 가 붙은 메서드를 의미하며 다양한 인수를 받을 수 있다.)<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @RequestMapping 인수는 다양하다.
+
+    1. HttpServletRequest 또는 HttpServletResponse
+    2. 임의형 (arbitary type) 요청 매개변수 (@RequestParam 을 붙여준다.)
+    3. 임의형 모델 속성 (@ModelAttribute 를 붙여준다.)
+    4. 요청 내에 포함된 쿠키값 (@CookieValue 를 붙여준다.)
+    5. 핸들러 메서드가 모델에 속성을 추가하기 위해 사용하는 Map 또는 ModelMap
+    6. 핸들러 메서드가 객체 바인딩/유효성을 검증한 결과를 가져올 때 필요한 Errors 또는 BindingResult
+    7. 핸들러 메서드가 세션 처리를 완료헀음을 알릴 때 사용하는 SessionStatus
+
+    @RequestMapping 에도 추가로 설정을 할 수 있다.
+    
+    1. value: 값
+    2. produces: 리턴 타입
+      - MediaType.APPLICATION_XML_VALUE
+      - MediaType.APPLICATION_JSON_VALUE
+
+      등이 있다.
+
+</xmp><br/>
+
+<h6>핸들러 인터셉터</h6>
+· <b>요청을 가로채 전처리/후처리</b>할 수 있다.<br/>
+· 핸들러 인터셉터는 <b>스프링 웹 애플리케이션 컨텍스트에 구성하기 때문에 컨테이너의 기능을 자유롭게 활용</b>할 수 있다.<br/>
+· HandlerInterceptor 인터페이스를 구현해야하며 preHandle(), postHandle(), afterCompletion() 세 콜백 메서드를 구현해야한다.<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    public class TestInterceptor implements HandlerInterceptor {
+        @Override
+        public boolean preHandle(HttpServletRequest request, 
+            HttpServletResponse response, Object handler) throws Exception {}
+            // 핸들러가 요청을 처리하기 직전
+        
+        @Override
+        public boolean postHandle(HttpServletRequest request, 
+            HttpServletResponse response, Object handler) throws Exception {}
+            // 핸들러가 요청을 처리하기 직전
+
+        @Override
+        public boolean afterCompletion(HttpServletRequest request, 
+            HttpServletResponse response, Object handler, Exception ex) throws Exception {}
+            // 요청 처리가 모두 끝난 (즉, 뷰 렌더링까지 완료된) 시점
+            // 핸들러가 반환한 ModelAndView 객체에 접근할 수 있다.
+    }
+
+</xmp><br/>
+
+<h6>유저 로케일 해석하기</h6>
+· <b>LocaleResolver 인터페이스를 구현한 로케일 리졸버로 식별</b>할 수 있다.<br/>
+(HTTP 요청 헤더, 세션 속성, 쿠키 속성)<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    HTTP 요청 헤더: AcceptHeaderLocaleResolver accept-language 요청 헤더값
+    (유저 웹 브루아저는 자신을 실행한 운영체제의 로케일 설정으로 이 헤더를 설정)
+
+    세션 속성: SessionLocaleResolver 사전 정의된 세션 값
+    (세션 속성이 없으면 accept-language 헤더로 기본 로케일을 설정)
+
+      로케일 관련 세션 속성이 없을 경우 설정할 수 있다.
+      public LocaleResolver localeResolver() {
+          SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+          localeResolver.setDefaultLocale(new Locale("en"));
+          return localeResolver;
+      }
+
+    쿠키 속성: CookieLocaleResolver 유저 브라우저의 쿠키값
+    (쿠키 속성이 없으면 accept-language 헤더로 기본 로케일을 설정)
+
+      로케일 관련 쿠키 속성이 없을 경우 설정할 수 있다.
+        public LocaleResolver localeResolver() {
+            CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+            cookieLocaleResolver.setCookieName("language");
+            cookieLocaleResolver.setCookieMaxAge(3600);
+            cookieLocaleResolver.setDefaultLocale(new Locale("en"));
+            return cookieLocaleResolver;
+        }
+
+</xmp><br/>
+
+<h6>뷰에 예외 매핑하기</h6>
+· 서버에서 <b>예기치 않은 예외가 발생할 경우 예외처리용 뷰를 노출</b>시켜줄 수 있다.<br/>
+· 스프링 MVC에서 제공하는 @ControllerAdvice는 호출되는 메소드에서 발생된 Exception을 모두 처리하는 역할을 한다.<br/>
+· @ControllerAdvice 애노테이션을 통해서 이 클래스의 객체가 컨트롤러에서 발생하는 Exception을 전문적으로 처리하는 클래스라는 것을 명시한다.<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @ControllerAdvice  
+    public class SampleCommonExceptionAdvice {
+        private static final Logger logger = LoggerFactory.getLogger(SampleCommonExceptionAdvice.class);
+        
+        @ExceptionHandler(Exception.class)
+        public String handle(Exception e) {
+            return "/errors/error_page";
+        }
+    }
+
+</xmp><br/>
+
+<h6>표준 애너테이션(JSR-303)으로 빈 검증하기</h6>
+· 이미 <a href="https://krr-b.github.io/posts/valid.html" target="_blank" style="color: #6B66FF">작성해둔 문서</a>를 참고하자.<br/><br/>
+
+<h6>엑셀 및 PDF 뷰 생성하기</h6>
+· 스프링에 내장되어 있는 XLS/PDF 파일 생성 기능과 아파치 POI 라이브러리, iText 라이브러리를 써서 구현할 수 있다.<br/>
+(XLS 은 <a href="www.poi.apache.org/" target="_blank">AbstractExcelView, AbstractXlsxView, AbstractXlsxStreamingView</a> 뷰를 이용, PDF 는 <a href="www.lowagie.com/iText/" target="_blank">AbstractPdfView</a> 를 이용)<br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    XLS: 아파치 POI 라이브러리 활용
+
+    pom.xml
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>${version}</version>
+    </dependency>
+
+    class
+    public class ExcelReservationSummary extends AbstractXlsxView {
+
+        @Override
+        protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, 
+            HttpServletRequest request, HttpServletResponse response) {
+
+            @SuppressWarnings({"unchecked"})
+            final List<Reservation> reservations = (List<Reservation>) model.get("reservations");
+            final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // 워크북에 시트를 생성한뒤
+            final Sheet sheet = workbook.createSheet();
+
+            addHeaderRow(sheet);
+
+            // 데이터 순회하며 처리
+            reservations.forEach(reservation -> createRow(dateFormat, sheet, reservation));
+        }
+
+        /**
+         * @description 시트 첫번째 열에 보고서 헤더를 넣는다.
+         **/
+        private void addHeaderRow(Sheet sheet) {
+            Row header = sheet.createRow(0);
+            header.createCell((short) 0).setCellValue("Date");
+            header.createCell((short) 1).setCellValue("Name");
+            header.createCell((short) 2).setCellValue("Value");
+        }
+
+        /**
+         * @description 두번째 열부터 예약 데이터를 하나씩 채운다. 
+         **/
+        private void createRow(DateFormat dateFormat, Sheet sheet, Reservation reservation) {
+            Row row = sheet.createRow(sheet.getLastRowNum() +1);
+            row.createCell((short) 0).setCellValue(reservation.getDate());
+            row.createCell((short) 1).setCellValue(reservation.getName);
+            row.createCell((short) 2).setCellValue(reservation.getValue);
+        }
+    }
+
+</xmp><br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    PDF: iText 라이브러리 활용
+
+    pom.xml
+    <dependency>
+        <groupId>com.iowagie</groupId>
+        <artifactId>itext</artifactId>
+        <version>${version}</version>
+    </dependency>
+
+    class
+    public class PdfReservationSummary extends AbstractPdfView {
+
+        @Override
+        protected void buildPdfDocument(Map model, Document document, 
+            PdfWriter writer, HttpServletRequest request, HttpServletResponse response) {
+
+            final List<Reservation> reservations = (List<Reservation>) model.get("reservations");
+            final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Table table = new Table();
+            table.addCell("Date");
+            table.addCell("Name");
+            table.addCell("Value");
+            
+            for (Reservation reservation : reservation) {
+                table.addCell(reservation.getDate());
+                table.addCell(reservation.getName());
+                table.addCell(reservation.getValue());
+            }
+
+            document.add(table);
+        }
+    }
+
+</xmp><br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    XLS, PDF 등과 같은 파일을 생성할 경우 날짜를 붙여서 보낼 수 있다.
+
+    public class ExtensionInterceptor extends HandlerInterceptorAdapter {
+        @Override
+        public void postHandle(HttpServletRequest request, HttpServletResponse response, 
+            Object handler, ModelAndView modelAndView) throws Exception {
+
+            String reportName = null;
+            String reportDate = request.getQueryString().replace("date=", "").replace("-", "_");
+            if (request.getServletPath().endsWith(".pdf")) {
+                reportName = "ReservationSummary_" + reportDate + ".pdf";
+            }
+
+            if (request.getServletPath().endsWith(".xls")) {
+                reportName = "ReservationSummary_" + reportDate + ".xls";
+            }
+
+            if (reportName != null) {
+                resonse.setHeader("Content-Disposition", "attachment; filename=" + reportName);
+            }
+        }  
+    }
+
+</xmp><br/>
+
+<h4>스프링 REST</h4><br/>
+<b>개발 업무중에 REST API (완벽하게 RESTFUL 하지는 않음) 를 개발한 경험</b>이 있기 때문에 <br/>
+이 장은 REST 의 이론만 이해하고 가는게 낫다고 판단하여 간단하게만 작성하고자 한다.<br/><br/>
+
+<a href="https://krr-b.github.io/posts/rest.html" target="_blank" style="color: #6B66FF">작성해둔 문서</a>를 참고하자.<br/>
+<br/>
+
+<h6>RSS/아톰 피드 발행하기</h6>
+· 크게 필요성을 못느꼈기 때문에 내용 정리를 보류하고 필요성을 느낄때 다시 작성하겠다.<br/><br/>
+
+<h4>스프링 MVC : 비동기처리</h4>
+· TODO<br/>
+<br/>
+
+<h4>스프링 시큐리티</h4>
+<b>책은 JAVA 기준 설정으로만 구성되어 있기 때문에 XML 기준으로 찾아서 작성하도록 한다.</b><br/>
+<br/>
+<b>스프링 시큐리티는 스프링 기반의 어플리케이션의 보안 (인증과 권한) 을 담당하는 프레임워크</b>이다.<br/>
+만약 스프링시큐리티를 사용하지 않는다면 자체적으로 세션을 체크하고 redirect 등을 해야할 것이다.<br/>
+스프링 시큐리티는 보안과 관련해서 체계적으로 많은 옵션들로 이를 지원해준다.<br/>
+스프링 시큐리티는 filter 기반으로 동작하기 때문에 스프링 MVC 와 분리되어 관리 및 동작한다.<br/><br/>
+
+본격적으로 들어가기 전에 스프링 시큐리티에 대해서 이해하려면 아래 용어 및 개념에 대한 숙지가 반드시 필요하다.<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    · 접근 주체 (Principal) : 보호된 대상에 접근하는 유저
+    · 인증 (Authentication) : 현재 유저가 누구인지 확인 (ex. 로그인)
+        애플리케이션의 작업을 수행할 수 있는 주체임을 증명
+    · 인가 (Authorization) : 현재 유저가 어떤 서비스, 페이지에 접근할 수 있는 권한이 있는지 검사
+    · 권한 (Authority) : 인증된 주체가 애플리케이션의 동작을 수행할 수 있도록 허락되있는지를 결정
+        권한 승인이 필요한 부분으로 접근하려면 인증 과정을 통해 주체가 증명 되어야만 한다
+        권한 부여에도 두가지 영역이 존재하는데 웹 요청 권한, 메소드 호출 및 도메인 인스턴스에 대한 접근 권한 부여
+
+</xmp><br/>
+
+<h6>스프링 시큐리티의 구조</h6><br/>
+<a href="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F99A7223C5B6B29F003F5F0" target="_blank"><img style="width: 100%;" src="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F99A7223C5B6B29F003F5F0"></a>
+<br/>
+<b>스프링 시큐리티는 세션-쿠키방식으로 인증한다.</b><br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+  1. 유저가 로그인을 시도 (HttpRequest)
+  2. AuthenticationFilter 에서 부터 위와 같이 데이터베이스까지 이동함
+  3. 데이터베이스에 있는 유저라면 UserDetails 로 꺼내서 유저의 세션 생성
+  4. 스프링 시큐리티의 인메모리 세션저장소인 SecurityContextHolder 에 저장
+  5. 유저에게 session ID와 함께 응답을 내려줌
+  6. 이후 요청에서는 요청쿠키에서 JSESSIONID를 까봐서 검증 후 유효하면 Authentication를 쥐어준다.
+
+</xmp><br/><br/>
+
+<h6>스프링 시큐리티의 필터</h6>
+<a href="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile30.uf.tistory.com%2Fimage%2F993341355B6B2A0A03B982" target="_blank"><img style="width: 100%;" src="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile30.uf.tistory.com%2Fimage%2F993341355B6B2A0A03B982"></a>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    1. SecurityContextPersistenceFilter:
+          SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다.
+
+    2. ogoutFilter:
+          설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
+    
+    3. AuthenticationFilter:
+        (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시, 유저 인증 처리
+            - AuthenticationManager 를 통한 인증 실행
+            - 성공할 경우 얻은 Authentication 객체를 SecurityContext에 저장 후 AuthenticationSuccessHandler 실행
+            - 실패할 경우 AuthenticationFailureHandler 실행
+
+    4. DefaultLoginPageGeneratingFilter:
+        인증을 위한 로그인폼 URL을 감시한다.
+    
+    5. BasicAuthenticationFilter:
+        HTTP 기본 인증 헤더를 감시하여 처리한다.
+    
+    6. RequestCacheAwareFilter:
+        로그인 성공 후, 원래 요청 정보를 재구성하기 위해 사용된다.
+    
+    7. SecurityContextHolderAwareRequestFilter:
+        HttpServletRequestWrapper를 상속한 SecurityContextHolderAwareRequestWapper 클래스로 HttpServletRequest 정보를 감싼다.
+        SecurityContextHolderAwareRequestWrapper 클래스는 필터 체인상의 다음 필터들에게 부가정보를 제공한다.
+
+    8. AnonymousAuthenticationFilter: 
+        이 필터가 호출되는 시점까지 사용자 정보가 인증되지 않았다면 인증토큰에 사용자가 익명 사용자로 나타난다.
+
+    9. SessionManagementFilter:
+        이 필터는 인증된 사용자와 관련된 모든 세션을 추적한다.
+
+    10. ExceptionTranslationFilter:
+        이 필터는 보호된 요청을 처리하는 중에 발생할 수 있는 예외를 위임하거나 전달하는 역할을 한다.
+
+    11. FilterSecurityInterceptor:
+        이 필터는 AccessDecisionManager 로 권한부여 처리를 위임함으로써 접근 제어 결정을 쉽게해준다.
+
+</xmp><br/>
+
+<h6>Authentication</h6>
+<b>모든 접근 주체(= 대개 유저) 는 Authentication 를 생성</b>한다.
+이것은 SecurityContext 에 보관되고 사용된다. 즉 <b>시큐리티의 세션들은 내부 메모리(SecurityContextHolder)에 쌓고 꺼내쓰는 것</b>이다.
+<a href="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F99CD2C3A5B6B2A19032A78" target="_blank"><img style="width: 100%;" src="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F99CD2C3A5B6B2A19032A78"></a>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    public interface Authentication extends Principal, Serializable { 
+        Collection<? extends GrantedAuthority> getAuthorities(); // Authentication 저장소에 의해 인증된 사용자의 권한 목록 
+        Object getCredentials(); // 주로 비밀번호 
+        Object getDetails(); // 사용자 상세정보 
+        Object getPrincipal(); // 주로 ID 
+        boolean isAuthenticated(); //인증 여부 
+        void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException; 
+    }
+
+    유저의 요청 내에 담긴 Authentication를 AuthenticationManager 에 넘겨주고, AuthenticationManager 를 구현한 ProviderManager가 처리한다. 
+    정확히는 ProviderManager 는 private List<AuthenticationProvider> providers; 로 여러 AuthenticationProvider를 가질 수 있는데, 
+      이 친구들이 처리를 해서 Authentication 를 반환해준다. (실패하면 예외던짐)
+
+    AuthenticationManager: 인증요청을 받고 Authentication를 채운다.
+    AuthenticationProvider: 실제 인증이 일어나며, 성공하면 Authentication.isAuthenticated = true 를 한다.
+
+</xmp><br/>
+
+<h6>설정하기</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    pom.xml
+
+    <security.version>4.2.7.RELEASE</security.version>
+    <dependency> 
+        <groupId>org.springframework.security</groupId> 
+        <artifactId>spring-security-core</artifactId> 
+        <version>${security.version}</version> 
+    </dependency> 
+    <dependency> 
+      <groupId>org.springframework.security</groupId> 
+      <artifactId>spring-security-web</artifactId> 
+      <version>${security.version}</version> 
+    </dependency> 
+    <dependency> 
+      <groupId>org.springframework.security</groupId> 
+      <artifactId>spring-security-config</artifactId> 
+      <version>${security.version}</version> 
+    </dependency> 
+    <dependency> 
+      <groupId>org.springframework.security</groupId> 
+      <artifactId>spring-security-taglibs</artifactId> 
+      <version>${security.version}</version> 
+    </dependency> 
+    <dependency> 
+      <groupId>org.springframework.security</groupId> 
+      <artifactId>spring-security-test</artifactId> 
+      <version>${security.version}</version> 
+    </dependency>
+
+</xmp><br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    web.xml
+
+    <context-param> 
+      <param-name>contextConfigLocation</param-name> 
+      <param-value> classpath:applicationContext.xml classpath:applicationContext-security.xml </param-value> 
+    </context-param> 
+    <listener>
+      <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class> 
+    </listener> 
+    <filter> 
+      <filter-name>springSecurityFilterChain</filter-name> 
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+    </filter> 
+    <filter-mapping> 
+      <filter-name>springSecurityFilterChain</filter-name> 
+      <url-pattern>/*</url-pattern> 
+    </filter-mapping>
+
+    HttpSessionEventPublisher: 한 유저가 다른 브라우저로 동시 로그인하는 것을 막음
+    DelegatingFilterProxy: 모든 요청은 이 프록시필터를 거친다. 스프링시큐리티는 이를 통해 인증, 인가를 수행
+
+</xmp><br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    *-security.xml
+
+    <security:http auto-config="true" use-expressions="true">
+      <security:csrf disabled="true"/> 
+      <security:intercept-url pattern="/**" access="permitAll" /> 
+      <security:form-login login-page="/login" authentication-success-handler-ref="loginSuccessHandler" 
+            authentication-failure-handler-ref="loginFailureHandler" login-processing-url="/auth" username-parameter="id" password-parameter="pw" /> 
+      <security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/login?status=logout" /> 
+        
+      <security:session-management invalid-session-url="/login"> 
+        <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="false" /> 
+      </security:session-management> 
+    </security:http>
+
+    <!-- secured method --> 
+    <security:global-method-security secured-annotations="enabled" />
+
+    <!-- provider --> 
+    <security:authentication-manager> 
+      <security:authentication-provider ref="userAuthHelper" /> 
+    </security:authentication-manager>
+
+    <bean id="loginSuccessHandler" class="com.devljh.domain.user.helper.LoginSuccessHandler"> 
+      <property name="defaultTargetUrl" value="/main" /> 
+      <property name="alwaysUseDefaultTargetUrl" value="true" /> 
+    </bean> 
+
+    <bean id="loginFailureHandler" class="com.devljh.domain.user.helper.LoginFailureHandler"> 
+      <property name="defaultFailureUrl" value="/login?status=fail" /> 
+    </bean> 
+
+    <bean id="userAuthService" class="com.devljh.domain.user.UserAuthService" /> 
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> 
+    <bean id="userAuthProvider" class="com.devljh.domain.user.helper.UserAuthProvider"> 
+      <property name="userDetailsService" ref="userAuthService" /> 
+      <property name="passwordEncoder" ref="passwordEncoder" /> 
+    </bean>
+
+</xmp><br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    auto-config: true 로 할경우 filter는 dafault 값으로 동작한다. 
+      - false 면 anonymous, x509, http-basic, session-management, expression-handler, custom-filter, port-mappings, request-cache, remember-me 를 정의해줘야한다.
+
+    use-expressions: 스프링 표현식(spEL)의 사용여부
+    csrf : csrf 보안 설정여부
+
+    intercept-url : pattern에 정의된 경로에 대해 access 권한을 지정 (Filter가 감시)
+        - 개인적으로 xml설정으로 url 감시하는 것은 swagger, static 리소스 같이 안보이는 것들만 해주고 
+        - 컨트롤러단에서는 어노테이션을 이용하는 것이 가독성이 더 좋아보인다.
+
+    form-login
+        login-page: login form 페이지 URL
+        username-parameter: form id의 name 속성값
+        password-parameter: form pw의 name 속성값
+        login-processing-url: form action 값 (security를 이용해 인증처리)
+        default-target-url: 로그인 성공 시 이동 URL
+        authentication-failure-url: 로그인 실패 시 이동 URL
+        always-use-default-target: true 로 하면 무조건 default-target-url 로 이동한다. false 로 하면 authentication-success-handler 대로 redirect 된다.
+        authentication-success-handler-ref: 로그인 성공 시 프로세스 정의, bean id 입력
+            - 만약 최종 로그인일시를 DB에 기록해야한다면 handler로 처리하는게 좋다.
+            - res.sendRedirect 등으로 처리
+        authentication-failure-handler-ref: 로그인 실패 시 프로세스 정의, bean id 입력
+
+    logout
+        logout-url: 로그아웃 처리할 URL (security가 알아서 만들기 때문에, 이 경로로 요청만 하면된다)
+        logout-success-url: 로그아웃 성공 시 이동 URL
+        success-handler-ref: 로그아웃 성공 시 프로세스 정의, bean id 입력
+        invalidate-session: 로그아웃 시 세션 삭제여부
+
+    session-management
+        invalid-session-url: invalid session(세션 타임아웃 등) 일 때 이동 URL
+        max-sessions: 최대 허용 가능한 세션 수
+        expired-url: 중복 로그인 발생시 이동 URL (처음 접속한 세션이 invalidate가 되고 다음 요청시 invalid-session-url로 이동)
+        error-if-maximum-exceeded: max-sessions을 넘었을때 접속한 세션을 실패처리할지 여부 (expired-url와 얘중에 하나만 쓰면 될듯)
+
+</xmp></br>
+<br/>
+<h6>AuthenticationSuccessHandler, AuthenticationFailureHandler, LogoutSuccessHandler</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    이들은 위 설정에서 보았듯이, 각각 로그인성공 시, 로그인실패 시, 로그아웃 성공 시 동작하게 할 수 있는 handler 이다.
+    이들은 인터페이스로 내부 코드들은 org.springframework.security.web.authentication 에 있다. 
+
+    이걸 직접 구현해도 되지만, 이 패키지가보면 Simple* 이라는 아주좋은 샘플 구현체들이 이미 있다. 
+    쌩으로 구현하는 것보단 당연히 상속받는 걸 추천한다. 이것들을 상속받으면 xml에서 설정자 주입으로 default-url 등을 설정 할 수 있다. 
+    (인터페이스를 구현했으면 직접 sendRedirect로 처리했어야함)
+
+</xmp><br/>
+<h6>PasswordEncoder</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    암호화 알고리즘을 골라서 bean을 만들 수 있다. 
+    AuthenticationProvider의 구현체로 DaoAuthenticationProvider를 사용할 경우, 기본적으로 PlaintextPasswordEncoder(=NoOpPasswordEncoder)를 사용한다.
+
+    public DaoAuthenticationProvider() {
+        this.setPasswordEncoder((PasswordEncoder)(new PlaintextPasswordEncoder()));
+    }
+
+    - BCryptPasswordEncoder: bcrypt 해쉬 알고리즘을 이용 (추천)
+    - StandardPasswordEncoder: sha 해쉬 알고리즘을 이용
+
+</xmp><br/>
+<h6>access</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    - hasRole(Role): 해당 Role 을 갖고있는 사용자 허용
+    - hasAnyRole(Role1, Role2, ...): 해당 Role 중에 1개이상 갖고있는 사용자 허용
+    - anonymous: 익명 사용자 허용
+    - authenticated: 인증된 사용자 허용
+    - permitAll: 모든 사용자 허용
+    - denyAll: 모든 사용자 허용
+
+</xmp><br/>
+<h6>유용한 annotation</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    @Secured: 각 요청경로에 따른 권한 설정은 위의 xml에서도 할 수 있지만, 메소드레벨에서 @Secured 를 통해서도 할 수 있다. 
+    <security:global-method-security secured-annotations="enabled"/> 를 추가하면 된다.
+      - @Secured("ROLE_ADMIN") , @Secured({"ROLE_ADMIN","ROLE_USER"})
+      - 비인가자 접근 시 AccessDeniedException 던짐
+
+    @PreAuthorize: 위와 비슷하지만 spEL 을 사용할 수 있다.
+    <security:global-method-security pre-post-annotations="enabled" /> 를 설정한다.
+      - @PreAuthorize("hasRole('ADMIN')")
+
+    @PostAuthorize: 위와 동일
+
+    @AuthenticationPrincipal: 컨트롤러단에서 세션의 정보들에 접근하고 싶을 때 파라미터에 선언해준다.
+      - public ModelAndView userInfo(@AuthenticationPrincipal User user)
+      - 이거 안쓰고 확인하려면 (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 이런식으로 써야한다.
+      - 4.x 부터는 org.springframework.security.core.annotation.AuthenticationPrincipal 을 import 해야한다.
+      - mvc:annotation-driven.mvc:argument-resolvers 에 bean 으로 
+        org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver 를 등록한다.
+
+</xmp><br/>
+
+<h4>스프링 모바일</h4>
+· 스프링 모바일의 <b>DeviceResolver 및 도우미 클래스를 이용해 DeviceResolverRequestFilter 또는 DeviceResolverHandlerInterceptor 를 구성하면 기기 유형</b>을 알아낼 수 있습니다.<br/>
+· 하지만 책과는 다르게 실무에서 사용할 수 있도록 XML 기준으로만 작성하겠다.<br/><br/>
+
+<h6>DeviceResolverRequestFilter</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    pom.xml
+
+    <dependency>
+       <groupId>org.springframework.mobile</groupId>
+       <artifactId>spring-mobile-device</artifactId>
+       <version>1.1.0.RELEASE</version>
+    </dependency>
+
+    action-servlet.xml
+
+    <mvc:interceptors>
+      <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    </mvc:interceptors>
+
+    web.xml
+
+    <filter>
+      <filter-name>deviceResolverRequestFilter</filter-name>
+      <filter-class>org.springframework.mobile.device.DeviceResolverRequestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>deviceResolverRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    controller
+
+    import org.springframework.mobile.device.Device;
+    import org.springframework.mobile.device.DeviceUtils;
+    public @ResponseBody String detectDevice(HttpServletRequest request) 
+    {        
+        Device device = DeviceUtils.getCurrentDevice(request);        
+        if (device == null) {
+            return "device is null";
+        }
+        
+        String deviceType = "unknown";
+        if (device.isNormal()) {
+            deviceType = "nomal";
+        } else if (device.isMobile()) {
+            deviceType = "mobile";
+        } else if (device.isTablet()) {
+            deviceType = "tablet";
+        }
+
+        return deviceType;
+    }
+
+</xmp><br/>
+
+<h4>데이터 액세스</h4>
+이번 장에서는 데이터 액세스 방법인 ORM, JPA, HIBERNATE 에 대해서 간단히 무엇인지만 이야기하고 넘어가고자 한다. <br/>
+재직중인 회사에서는 자바 퍼시스턴스 프레임워크의 하나인 <b>마이바티스</b>만 사용하기 때문에 ORM 은 이 책에 대한 정리가 끝나면 추가로 정리를 하려고 한다.<br/>
+<br/><br/>
+<h6>ORM (Object Relational Mapping)</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    간단히 정의하면 RDB(Realational Database) 는 객체지향적(상속, 다형성, 레퍼런스, 오브젝트 등)으로 접근하기 쉽지않기 때문에 RDB 를 객체지향적으로 사용하기 위한 기술이다.
+
+</xmp><br/>
+
+<h6>JPA (Java Persistence API)</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    ORM 전문가가 참여한 EJB 3.0 스펙 작업에서 기존 EJB ORM 이던 Entity Bean 을 JPA 라고 바꾸고 JavaSE, JavaEE 를 위한 영속성 관리와 ORM 을 위한 표준 기술이다.
+
+    JPA 는 ORM 표준 기술로 Hibernate, OpenJPA, EclipseLint, TopLink Essentials 와 같은 구현체가 있고 이에 표준 인터페이스가 바로 JPA 이다.
+
+</xmp><br/>
+
+<h6>HIBERNATE</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    · Boss 에서 개발한 ORM 프레임워크이다.
+    · 특정 클래스에 매핑되어야 하는 데이터베이스의 테이블에 대한 관계 정의가 되어 있는 XML 파일의 메타데이터로 객체관계 매핑을 간단하게 수행시킨다.
+    · HIBERNATE 를 사용함으로써 설정파일의 프로퍼티를 수정함으로서 쉽게 데이터베이스 변경에 대처할 수 있다.
+    · MySQL, Oracle, Sybase, Derby, PostgreSQL 를 포함한 많은 데이터베이스를 지원하며 POJO 기반의 모델과도 원활하게 동작한다.
+
+</xmp><br/>
+
+<h6>JPA 를 쓰는 이유</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    · SQL 중심적인 개발시 불편하다.
+    · 객체-관계 간 모델 불일치
+    · 상속 불일치
+    · 관계와 연관 관계의 불일치
+
+</xmp><br/>
+
+<h6>JPA 의 장단점</h6>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    <장점>
+    · 객체지향적으로 데이터를 관리할 수 있기 때문에 비즈니스 로직에 집중할 수 있으며, 객체지향 개발이 가능하다.
+    · 테이블 생성, 변경, 관리가 쉽다.
+    · 빠른 개발이 가능하다.
+
+    <단점>
+    · 공부해야 할 것이 많다. (어렵다)
+    · 성능상 문제가 있을 수 있다.
+
+</xmp><br/>
+    </div>
+  </div>
+</section>
+</body>
+</html>

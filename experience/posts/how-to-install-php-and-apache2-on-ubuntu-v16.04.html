@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">Php 서버 환경 구축</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+  간단하게 Linux Ubuntu (v16.04) 를 이용해서 Php 서버 환경을 구축해보겠다.<br/><br/>
+
+  Amazon AWS 에서 발급받은 EC2 Instance 에서 진행하였으며 Php 버전은 5.* 이다.<br/>
+  밑에서 따로 설명을 하겠지만 Php 7.* 버전을 설치하는 것 또한 어렵지는 않다.<br/><br/>
+
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+  
+  1. AWS Instance 생성하자.
+
+  2. SSH 접속하자.
+  
+      1번과 2번에서 사용되는 AWS, SSH 는 <span style="background-color: #6799FF; color: #000;"><a href="https://krr-b.github.io/posts/ci-cd-configuration.html" target="_blank" style="color:#000;">주니어 개발자의 배포환경구축 도전기</a></span> 를 보고 따라하도록 하자.
+
+  3. SSH 접속을 완료했다면, 서버 업데이트 및 업그레이드를 해주자.
+    
+    <span style="background-color: #86E57F; color: #000;">sudo apt-get update && sudo apt-get -y upgrade</span>
+
+  4. Apache2 를 설치해주자.
+      
+      <span style="background-color: #86E57F; color: #000;">sudo apt-get install apache2</span>
+
+      Apache 에 대해서는  <span style="background-color: #6799FF; color: #000;"><a href="https://krr-b.github.io/posts/http-1.html" target="_blank" style="color:#000;">HTTP 완벽가이드 (1장)</a></span> 에 미약하게 설명이 되어있다.
+
+  5. Apache2 버전을 체크해서 설치가 완료됬는지 확인해보자.
+  
+      <span style="background-color: #86E57F; color: #000;">apache2 -v</span>
+  
+  6. 이제 Php 와 Myadmin 을 설치해보자.
+
+  7. 일단 Php 와 라이브러리 설치를 해보자.
+
+      <span style="background-color: #86E57F; color: #000;">apt-get install php libapache2-mod-php php-xml php-gd</span>
+
+      필요한 경우 추가로 라이브러리를 찾아서 설치해주자.
+      Php7 버전이 필요한 경우 <span style="background-color: #86E57F; color: #000;">apt-get install php7.0</span> 으로 설치해주자.
+
+  8. 이제 MySQL Database 를 서버에 설치해주자.
+
+      <span style="background-color: #86E57F; color: #000;">apt-get install mysql-server</span>
+
+      Database 를 별도로 가져간다면 필요없지만 PhpMyadmin 을 사용하거나 하나의 서버로 같이 돌린다면 설치해주자.
+
+  9. PhpMyAdmin 을 설치해주자.
+
+      <span style="background-color: #86E57F; color: #000;">apt-get install phpmyadmin</span>
+
+  10. 기본 설치는 이정도로 해두고, 간단하게 설정을 해보자
+
+  11. Apache2 를 설정해보자.
+    
+      <span style="background-color: #86E57F; color: #000;">chmod -R 777 /var/www/html</span>
+
+      apache2 를 기본으로 설치하고 경로를 바꾸지 않았다면 /var/www/html 을 바라보고 있을 것이다.
+      SFTP 및 Deploy 를 위해 권한을 바꿔주자
+
+  12. Apache2 설정을 변경해보자.
+    
+      <span style="background-color: #86E57F; color: #000;">vi /etc/apache2/apache2.conf</span>
+      <span style="background-color: #86E57F; color: #000;">AllowOverride None ---&gt; All</span>
+      <span style="background-color: #86E57F; color: #000;">sudo a2enmod rewrite</span>
+
+      이 외에도 
+
+      Timeout
+      KeepAlive
+      MaxKeepAliveRequests
+      KeepAliveTimeout
+      ErrorLog Dir
+      LogLevel
+      AccessFileName
+
+      등을 설정할 수 있다.
+  
+  13. 여기까지 했다면 Apache2 를 재시작해보자.
+      
+      <span style="background-color: #86E57F; color: #000;">service apache2 restart</span>
+
+  14. 접속 확인
+
+      기본적으로 서버를 구축해주는 SE팀이 있겠지만 없을 경우 또는 급하게 테스트해야하는 경우에 적합한 것 같다.
+      
+</pre>
+    </div>
+</section>
+</body>
+</html>

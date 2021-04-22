@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">가비지 컬렉션</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container kakao" style="margin-top: 50px; margin-bottom: 300px;">
+'이것이 자바다' 와 '네이버 D2' 를 참고하여 작성하였습니다.<br/>
+<br/>
+<h4>가비지 컬렉션?</h4><br/>
+자바는 프로그램 코드에서 메모리를 명시적으로 지정하여 해제하지 않는다. <br/>가끔 명시적으로 해제하려고 해당 객체를 null로 지정하거나 System.gc() 메서드를 호출하는 개발자가 있다. <b>좋지 않은 방법이다.</b><br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    System.gc();
+    : 안좋은 방법이다.
+
+    객체 = null;
+    : 큰 문제가 되지 않는다.
+
+</xmp><br/>
+자바에서는 <font style="color:#5F00FF;">개발자가 프로그램 코드로 메모리를 명시적으로 해제하지 않기 때문에 가비지 컬렉터 (Garbage Collector) 가 더 이상 필요 없는 (쓰레기) 객체를 찾아 지우는 작업</font>을 한다.<br/><br/>
+
+즉, <font style="color:#5F00FF;">가비지를 회수하여 사용할 수 있는 메모리 공간을 늘리는 것을 가비지 컬렉션</font>이라고 한다. 자바 가상 머신 (JVM) 은 가비지 컬렉터 역할을 수행하는 가비지 컬렉션 스레드를 두고 있다. 가비지가 많아지면 상대적으로 프로그램에 할당해줄 수 있는 가용 메모리의 양이 줄어들기 때문이다.<br/><br/>
+
+이러한 처리는 <font style="color:#5F00FF;">HotSpot VM 에서 물리적으로 나눈 Young 영역 공간과 Old 영역 공간</font>에서 한다.<br/>
+<br/><br/>
+<img src="https://d2.naver.com/content/images/2015/06/helloworld-1329-1.png" style="width: 50%">
+<br/><br/>
+영역별 데이터 흐름은 다음과 같다.<br/>
+<ul>
+<li><font style="color:#5F00FF;">Young 영역(Yong Generation 영역): 새롭게 생성한 객체의 대부분이 여기에 위치</font>한다. 대부분의 객체가 금방 접근 불가능 상태가 되기 때문에 매우 많은 객체가 Young 영역에 생성되었다가 사라진다. 이 영역에서 객체가 사라질때 Minor GC가 발생한다고 말한다.</li>
+<li><font style="color:#5F00FF;">Old 영역(Old Generation 영역): 접근 불가능 상태로 되지 않아 Young 영역에서 살아남은 객체가 여기로 복사</font>된다. 대부분 Young 영역보다 크게 할당하며, 크기가 큰 만큼 Young 영역보다 GC는 적게 발생한다. 이 영역에서 객체가 사라질 때 Major GC(혹은 Full GC)가 발생한다고 말한다.</li>
+</ul>위 그림의 Permanent Generation 영역 (이하 Perm 영역) 은 Method Area 라고도 한다. 객체나 억류(intern)된 문자열 정보를 저장하는 곳이며, Old 영역에서 살아남은 객체가 영원히 남아 있는 곳은 절대 아니다. 이 영역에서 GC가 발생할 수도 있는데, 여기서 GC가 발생해도 Major GC의 횟수에 포함된다.
+<br/><br/>
+<h4>Young 영역의 구성</h4><br/>
+Young 영역은 3개의 영역으로 나뉜다.<br/><br/>
+
+- Eden 영역<br/>
+- Survivor 영역(2개)<br/><br/>
+
+<font style="color:#5F00FF;">메모리에 객체가 새롭게 할당이 되면 Young 영역에 위치하여 내부 Eden 영역에 위치하게 되고, Eden 영역에서 GC가 한 번 발생한 후 살아남은 객체는 Survivor 영역 중 하나로 이동하게 되고 Eden 영역에서 GC가 발생하면 이미 살아남은 객체가 존재하는 Survivor 영역으로 객체가 계속 쌓인다. <br/>이 과정을 반복하다가 계속해서 살아남아 있는 객체는 Old 영역으로 이동하게 된다.</font><br/><br/>
+
+그림으로 표현하면 아래와 같다.<br/><br/>
+
+<img src="https://d2.naver.com/content/images/2015/06/helloworld-1329-3.png" style="width: 50%">
+<br/><br/>
+위에서 설명한 것과 같이 이러한 과정에서 Minor GC, Major GC 가 발생하며 GC 가 발생할 때마다 JVM 은 어플리케이션 실행을 멈춘다. 이것을 'STOP-THE-WORLD' 라 한다.
+<br/><br/>
+<h4>STOP-THE-WORLD</h4><br/>
+<font style="color:#5F00FF;">GC을 실행하기 위해 JVM 이 애플리케이션 실행을 멈추는 것</font>이다. <br/>STOP-THE-WORLD 가 발생하면 GC를 실행하는 쓰레드를 제외한 나머지 쓰레드는 모두 작업을 멈춘다.<br/><br/>
+
+GC 작업을 완료한 이후에야 중단했던 작업을 다시 시작한다. 어떤 GC 알고리즘을 사용하더라도 STOP-THE-WORLD 는 발생한다.<br/>
+<font style="color:#5F00FF;">하지만 어플리케이션에 따라 최적의 GC 설정 및 알고리즘이 있을 것이다. 우리는 최적의 GC 설정 및 알고리즘을 찾기 위해 JVM 과 GC 에 대해서 잘 알아야 한다.</font><br/><br/>
+
+GC 튜닝과 모니터링 방법에 대해서는 공부를 하고 글을 올리도록 하겠다.<br/>
+    </div>
+  </section>
+</body>
+</html>

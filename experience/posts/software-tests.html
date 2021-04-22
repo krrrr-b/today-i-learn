@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+    .j {
+      font-size: 15pt;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">Test Driven Development</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+  <a href="https://www.youtube.com/watch?v=wmHV6L0e1sU&t=4s&list=PLuLb6MC4SOvXCRePHrb4e-EYadjZ9KHyH&index=9" target="_blank" style="color: #0100FF">백명석님이 클린코드 강의</a> 중에 말씀하셨던 부분이 굉장히 와닿았고 지금까지도 정답이라고 생각한다.<br/><br/>
+
+        <h4>"테스트 코드를 작성하는 것은 일종의 안전장치이다."</h4>
+<br/>
+  즉, 테스트 코드를 작성함으로써 발생할 수 있는 사이드 이펙트를 줄일 수 있기 때문에 개발자에게 심리적으로 안정감을 줄 수 있는 것이다.<br/>
+  또한 테스트 케이스를 하나씩 작성하다보면 서비스의 히스토리 처럼 쌓이게 될텐데 기술직 특성상 이직이 자주 일어나기 때문에 새로운 사람이 업무를 담당하게 되도 기존 테스트 케이스를 활용한다면 이슈는 최소화 할 수 있을 것이라고 생각한다.<br/><br/>
+
+  실제로 담당하는 서비스가 다른 서비스의 수정으로 인해 영향을 받아 크게 이슈가 있었던 적이 있었다.<br/>
+  (그 일을 계기로 CI/CD, TDD 등의 공부와 구축을 하게 되었다.)<br/><br/>
+
+  위와 같은 이유로 <span class="g">소프트웨어 테스트</span> 라는 문서를 작성하게 되었고,
+  나아가 <span class="g">테스트 주도 개발</span> 과 <span class="g">활용 방법</span> 까지 공부하여 작성해보고자 한다.<br/><br/>
+
+  <h2 style="font-size: 22pt;">소프트웨어 테스트 용어</h2><br/>
+
+    <b>테스트중인 코드 (또는 응용 프로그램)</b><br/><br/>
+
+      테스트되는 코드는 일반적으로 테스트중인 코드 라고 한다. <br/>
+      응용 프로그램을 테스트하는 경우 이를 테스트 중인 응용 프로그램이라고 한다.<br/><br/>
+
+    <b>테스트 픽스쳐</b><br/><br/>
+
+      테스트 픽스쳐는 코드의 고정 된 상태이며 테스트용 입력으로 테스트된다. 이것을 설명하는 또 다른 방법은 테스트 전제 조건이다.<br/>
+      예를 들어, 테스트 픽스쳐는 메소드의 입력으로 사용되는 고정 문자열 일 수 있다. <br/><br/>
+
+      이 입력으로 메소드가 올바르게 작동하는지 테스트하면 유효성을 검사한다.<br/><br/>
+
+    <b>단위 테스트</b><br/><br/>
+
+      단위 테스트는 테스트 할 코드에서 특정 기능을 실행하고 특정 동작이나 상태를 선언하는 개발자가 작성한 코드 조각이다.<br/>
+      단위 테스트로 테스트되는 코드의 백분율을 일반적으로 테스트 적용범위 라고한다.<br/><br/>
+
+      단위 테스트는 <span class="g">메서드 또는 클래스와 같은 작은 코드 단위를 대상</span>으로 한다. 외부 의존성은 단위 테스트에서 제거되어야한다. <br/>
+      예를 들어 의존성을 테스트 구현이나 테스트 프레임 워크에 의해 생성된 모의 객체로 대체해야한다.<br/><br/>
+
+      하지만 <span class="g">단위 테스트는 복잡한 사용자 인터페이스 또는 구성 요소 상호 작용을 테스트하는 데 적합하지 않다.</span><br/>
+      이를 위해서는 통합 테스트를 개발해야한다.<br/><br/>
+
+    <b>통합 테스트</b><br/><br/>
+
+      통합 테스트는 <span class="g">구성 요소의 동작 또는 구성 요소 집합 간의 통합을 테스트 하는 것을 목표</span>로 한다.<br/>
+      기능 테스트 라는 용어는 때때로 통합 테스트의 동의어로 사용된다.<br/><br/>
+
+      통합 테스트는 전체 시스템이 의도한대로 작동하는지 확인하므로 집중적인 수동 테스트의 필요성이 줄어 듭니다.<br/>
+      이러한 종류의 테스트를 통해 사용자 스토리를 테스트 스위트로 변환 할 수 있다.<br/><br/>
+
+      테스트는 응용 프로그램과 예상되는 사용자 상호 작용과 유사하다.<br/><br/>
+
+    <b>성능 테스트</b><br/><br/>
+
+      성능 테스트는 소프트웨어 구<span class="g">성 요소를 반복적으로 벤치마킹하는데 사용</span>된다.<br/>
+      이들의 목적은 테스트중인 코드가 부하가 높을지라도 충분히 빠르게 실행되도록하는 것이다.<br/><br/>
+
+    <b>행동 테스트</b><br/><br/>
+
+      테스트는 <span class="g">특정 메소드가 올바른 입력 매개 변수로 호출되었는지 점검하는 경우 작동 테스트</span>이다.<br/>
+      행동 테스트에서는 메서드 호출의 결과를 확인하지 않는다.<br/><br/>
+
+      상태 테스트는 결과의 유효성을 검사하는 것이다.<br/>
+      행동 테스트는 테스트중인 애플리케이션의 동작을 테스트하는 것입니다.<br/><br/>
+
+      알고리즘 또는 시스템 기능을 테스트하는 경우 대부분의 경우 상호 작용이 아닌 상태를 테스트 할 수 있다.<br/>
+      일반적인 테스트 설정에서는 관련 클래스의 Mock 또는 Stub 을 사용하여 다른 클래스와의 상호 작용을 추상화하며 필요에 따라 상태 또는 동작을 테스트한다.<br/><br/>
+
+  <h2>자바 언어의 테스트 프레임 워크 (JUnit)</h2><br/>
+
+    간략하게 JUnit 은 <span class="g">어노테이션을 사용하여 테스트를 지정하는 메소드를 식별하는 테스트 프레임 워크</span>이다.<br/><br/>
+    설정 방법은 어렵지 않다.<br/><b>Eclipse (<a href="https://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2FgettingStarted%2Fqs-junit.htm" target="_blank" style="color: #0100FF">Eclipse Tutorials</a>), Intellij (<a href="https://www.jetbrains.com/help/idea/creating-run-debug-configuration-for-tests.html" target="_blank" style="color: #0100FF">IntelliJ IDEA Help</a>)</b> 를 참고하자.<br/><br/>
+
+    <h4>규칙</h4><br/>
+
+      JUnit 테스트에는 몇 가지 규칙이 있다.<br/>
+      클래스 용으로 널리 사용되는 클래스 네이밍 규칙은 <span class="g">테스트 클래스 이름 끝에 "Test" 접미어를 사용</span>하는 것이다.<br/><br/>
+
+      또한 테스트 메소드 네이밍 규칙은 <span class="g">"ordersShouldBeCreated" 또는 "menuShouldGetActive" 와 같이 "should" 를 사용하는 것</span>이다.<br/>
+      이것은 테스트 메소드가 실행될 때 일어날 일을 알려준다.<br/><br/>
+
+      또 다른 방법은 테스트 메서드의 표시 이름에 대해 [WhatIsDone] Then [ExpectedResult]가 지정된 경우 [ExplainYourInput] 을 사용하는 것이다.<br/><br/>
+
+      <h4>Annotations</h4><br/>
+
+          <span class="j">@Test</span><br/>
+          메서드를 테스트 메서드로 식별한다.<br/><br/>
+
+          <span class="j">@Before</span><br/>
+          각 테스트 전에 실행된다.<br/>
+          이것은 테스트 환경을 준비하는 데 사용된다. <br/>
+          (예: 입력 데이터 읽기, 클래스 초기화)<br/><br/>
+
+          <span class="j">@After</span><br/>
+          각 테스트 후에 실행된다.<br/>
+          이것은 테스트 환경을 정리하는 데 사용된다.<br/>
+          (예: 임시 데이터 삭제, 기본값 복원)<br/><br/>
+
+          또한 메모리 구조를 정리하여 메모리를 절약할 수 있다.<br/><br/>
+
+          <span class="j">@BeforeClass</span><br/>
+          모든 테스트가 시작되기 전에 한 번 실행된다.<br/>
+          예를 들어, 데이터베이스에 연결하는 것과 같이 시간 집중적 인 활동을 수행하는 데 사용됩니다. <br/><br/>
+
+          이 주석으로 표시된 메소드는 JUnit에서 작동하도록 static 으로 정의되어야 한다.<br/><br/>
+
+          <span class="j">@AfterClass</span><br/>
+          모든 테스트가 끝나면 한 번 실행된다.<br/>
+          예를 들어 데이터베이스에서 연결을 끊는 등의 정리 작업을 수행하는 데 사용된다.<br/><br/>
+
+          이 주석으로 주석 된 메소드는 JUnit과 함께 작동하도록 static 으로 정의되어야 한다.<br/><br/>
+
+          <span class="j">@Ignore 또는 @Ignore("Why disabled")</span><br/>
+          테스트를 비활성화해야 함을 나타낸다.<br/>
+          기본 코드가 변경되고 테스트 케이스가 아직 적용되지 않은 경우 와 테스트의 실행 시간이 너무 길어서 포함될 수없는 경우에 유용하다. <br/><br/>
+
+          테스트가 사용되지 않는 이유에 대한 설명 (옵션) 을 제공하는 것이 가장 좋다.<br/><br/>
+
+          <span class="j">@Test(expected = Exception.class)</span><br/>
+          메소드가 이름 첨부 예외를 throw하지 않는 경우는 실패한다.<br/><br/>
+
+          <span class="j">@Test(timeout=100)</span><br/>
+          메서드가 100 밀리 초보다 오래 걸리면 실패한다.<br/><br/>
+
+      <h4>Test methods</h4><br/>
+
+          <span class="j">fail ([메시지])</span><br/>
+          강제로 실패를 만든다.<br/>
+          message 매개 변수는 선택적이다.<br/><br/>
+
+          <span class="j">assertTrue ([message,] 조건)</span><br/>
+          조건이 참인지 확인한다.<br/><br/>
+
+          <span class="j">assertFalse ([message,] 조건)</span><br/>
+          조건이 false인지 확인한다.<br/><br/>
+
+          <span class="j">assertEquals ([message,] expected, actual)</span><br/>
+          두 값이 같은지 테스트한다.<br/>
+          배열의 경우 참조가 배열의 내용이 아닌지 확인된다.<br/><br/>
+
+          <span class="j">assertEquals ([메시지,] 예상, 실제, 허용 오차)</span><br/>
+          float 또는 double 값이 일치하는지 테스트한다.<br/>
+          허용차는 같아야하는 소수점 이하 자릿수이다.<br/><br/>
+
+          <span class="j">assertNull ([message,] object)</span><br/>
+          객체가 null 인 것을 확인한다.<br/><br/>
+
+          <span class="j">assertNotNull ([message,] 객체)</span><br/>
+          오브젝트가 null는 아닌지를 판정한다.<br/><br/>
+
+          <span class="j">assertSame ([message,] expected, actual)</span><br/>
+          두 변수가 동일한 객체를 참조하는지 확인한다.<br/><br/>
+
+          <span class="j">assertNotSame ([message,] expected, actual)</span><br/>
+          두 변수가 서로 다른 객체를 참조하는지 확인한다.<br/><br/>
+
+        <h4>JUnit test suites</h4><br/>
+
+          <span class="g">여러 테스트 클래스가 있는 경우 이를 테스트 스위트로 결합</span>할 수 있다.<br/>
+          <span class="g">테스트 스위트를 실행하면 해당 스위트의 모든 테스트 클래스가 지정된 순서로 실행</span>된다. <br/><br/>
+
+          테스트 스위트에는 다른 테스트 스위트도 포함될 수 있다.<br/><br/>
+
+          다음 예제 코드는 테스트 슈트의 사용법을 보여준다.<br/>
+          여기에는 두 개의 테스트 클래스 (MyClassTest 및 MySecondClassTest)가 포함된다.<br/>
+          다른 테스트 클래스를 추가하려면 @Suite.SuiteClasses 문에 추가하면 된다.<br/><br/>
+
+          <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+          package com.vogella.junit.first;
+          import org.junit.runner.RunWith; 
+          import org.junit.runners.Suite; 
+          import org.junit.runners.Suite.SuiteClasses; 
+
+          @RunWith (Suite.class)
+          @SuiteClasses ({ <span class="g">MyClassTest.class, MySecondClassTest.class</span> }) 
+          public class AllTests { }
+          </pre><br/>
+
+        <h4>Disabling tests</h4><br/>
+
+          @Ignore 주석은 테스트를 정적으로 무시할 수 있도록 해준다.<br/>
+          또는 Assume.assumeFalse 또는 Assume.assumeTrue 를 사용하여 테스트 조건을 정의 할 수 있다.<br/><br/>
+
+          Assume.assumeFalse 는 조건이 true로 평가되면 테스트를 유효하지 않은 Assume.assumeFalse 표시한다.<br/>
+          Assume.assumeTrue 는 조건이 false로 평가되면 테스트를 무효로 평가합니다. <br/><br/>
+
+          <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+          Assume.assumeFalse( System .getProperty( " os.name " ).contains( " Linux " )); 
+          </pre><br/>
+
+        <h4>JUnit Rules</h4><br/>
+        
+          JUnit Rules 을 통해 테스트 클래스의 각 테스트에 행동을 추가할 수 있다.<br/>
+          TestRule 유형의 필드에 @Rule 주석을 사용하여 주석을 추가할 수 있다.<br/><br/>
+
+          테스트 메소드에서 사용하고 구성할 수있는 객체를 만들 수 있다.<br/>
+          이렇게하면 테스트에 더 많은 유연성이 추가된다.<br/><br/>
+
+          테스트 코드 실행 중에 예상되는 예외 메시지도 지정할 수 있다.<br/><br/>
+
+          <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+          package de.vogella.junit.first;
+
+          import org.junit.Rule;
+          import org.junit.Test;
+          import org.junit.rules.ExpectedException;
+
+          public class RuleExceptionTesterExample {
+
+            @Rule
+            public ExpectedException exception = ExpectedException.none();
+
+            @Test
+            public void throwsIllegalArgumentExceptionIfIconIsNull() {
+              exception.expect(IllegalArgumentException.class);
+              exception.expectMessage("Negative value not allowed");
+              ClassToBeTested t = new ClassToBeTested();
+              t.methodToBeTest(-1);
+            }
+          }
+          </pre><br/>
+
+        <h4>Writing custom JUnit rules</h4><br/>
+
+          사용자 정의 규칙을 작성하려면 Test Rule 인터페이스를 구현해야 한다.<br/>
+          이 인터페이스는 apply(Statement, Description) 의 인스턴스를 리턴해야하는 apply(Statement, Description) 메소드를 정의한다.<br/>
+          Statement는 JUnit 런타임의 테스트를 나타내고 Statement # evaluate ()은 이들을 실행한다.<br/><br/>
+
+          설명은 개별 테스트를 설명하며 리플렉션을 통해 테스트에 대한 정보를 읽을 수 있다.<br/><br/>
+
+          다음은 테스트 실행 전과 후에 Android 애플리케이션에 log 문을 추가하는 간단한 예제이다.<br/><br/>
+          <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+          package testing.android.vogella.com.asynctask;
+
+          import android.util.Log;
+
+          import org.junit.rules.TestRule;
+          import org.junit.runner.Description;
+          import org.junit.runners.model.Statement;
+
+          public class MyCustomRule implements TestRule {
+              private Statement base;
+              private Description description;
+
+              @Override
+              public Statement apply(Statement base, Description description) {
+                  this.base = base;
+                  this.description = description;
+                  return new MyStatement(base);
+              }
+
+              public class MyStatement extends Statement {
+                  private final Statement base;
+
+                  public MyStatement(Statement base) {
+                      this.base = base;
+                  }
+
+                  @Override
+                  public void evaluate() throws Throwable {
+                      System.
+                      Log.w("MyCustomRule",description.getMethodName() + "Started" );
+                      try {
+                          base.evaluate();
+                      } finally {
+                          Log.w("MyCustomRule",description.getMethodName() + "Finished");
+                      }
+                  }
+              }
+          }
+          </pre><br/>
+
+          이 규칙을 사용하려면 @Rule 주석이 달린 필드를 테스트 클래스에 간단하게 추가하면 된다.<br/><br/>
+          <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+          @Rule public MyCustomRule myRule = new MyCustomRule(); 
+          </pre><br/>
+
+  <h2>JUnit5</h2><br/>
+
+    ※ Junit5 에 대해서는 따로 작성하지 않겠다.<br/><br/>
+
+  <h2>Junit 활용</h2><br/>
+
+    <b>개발 환경에서의 테스팅</b><br/><br/>
+
+      IDE 또는 커맨드를 활용하여 테스팅하는 것이 좋다.<br/>
+      사용법에 대해서는 개발자마자 개발 방법이 다르기 때문에 따로 적어놓지 않겠다.<br/><br/>
+
+    <b>스테이징 환경에서의 테스팅</b><br/><br/>
+
+      <a href="https://krr-b.github.io/posts/saramin-ci-cd-server.html" target="_blank" style="color: #0100FF">젠킨스를 활용하여 CI/CD 환경을 구축</a>하고 활용하는 것이 좋다.<br/>
+      <a href="https://krr-b.github.io/posts/saramin-ci-cd-server.html" target="_blank" style="color: #0100FF">문서</a>와 같이 자동 빌드, 배포, 테스트 환경을 구축해두면 스테이징 배포시에 젠킨스가 자동으로 테스트 케이스 및 코드 스타일에 대한 테스팅을 돌리고 그 결과를 메신저로 전달해준다. <br/><br/>
+
+      그러면 받은 결과를 토대로 잘못된 부분을 다시 개발 환경에서 수정하면 되는 것이다.<br/>
+      테스트 결과는 아래와 같이 전달될 것이다.<br/><br/>
+
+      <img src="https://jenkins.io/images/post-images/2016-10-27/job-7-report.png" width="1076"><br/><br/>
+
+      프로덕션으로 나가기 전의 스테이징 서버에서는 테스팅이 하나라도 실패할 경우 배포가 안되도록 해야하는 것이 맞고,<br/>
+      환경 테스트를 위한 스테이징 서버에서는 테스팅이 실패하더라도 배포를 가능하게 하여 스테이징에서 다른 부분도 테스트할 수 있도록 하는 것이 맞다고 생각한다.<br/>
+
+      <span style="color: #FF0000;">※서버 환경마다 정상적이었던 기능도 다른 서버에서는 안될 수도 있으니 주의하자!</span><br/><br/>
+
+    <b>프로덕션 환경에서의 테스팅</b><br/><br/>
+
+      <span class="g">프로덕션 배포시에는 테스팅하지 않는 것이 옳다고 생각</span>한다.<br/>
+      테스트와 그에 따른 수정사항은 스테이징 환경에서 모두 처리하고 프로덕션 환경에 배포하는것이 옳다.<br/><br/>
+
+      <span class="g">긴급하게 배포하게 될 일이 생기더라도 서버에서 코드를 바로 수정하는 것보다는 평소와 같이 개발 환경, 스테이징 환경에서 개발 및 테스트한 뒤에 프로덕션 환경에 적용</span>해야 한다.<br/><br/><br/>
+  
+  <h2>간단한 테스트 코드 예제</h2><br/>
+    
+    간단하게 회원가입 기능에 테스트 케이스를 작성해보자.<br/><br/>
+
+  <a href="https://github.com/krr-b/tdd" target="_blank" style="text-decoration: none;">
+    <img src="https://camo.githubusercontent.com/7710b43d0476b6f6d4b4b2865e35c108f69991f3/68747470733a2f2f7777772e69636f6e66696e6465722e636f6d2f646174612f69636f6e732f6f637469636f6e732f313032342f6d61726b2d6769746875622d3235362e706e67">
+  </a>
+  <br/><br/><br/><br/>
+  <hr>
+  <br/><br/>
+
+  <h2>테스트 주도 개발</h2><br/><br/>
+
+    <h4>정의</h4><br/>
+      Test Driven Development 의 약자로 테스트 주도 개발: 테스트가 개발을 이끌어 나간다라는 의미이다.<br/>
+      테스트를 먼저 만들고 테스트를 통과하기 위한 것을 짜는 것<br/><br/>
+
+      즉, 만드는 과정에서 우선 테스트를 작성하고 그걸 통과하는 코드를 만들고를 반복하면서 제대로 동작하는지에 대한 피드백을 적극적으로 받는 것이다.<br/><br/>
+
+    @Todo. 작성중
+    
+      </pre>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

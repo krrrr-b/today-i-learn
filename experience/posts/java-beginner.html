@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="https://krr-b.github.io/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://krr-b.github.io/css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(https://krr-b.github.io/notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">이것이 자바다</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px;">
+      <pre style="font-family: 'Yeon Sung', cursive; font-size: 22pt; word-wrap: break-word; white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;">
+<div class="row" style="margin-left: 15px; ">
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small; font-family: 'Yeon Sung', cursive; font-size: 22pt;">자바 언어의 특징</span></h3>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">쉬운 언어이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">플랫폼에 독립적이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">자바는 JVM 만 있으면 Window, Linux, Mac 등 어떤 플랫폼에서도 실행이 가능하다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">객체지향 언어이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">메모리 관리를 자동으로 해준다.</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">자바 실행에 필요한 구성요소</span></h3>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="box-sizing: inherit; font-weight: 700;"><span style="font-family: inherit;">Java SE (Standard Edition) - 기본 에디션</span></span></li>
+<div style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">Java SE 는 자바 프로그램들이 공통적으로 사용하는 자바 가상 기계 (JVM: Java Virtual Machine) 를 비롯해서 자바 프로그램 개발에 필수적인 도구와 라이브러리 API 를 정의한다. 클라이언트와 서버 프로그램에 상관없이 자바 프로그램을 개발하고 실행하기 위해서는 반드시 Java SE 구현체인 자바 개발 키트 (JDK: Java Development Kit) 를 설치해야 한다.</span></div>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="box-sizing: inherit; font-weight: 700;"><span style="font-family: inherit;">Java EE (Enterprise Edition) - 서버용 애플리케이션 개발 에디션</span></span></li>
+<div style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">Java EE 는 분산 환경 (네트워크, 인터넷) 에서 서버용 어플리케이션을 개발하기 위한 도구 및 라이브러리 API 를 정의한다.<br style="box-sizing: inherit;" />서버용 어플리케이션으로는 Servlet/JSP 를 이용한 웹 어플리케이션, 분산 처리 컴포넌트인 EJB (Enterprise Java Bean) 그리고 XML 웹 서비스 등이 있다.</span></div>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="box-sizing: inherit; font-weight: 700;"><span style="font-family: inherit;">JVM (Java Virtual Machine) - 자바 가상 기계</span></span></li>
+<div style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">실 운영체제를 대신해서 자바 프로그램을 실행하는 가상의 운영체제 역할을 한다.<br style="box-sizing: inherit;" />바이트 코드는 모든 JVM 에서 동일한 실행 결과를 보장하지만, JVM 은 운영체제에 종속적이다.</span></div>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">JVM 실행 순서</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">자바 소스 파일 (.java) &gt; 컴파일러 (javac.exe) &gt; 바이트 코드 파일 (.class) &gt; 자바 가상 기계 (java.exe) &gt; 기계어 &gt; 실행</span></div>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<img alt="java-run-process" src="http://www.atnyla.com/library/images-tutorials/compilation-process2.png" style="border: 0px; box-sizing: inherit; display: block; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 1.5em auto; max-width: 1040px; padding: 0px; vertical-align: middle;" /></div>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">자바 프로그램은 확장자가 .java 인 파일을 작성하는 것부터 시작된다. 이것을 소스 파일이라고 하는데, 이 소스 파일을 컴파일러로 (javac.exe) 로 컴파일하면 확장자가 .class 인 바이트 코드 파일이 생성된다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">바이트 코드 파일은 JVM 구동 명령어 (javac.exe) 에 의해 JVM 에서 해석되고 해당 운영체제에 맞게 기계어로 번역된다. 바이트 코드는 하나지만, JVM 에 의해서 번역되는 기계어는 운영체제에 따라 달라진다.</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">메모리 할당</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">JVM 은 운영체제에서 할당받은 메모리 영역 (Runtime Data Area) 을 세부 영역으로 구분하여 사용한다.</span></div>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<img alt="jvm-memory" src="http://www.pointsoftware.ch/wp-content/uploads/2012/11/Cookbook_JVMArguments_2_MemoryModel.png" style="border: 0px; box-sizing: inherit; display: block; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 1.5em auto; max-width: 1040px; padding: 0px; vertical-align: middle;" /></div>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">Method Area</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">상수, 필드, 메소드, 생성자 등을 저장</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">(JVM 이 시작할 때 생성되고 모든 스레드가 공유하는 영역)</span></li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">Heap Area</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">객체, 배열이 생성되는 영역</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">(필요없다면 JVM 은 Garbage Collector 을 실행시켜 제거)</span></li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">Stack Area (Thread-1, Thread-n)</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">각 스레드마다 하나씩 존재하며 스레드가 시작될 때 할당</span></li>
+</ul>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">변수 메모리 할당</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">기본타입: byte, char, short, int, long, float, double, boolean<br style="box-sizing: inherit;" />참조타입: 배열, 열거, 클래스, 인터페이스</span></div>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">기본타입 변수의 값과 메모리는 stack 영역에 할당되며, 참조타입 변수의 값과 메모리는 stack 과 heap 영역에 할당된다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">(stack 에 변수 이름과 주소값을 저장/ heap 에 실제 값 저장)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">연산 메모리 할당</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">연산할 당시에 필요한 값을 가져와 스택에 저장하고 연산이 완료된 이후에는 삭제시킨다.</span></div>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">상속, 생성자 메모리 할당</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">부모 생성자 호출은 stack 영역에 객체 주소를 담고, heap 영역에 객체의 값을 담는다<br style="box-sizing: inherit;" />(객체의 값 부분에 사용된 클래스가 다른 객체를 상속받고 있다면 그 부모 객체까지도 담는다)</span></div>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">정수/ 문자형 데이터 타입</span></h3>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">byte (1byte)</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">char (2byte)</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">문자형은 char로 2byte크기를 가집니다. 문자는 작은따옴표를 이용하여 한 글자를 표현할 수 있다.</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">Java 의 자료형 중에 유일하게 Unsigned인 자료형 (음수가 없는 자료형)</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">유니코드를 도입해서 2byte의 범위로 이루어져 있어 해당하는 범위의 수는 0~65535 이 사이의 데이터를 저장할 수 있음</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">표현 방식은 직접 숫자를 대입해도 되고 작은 따옴표를 이용해 해당 문자 값을 넣을 수도 있음</span></li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">short (2byte)</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">int (4byte)</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">long (8byte)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">실수형 데이터 타입</span></h3>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">float (4byte)</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">double (8byte)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">논리형 데이터 타입</span></h3>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">true/ false (1byte)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">리터럴 (literal)</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">소스 코드 내에서 직접 입력된 값을 리터럴 값이라고 한다.</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">첫 번째 글자는 문자 이거나 '$', '_'이어야 함</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">두번재 이후의 글자는 숫자, 문자, '$', '_'이어야 함</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">'$', '_' 이외의 특수문자 사용 불가능</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">키워드는 식별자로 사용할 수 없음</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">상수 값을 표현하는 단어 true, false, null은 식별자로 사용할 수 없음</span></li>
+</ul>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">첫 번째 문자가 소문자인 명사로 정함</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">여러 단어로 구성된 이름의 경우 두번째 단어부터 첫글자를 대문자로 함</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">'_'을 쓰지 않음</span></li>
+</ul>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">0, 75, -100 (소수점이 없는 정수 리터럴은 10진수로 간주한다)</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">02, -04 (0 으로 시작되는 리터럴은 8진수로 간주한다)</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">0x5, 0xA, 0xB3, 0xAC08 (0x 또는 0X 로 시작하고 0~9 숫자나 알파벳으로 구성된 리터럴은 16진수로 간주한다)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">상수 (constant)</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">한번 저장하면 변경할 수 없는 값을 상수 값이라고 한다.</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">값이 변하면 위험한 경우에 상수를 사용</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">값만 봤을때 무엇을 의미하는지 쉽게 파악할 수 없는 값에도 값 자체를 사용하기 보다는 상수를 사용</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">대문자로만 구성된 명사로 정함</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">여러 단어로 구성된 이름의 경우 단어 사이에 '_'을 써서 구분함.</span></li>
+</ul>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">0.25, -3.14 (소수점이 있는 리터럴은 10진수 실수로 간주한다)</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">5E7, 0.12E-5 (알파벳 E 또는 e 가 있는 리터럴은 10진수 지수와 가수로 간주한다)</span></li>
+</ol>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">타입 변환</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">자동 타입변환 (=묵시적, Promotion)</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">프로그램 실행 도중에 작은 크기를 가지는 타입이 큰 크기를 가지는 타입에 저장될 때 발생한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">int + double 을 연산하는 경우 자동으로 double 타입으로 변환된다.</span></li>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">강제 타입변환 (=명시적, Casting)</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">캐스팅 연산자 () 를 사용하여 타입을 강제로 변환시는 것이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">변수.MAX_VALUE 로 Casting 이후에 데이터 손실이 발생할 것인지 체크를 먼저 하는 것이 좋다.</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">double 타입의 값을 int 로 Casting 하면 소수점은 버림한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">강제 타입변환 (instanceof) 경우 ClassCastException 이 일어날 수 있다.</span></li>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">연산자 내용은 언어 공통이기 때문에 필요한 내용만 작성</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">NaN 과 Infinity 연산</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">5 / 0.0 -&gt; Infinity</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">5 % 0.0 -&gt; NaN</span></li>
+<span style="font-family: inherit;"><br style="box-sizing: inherit;" /></span>
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">if (Double.isInfinity(value) || Double.isNaN(value)) 와 같은 처리를 하는 것이 좋다.</span></li>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">비트 연산자</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">컴퓨터는 2진수를 기반으로 데이터를 저장하고 연산을 진행한다.</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">만약 int num = 93 을 저장했을 경우에 컴퓨터에서는
+
+ 0    0    0   1   0   1   1  1  0  1 
+512  216  128  64  32  16  8  4  2  1
+
+로 저장이 된다. 
+(10010111101)
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">~ 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+int num2 = ~num1;
+
+num1 = 00000000 00000000 00000000 00001001
+num2 = 11111111 11111111 11111111 11110110
+
+0은 1로, 1은 0으로 반전시킨다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">&amp; 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+int num2 = 15;
+int num3 = num1 &amp; num2;
+
+num1 = 0000 1001
+num2 = 0000 1111
+num3 = 0000 1001
+
+두 비트 모두 1일때 1을 반환한다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">| 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+int num2 = 15;
+int num3 = num1 | num2;
+
+num1 = 0000 1001
+num2 = 0000 1111
+num3 = 0000 1111
+
+두 비트 중 하나라도 1이면 1을 반환한다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">^ 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+int num2 = 15;
+int num3 = num1 ^ num2;
+
+num1 = 0000 1001
+num2 = 0000 1111
+num3 = 0000 0110
+
+두 비트가 다를때 1을 반환한다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">&lt;&lt; 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+num1 = num1 &lt;&lt; 2;
+
+num1 = 0000 1001
+num1 = 0010 0100
+
+비트를 왼쪽으로 움직인다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">&gt;&gt; 연산자</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int num1 = 9;
+num1 = num1 &gt;&gt; 2;
+
+num1 = 0000 1001
+num1 = 0000 0010
+
+비트를 오른쪽으로 움직인다.
+
+</span></pre>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">논리 연산자</span></h3>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">별도 정리하지 않음</span></li>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">삼항 연산자</span></h3>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">조건식 ? 피연산자1 : 피연산자2</span></li>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">switch 문</span></h3>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">어떤 변수의 값에 따라서 문장을 실행할 수 있도록 하는 제어문</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">JDK7이전에는 switch다음 괄호안에 정수타입의 변수만 올 수 있었습니다. 그런데 JDK7부터는 switch다음 괄호안에 문자열 타입의 변수도 올 수 있습니다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">if 문의 true, false 로의 구분만으로 처리하는 것과 다르게 String, int 등의 타입으로 구분을 함</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">String str = "A";
+
+switch(str){
+case "A": 
+  System.out.println("1");
+case "B":
+  System.out.println("2");
+case "C" :
+  System.out.println("3");
+default :
+  System.out.println("그 외의 숫자");
+}
+
+</span></pre>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">반복문</span></h3>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">실행문을 반복적으로 실행해야 할 때 사용</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">while 문</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">while(idx &lt;= 100) {
+  total = total + idx;
+  idx++;
+}
+
+</span></pre>
+</li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">do-while 문</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">for 문</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">foreach 문</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">자바 1.5 버전부터 추가된 foreach 구문</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[] iarr = {10,20,30,40,50};
+
+for(int value : iarr){
+  System.out.println(value);
+}
+
+</span></pre>
+</li>
+</ul>
+</ol>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">참고:&nbsp;<a href="http://12bme.tistory.com/92" style="background-color: transparent; border: 0px; box-shadow: rgb(62, 176, 239) 0px -1px 0px inset; box-sizing: inherit; color: black; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 0px; padding: 0px; text-decoration-line: none; vertical-align: baseline;" target="_blank">for 루프 성능</a></span></div>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">열거 타입 (like 구조체)</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">JDK 1.5 이상</span></div>
+<ol style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">클래스처럼 보이게 하는 상수</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">서로 관련 있는 상수들을 모아 심볼릭한 명칭의 집합으로 정의한 것</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">Enum 클래스형을 기반으로 한 클래스형 선언</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">새로운 열거형을 선언하면, 내부적으로 Enum 클래스형 기반의 새로운 클래스형이 만들어짐.</span></li>
+</ol>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+</div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">  public enum Week { MONDAY, TUESDAY... }
+  
+  public enum Type {
+    WALKING("워킹화"), RUNNING("러닝화"), TRACKING("트래킹화"), HIKING("등산화") 
+  }
+
+  열거된 순서에 따라 0 부터 순서값을 가짐.
+  enum 열거형으로 지정된 상수는 대문자 사용.
+  마지막 끝에 세미콜론(;)을 붙이지 않음.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<img alt="" src="https://krr-b.github.io/assets/images/enum.png" style="border: 0px; box-sizing: inherit; display: block; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 1.5em auto; max-width: 1040px; padding: 0px; vertical-align: middle;" /></div>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">열거 객체는 힙 영역에 생성된다. 그리고 열거 상수는 메소드 영역에서 열거 객체를 참조하는 형태를 가진다.</span></div>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<img alt="enum" src="https://krr-b.github.io/assets/images/enum1.png" style="border: 0px; box-sizing: inherit; display: block; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; margin: 1.5em auto; max-width: 1040px; padding: 0px; vertical-align: middle;" /></div>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #26a8ed; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">Week today = Week.SUNDAY; 의 경우 메모리 흐름</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">name()</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">열거 객체가 가지고 있는 문자열을 리턴한다. 열거 타입을 정의할 때 사용한 상수 이름과 동일하다.</span></li>
+</ol>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">ordinal()</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">전체 열거 객체 중에 몇번째 열거 객체인지 메소드이다. 열거 객체 타입을 정의할 떄 주어진 순번을 말하며, 0부터 시작한다.</span></li>
+</ol>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">compareTo()</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">매개값으로 주어진 열거 객체를 기준으로 전후로 몇번째 위치하는 지를 비교한다. 만약 열거 객체가 매개값의 열거 객체보다 순번이 빠르다면 음수가, 순번이 늦다면 양수가 리턴된다.</span></li>
+</ol>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">valueOf()</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">매개값으로 주어지는 문자열과 동일한 문자열을 가지는 열거 객체의 번지를 리턴한다. 외부로 받은 문자열을 통해 열거 객체를 변환할 때 유용하게 사용된다.</span></li>
+</ol>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">values()</span></li>
+<ol style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">열거 타입의 모든 열거 객체들을 배열로 만들어 리턴한다. 열거 객체의 순번과 배열의 인덱스가 일치한다.</span></li>
+</ol>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">배열</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">배열은 같은 데이터 타입을 가진 연속된 메모리 공간으로 이루어진 자료구조</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">배열 생성 방법</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">정수를 4개 저장 할 수 있는 배열을 생성 하는 방법</span></li>
+</ul>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[] array1 = new int[4];
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">배열에 값을 저장하는 방법</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">array1[0] = 1;
+array1[1] = 2;
+array1[2] = 3;
+array1[3] = 4;
+
+자바에서 배열의 인덱스는 0번 부터 사용한다. 4개짜리 배열은 0부터 3까지의 인덱스를 가지게 된다.
+배열인덱스 0번부터 3번까지 차례로 1,2,3,4 값을 저장한다. 
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">배열에 저장된 값을 꺼내서 사용하는 방법</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int value = array1[2]; 
+array1 이 참조하는 배열의 2번 인덱스에 해당하는 값 3을 꺼내서 int형 변수 value에 담는다. 
+
+System.out.println(array1[1]); 
+array1 이 참조하는 배열의 1번 인덱스에 해당하는 값 2가 콘솔에 출력된다. 
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">선언과 동시에 초기화하는 방법</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[] array2 = new int[]{1,2,3,4,5};
+int 값을 5개저장 할 수 있는 배열이며, 해당 배열에는 1,2,3,4,5가 순서대로 저장되게 된다.
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">배열의 길이를 알아내는 방법</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">array.length 
+배열을 참조하는 레퍼런스 변수.length 하면 해당 배열의 길이를 리턴한다. 
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">2차원 배열 생성 방법</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[][] array4 = new int[3][4];
+정수를 4개씩 담을 수 있는 배열이 3개 생성된다.
+
+</span></pre>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[][] array5 = new int[3][];
+위와 같이 선언하면 array5는 3개짜리 배열을 참조한다. 3개짜리 배열은 아직 참조하는 배열이 없다는 것을 의미.
+
+array5[0] = new int[1];
+정수를 하나 담을 수 있는 배열을 생성해서 array5 의 0 번째 인덱스가 참조한다.  
+
+array5[1] = new int[2];
+정수를 두개 담을 수 있는 배열을 생성해서 array5 의 1 번째 인덱스가 참조한다.  
+
+array5[2] = new int[3];
+정수를 세개 담을 수 있는 배열을 생성해서 array5 의 2 번째 인덱스가 참조한다. 
+
+</span></pre>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">int[][] array6 = {{1}, {2,3}, {4,5,6}};
+위와 같이 선언할 경우 array6[0][0] 는 1이다. array6[1][0]은 2이다. 
+
+</span></pre>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">클래스</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">자바에서의 클래스는 객체를 만들기 위한 일종의 틀이다.</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class Car {
+  String name;    
+  int number;
+}
+
+public class CarExam{
+  public static void main(String args[]){
+    Car c1 = new Car();
+    Car c2 = new Car();
+
+    c1.name = "소방차"; 
+    c1.number = 1234;
+
+    c2.name = "구급차";
+    c2.number = 1004;
+  }
+}
+
+new 연산자는 new연산자 뒤에 나오는 생성자를 이용하여 메모리에 객체를 만들라는 명령.
+메모리에 만들어진 객체를 인스턴스(instance)라고도 한다.
+
+이렇게 만들어진 객체를 참조하는 변수가 c1 , c2 이다.
+위의 코드가 실행되면 Car라는 객체가 2개가 만들어지고 각각의 객체를 참조하는 c1과 c2변수가 선언됩니다.
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">참조형 타입은 기본형 타입을 제외한 모든 타입입니다. 앞서 배웠던, 배열도 참조형이고, 클래스도 모두 참조 타입이다.</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">참조형 변수</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">String str = new String(hello);</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str 변수 앞에 기본형 타입이 아닌 String클래스가 적혀있다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">이퀄(=)뒤에는 new 다음에 생성자라는 것이 있다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">new 라는 키워드는 클래스를 메모리에 올려준다. 이렇게 메모리에 올라간 클래스를 인스턴스라고 말한다.</span></li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">메모리에 올라간 인스턴스를 가리키는 변수, 참조하는 변수, 레퍼런스 하는 변수가 str 이다. 참조한다. 레퍼런스 한다라는 것은 변수가 인스턴스를 가지고 있는게 아니라 말그대로 가리킨다는 의미이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str이라는 변수에는 메모리의 위치 값이 저장되는 것이다. 메모리의 위치값이 저장된다고 하더라도, 어떤 메모리에 저장되는지 그 정보를 알 수 있는 방법은 없다. 그렇기 때문에 str변수는 String 인스턴스를 참조한다라고만 아시면 된다.</span></li>
+</ul>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">메소드</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">메소드에 대해서는 따로 이론적 설명을 작성하지 않겠다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class MyClass{
+  public void method(){
+    System.out.println("method1이 실행됩니다.");
+  }
+
+  public void method2(int x){
+    System.out.println(x + " 를 이용하는 method2입니다.");
+  }
+
+  public int method3(){
+    System.out.println("method3이 실행됩니다.");
+    return 10;
+  }
+
+  public void method4(int x, int y){
+    System.out.println(x + "," + y + " 를 이용하는 method4입니다.");
+  }
+
+  public int method5(int y){
+    System.out.println(y + " 를 이용하는 method5입니다.");
+    return 5;
+  }
+}
+
+public class MyClassExam{
+  public static void main(String args[])
+  {
+    MyClass my1 = new MyClass(); //메소드가 정의된 클래스 생성 
+    
+    my1.method1();   //MyClass에서 정의해 놓은 메소드 method1() 를 호출한다.       
+
+    my1.method2(10);
+
+    int x = my1.method3();
+
+    System.out.println("method3 이 리턴한 " + x + " 입니다.");
+
+    my1.method4(10,100);
+
+    int x2 = my1.method5(50);
+
+    System.out.println("method5 가 리턴한 " + x2 + " 입니다.");
+
+  }
+}
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">String Class가 제공하는 메소드 이용하기</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">문자열 길이 구하기 (length)</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str.length()는 str이 참조하는 문자열의 길이를 구해서 int 타입으로 리턴해주는 메소드</span></li>
+</ul>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">문자열 붙히기 (concat)</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str.concat(world) 메소드는 str 이 참조하는 문자열 hello 에다가 메소드의 인자로 들어온 문자열 world 를 붙혀서 String 타입으로 리턴하는 메소드다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">String Class는 불변 클래스로, 메소드가 수행되면, 새로운 문자열을 만든다. 그러므로, 원래 클래스는 변하지 않는다.</span></li>
+</ul>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">String str = new String("hello");
+
+System.out.println(str.concat(" world"));  //출력결과는 hello world 
+System.out.println(str);  //출력결과는 hello 
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">문자열 자르기 (subString)</span></li>
+<ul style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; list-style: disc; margin: 0.5em 0px 1em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str.subString(1,3) 은 str이 참조하는 문자열을 인덱스 1번부터 3번까지 자른 결과이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">str.subString(2) 은 str이 참조하는 문자열을 2번 인덱스부터 마지막까지 자른 결과를 의미한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">문자열의 인덱스는 0번 부터 시작한다.</span></li>
+</ul>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">System.out.println(str.substring(1, 3)); //출력결과  el
+System.out.println(str.substring(2));   //출력결과 llo world
+
+</span></pre>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">변수의 스코프</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">프로그램상에서 사용되는 변수들은 사용 가능한 범위를 가진다. 그 범위를 변수의 스코프라고 한다.</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class ValableScopeExam
+{
+  int globalScope = 10;   //클래스 변수 
+
+  public void scopeTest(int value)
+  {   
+    int localScope = 10;
+    System.out.println(globalScope);
+    System.out.println(localScpe);
+    System.out.println(value);
+  }
+}
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">클래스의 속성으로 선언된 변수 globalScope 의 사용 범위는 클래스 전체 이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">매개변수로 선언된 int value 는 블럭 바깥에 존재하기는 하지만, 메서드 선언부에 존재하므로 사용범위는 해당 메소드 블럭내이다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">메소드 블럭내에서 선언된 localScope 변수의 사용범위는 메소드 블럭내이다.</span></li>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">main메소드에서 사용하기</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">같은 클래스 안에 있는데 globalScope 변수를 사용 할 수 없다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">main은 static한 메소드이다. static한 메서드에서는 static 하지 않은 필드를 사용 할 수 없다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class VariableScopeExam {
+  int globalScope = 10; 
+
+  public void scopeTest(int value){
+    int localScope = 20;            
+    
+    System.out.println(globalScope);
+    System.out.println(localScope);
+    System.out.println(value);
+  }   
+  
+  public static void main(String[] args) {
+    System.out.println(globalScope);  //오류
+    System.out.println(localScope);   //오류
+    System.out.println(value);        //오류  
+  }   
+}
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">static</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">같은 클래스 내에 있음에도 해당 변수들을 사용할 수 없다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">main 메소드는 static 이라는 키워드로 메소드가 정의되어 있다. 이런 메서드를 static 한 메소드 라고 한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">static한 필드(필드 앞에 static 키워드를 붙힘)나, static한 메소드는 Class가 인스턴스화 되지 않아도 사용할 수 있다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class VariableScopeExam {
+  int globalScope = 10; 
+  static int staticVal = 7;
+
+  public void scopeTest(int value){
+    int localScope = 20;        
+  }
+
+  public static void main(String[] args) {
+    System.out.println(staticVal);      //사용가능 
+  }
+}
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">static한 변수는 공유된다.</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">static하게 선언된 변수는 값을 저장할 수 있는 공간이 하나만 생성된다. 그러므로, 인스턴스가 여러개 생성되도 static한 변수는 하나다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">ValableScopeExam v1 = new ValableScopeExam();
+ValableScopeExam v2 = new ValableScopeExam();
+v1.golbalScope = 20;
+v2.golbalScope = 30; 
+
+System.out.println(v1.golbalScope);  //20 이 출력된다. 
+System.out.println(v2.golbalScope);  //30이 출력된다. 
+
+v1.staticVal = 10;
+v2.staticVal = 20; 
+
+System.out.println(v1.statVal);  //20 이 출력된다. 
+System.out.println(v2.statVal);  //20 이 출력된다. 
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">golbalScope같은 변수(필드)는 인스턴스가 생성될때 생성되기때문에 인스턴스 변수라고 한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">staticVal같은 static한 필드를 클래스 변수라고 한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">클래스 변수는 레퍼런스.변수명 하고 사용하기 보다는 클래스명.변수명 으로 사용하는것이 더 바람직하다고 하다.</span></li>
+</ul>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">생성자</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">생성자의 특징</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">생성자는 리턴타입이 없다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">생성자를 프로그래머가 만들지 않으면 매개변수가 없는 생성자가 컴파일할 때 자동으로 만들어진다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">매개변수가 없는 생성자를 기본생성자라고 한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">생성자를 하나라도 프로그래머가 만들었다면 기본생성자는 자동으로 만들어지지 않는다.</span></li>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">생성자의 역할</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">생성자가 하는 일은 객체가 될 때 필드를 초기화 하는 역할을 수행한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">자동차가 객체가 될때 반드시 이름을 가지도록 하려면,Car클래스를 다음과 같이 만들어야 한다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class Car {
+  String name;
+  int number;
+
+  public Car(String name) {
+    this.name = name;
+  }
+}
+
+</span></pre>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">name=name 이라고 코드를 바꾸면, 가깝게 선언된 변수를 우선 사용하기 때문에 name=name 이라는 코드는 매개변수의 name의 값을 매개변수 name에 대입하라는 의미가 된다. 즉, 필드는 바뀌지 않습니다. 이런 경우 필드라는 것을 컴파일러와 JVM에게 알려주기 위해서 this키워드를 사용해야 한다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">클래스 안에서 자기 자신이 가지고 있는 메소드를 사용할 때도 this.메소드명()으로 호출할 수 있다.</span></li>
+</ul>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">위의 Car 클래스를 이용하여 Car 인스턴스를 생성하는 방법</span></div>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class CarExam2 
+{
+  public static void main(String args[]) 
+  {
+    Car c1 = new Car("소방차");
+    Car c2 = new Car("구급차");
+    
+    // Car c3 = new Car(); 
+    컴파일 오류가 발생합니다.
+
+    System.out.println(c1.name);
+    System.out.println(c2.name);
+  }
+}
+
+</span></pre>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">Car클래스는 기본 생성자를 가지지 않는다. 그래서 기본생성자로 Car 객체를 생성할 수 없다.</span></div>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">메소드 오버로딩</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">매개변수의 유형과 개수가 다르게 하여 같은 이름의 메소드를 여러 개 가질 수 있게하는 기술</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">이름은 같지만 매개변수가 다른 메소드</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">class MyClass2
+{
+  public int plus(int x, int y){
+    return x+y;
+  }
+
+  public int plus(int x, int y, int z){
+    return x + y + z;
+  }
+
+  public String plus(String x, String y){
+    return x + y;
+  }
+}
+
+메소드 오버로딩은 매개변수 부분이 달라야 한다.
+
+public MethodOverloadExam
+{
+  public static void main(String args[])
+  {
+    MyClass2 m = new MyClass2();
+    
+    System.out.println(m.plus(5,10));
+    System.out.println(m.plus(5,10,15));
+    System.out.println(m.plus("hello" + " world"));
+  }
+}
+
+</span></pre>
+<h3 style="background-color: white; border: 0px; box-sizing: inherit; color: #090a0b; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.15; margin: 0.5em 0px 0.2em; min-width: 100%; padding: 0px; text-rendering: optimizeLegibility; vertical-align: baseline;">
+<span style="font-family: inherit; font-size: small;">생성자 오버로딩과 this</span></h3>
+<div style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; margin-bottom: 1.5em; min-width: 100%; padding: 0px; vertical-align: baseline;">
+<span style="font-family: inherit;">생성자의 매개변수의 유형과 개수가 다르게 하여 같은 이름의 생성자를 여러 개 가질 수 있다</span></div>
+<ul style="background-color: white; border: 0px; box-sizing: inherit; color: #3c484e; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: inherit; list-style-image: initial; list-style-position: initial; margin: 0px 0px 1.5em; min-width: 100%; padding: 0px 1.5em 0px 1.3em; vertical-align: baseline;">
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0px 0px 0.5em; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">생성자도 메소드와 마찬가지로 여러개를 선언할 수 있다.</span></li>
+<li style="border: 0px; box-sizing: inherit; font-stretch: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: 1.6em; margin: 0.5em 0px; padding: 0px 0px 0px 0.3em; vertical-align: baseline; word-break: break-word;"><span style="font-family: inherit;">매개변수의 수와 타입이 다르다면 여러개의 생성자를 선언할 수 있다.</span></li>
+</ul>
+<pre style="background: rgb(14, 15, 17); border-radius: 5px; border: 1px solid rgb(0, 0, 0); box-sizing: inherit; color: #e5eff5; font-stretch: inherit; font-variant-east-asian: inherit; font-variant-numeric: inherit; line-height: 1.5em; margin-bottom: 3em; margin-top: 1.5em; max-width: 100%; min-width: 100%; overflow-x: auto; padding: 20px; vertical-align: baseline;"><span style="font-family: inherit;">public class Car 
+{
+  String name;
+  int number;
+
+  public Car() {
+
+  }
+
+  public Car(String name) {
+    this.name = name;
+  }
+
+  public Car(String name, int number) {
+    this.name = name;
+    this.number = number;
+  }
+}
+
+public class CarExam4 {
+  public static void main(String args[]) {
+    Car c1 = new Car();
+    Car c2 = new Car("소방차");
+    Car c3 = new Car("구급차", 1234);
+    }
+}
+
+public Car(){
+  this("이름없음", 0);
+}
+
+this괄호 열고로 시작하면 자신의 생성자를 호출하는 것이다.
+자기 자신의 생성자를 호출함으로써 비슷한 코드가 중복되서 나오는 것을 방지할 수 있다.
+
+</span>
+</pre>
+</div>
+</pre>
+
+</div>
+</section>
+</body>
+</html>

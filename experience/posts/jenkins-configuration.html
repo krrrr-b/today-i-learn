@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">Jenkins 설치, 환경 구축</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+     <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+  간단하게 Linux Ubuntu (v16.04) 를 이용해서 Jenkins 환경을 구축해보겠다. <br/><br/>
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+  1. AWS Instance 생성하자.
+
+  2. SSH 접속하자.
+  
+      1번과 2번에서 사용되는 AWS, SSH 는 <span style="background-color: #6799FF; color: #000;"><a href="https://krr-b.github.io/posts/ci-cd-configuration.html" target="_blank" style="color:#000;">주니어 개발자의 배포환경구축 도전기</a></span> 를 보고 따라하도록 하자.
+
+  3. SSH 접속을 완료했다면, 서버 업데이트 및 업그레이드를 해주자.
+    
+    <span style="background-color: #86E57F; color: #000;">sudo apt-get update && sudo apt-get -y upgrade</span>
+  
+  4. Java 를 설치하기 전에 PPA 저장소를 추가하자.
+
+    <span style="background-color: #86E57F; color: #000;">sudo add-apt-repository -y ppa:webupd8team/java</span>
+  
+  5. 다시 한번 서버를 업데이트하고, Java 8 을 설치해보자.
+
+    <span style="background-color: #86E57F; color: #000;">sudo apt-get update</span>
+    <span style="background-color: #86E57F; color: #000;">sudo add-apt-repository ppa:webupd8team/java</span>
+    <span style="background-color: #86E57F; color: #000;">sudo apt-get openjdk-8-jdk</span>
+
+  6. Java 설치를 완료했다면 한번 확인해보자.
+
+    <span style="background-color: #86E57F; color: #000;">java -version</span>
+
+    ------
+    java version "1.8.0_40"
+    Java(TM) SE Runtime Environment (build 1.8.0_40-b26)
+    Java HotSpot(TM) 64-Bit Server VM (build 25.40-b25, mixed mode)
+    ------
+
+  7. 젠킨스 패키지 파일 다운로드 및 설정해주자.
+      
+      <span style="background-color: #86E57F; color: #000;">wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -</span>
+      <span style="background-color: #86E57F; color: #000;">sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'</span>
+
+  8. 완료했다면 다시 한번 서버를 업데이트 시켜주자.
+
+      <span style="background-color: #86E57F; color: #000;">sudo apt-get update</span>
+
+  9. 이제 젠킨스를 설치해주자.
+
+      <span style="background-color: #86E57F; color: #000;">apt-get install jenkins</span>
+
+  10. 설치를 완료하였다! 젠킨스에 접근해보자.
+      - 젠킨스에 접근하기 위해서는 Public IP:8080 포트로 접근하자.
+      - 초기에 접근했다면 비밀번호 입력이 필요하다.
+      - 비밀번호는 서버 내 /var/lib/jenkins/secrets/initialAdminPassword 경로에 존재한다.
+
+      <span style="background-color: #86E57F; color: #000;">vi /var/lib/jenkins/secrets/initialAdminPassword</span>
+
+      - 젠킨스 로그 파일 위치는 /var/log/jenkins/jenkins.log 이다.
+      - 젠킨스 설정 파일 위치는 /etc/default/jenkins 이며 PORT 를 포함한 기본 설정을 변경할 수 있다.
+      - 설정 변경 후에는 재시작이 필수이다.
+
+      - 젠킨스의 시작 및 종료 명령어는 다음과 같다.
+
+      시작: <span style="background-color: #86E57F; color: #000;">service jenkins start</span>
+      종료: <span style="background-color: #86E57F; color: #000;">service jenkins stop</span>
+
+      개인 프로젝트 또는 공부하면서 지속적으로 설정에 대해서 추가해놓겠다.
+
+</pre>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+    .code {
+      background-color: #5d5d5d;
+      color: #FFF;
+
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">Docker</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px;">
+일년 전부터 소프트웨어의 개발과 운영의 합성어인 데브옵스 (Devops) 에 굉장히 관심을 가지고 있었지만, 현업에서는 어플리케이션 개발을 중점적으로 했기 때문에 운영 분야 공부를 깊게 해보지 못했었다.
+<br/><br/>
+
+계속 관심만 가지던 와중에 시간적 여유가 생겨서 이번 기회에 운영 분야에 대한 지식을 쌓아보고자 한다.
+<br/>자료는 <a style="color: #5F00FF" href="https://book.naver.com/bookdb/book_detail.nhn?bid=13987575" target="_blank">완벽한 IT 인프라 구축을 위한 Docker</a> 와 인터넷 강의를 활용하였다!
+
+<br/><br/><br/>
+<a href="https://book.naver.com/bookdb/book_detail.nhn?bid=13987575" target="_blank"><img src="https://misc.ridibooks.com/cover/1170000079/xxlarge" height="250"></a>
+<br/><br/><br/>
+
+<font style="font-size: 12pt">인프라와 도커에 대해서 깊지 않은 내용을 다루는 책이다. <br/>입문서로 나쁘지 않았다.</font>
+
+<hr>
+<font style="font-size: 30pt">인프라</font><br/><br/>
+@TODO
+<br/><br/><br/>
+<hr>
+그럼 도커를 한번 설치해보자.<br/>
+<b>운영체제는 리눅스 우분투 기준</b>으로 하였다.<br/>
+<br/>
+서버 업데이트
+<pre class="code">
+
+  sudo apt-get update
+
+</pre><br/>
+패키지 설치
+<pre class="code">
+
+  sudo apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+</pre><br/>
+GPG 키 추가/ 확인
+<pre class="code">
+
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo apt-key list
+
+</pre><br/>
+Docker 레파지토리 등록
+<pre class="code">
+
+  sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+
+</pre><br/>
+Docker 설치/ 확인
+<pre class="code">
+
+  sudo apt-get install docker-ce
+  apt-cache policy docker-ce
+
+</pre><br/>
+<hr><br/>
+<b>도커를 사용하기 위한 기본 명령어</b>다.<br/>
+옵션값에 따라서 액션이 달라지니 주의하자.
+
+<br/><br/>
+Docker 컨테이너 실행
+<pre class="code">
+
+  docker run \
+    [이미지 명칭(:version)] \
+    /bin/echo 'Hello world!'
+
+</pre><br/>
+Docker 버전 확인
+<pre class="code">
+
+  docker version
+
+</pre><br/>
+Docker 실행 환경 확인
+<pre class="code">
+
+  docker system info
+
+</pre><br/>
+Docker 디스크 이용 상황
+<pre class="code">
+
+  docker system df
+
+</pre><br/>
+Docker 이미지 다운로드
+<pre class="code">
+
+  docker image pull [option] [이미지 명칭(:version), 태그명]
+
+  option
+  -a 이미지의 모든 버전 다운로드
+
+  :version
+  입력하지 않으면 latest 버전으로 다운로드
+
+</pre><br/>
+Docker 이미지 조회
+<pre class="code">
+
+  docker image ls [option] [이미지 명칭(:version), 태그명]
+
+  option
+  -all, -a 모든 이미지를 표시
+  --digests 다이제스트를 표시할지 말지
+  --no-trunc 결과를 모두 표시
+  --quiet, -q Docker 이미지 Id 만 표시
+
+</pre><br/>
+Docker 이미지 상세정보 조회 (ID, 작성일, 버전, CPU 아키텍처 등의 정보를 JSON 형식으로 반환)
+<pre class="code">
+
+  docker image inspect [option] [이미지 명칭(:version), 태그명]
+
+  option
+  --format 특정 값만 반환할 수 있도록 함
+    ex. --format={{ .Os}}, --format={{ .ContanierConfig.Image}}
+
+</pre><br/>
+Docker 이미지 태깅
+<pre class="code">
+
+  docker image tag [이미지 명칭(:version)] 사용자명/태그 이름:version
+    ex. docker image tag nginx krr-b/webserver:1.0
+
+</pre><br/>
+Docker 이미지 삭제
+<pre class="code">
+
+  docker image rm [option] [이미지 명칭(:version), 태그명]
+
+  option
+  --force, -f 이미지를 강제로 삭제
+  --no-prune 중간 이미지를 삭제하지 않음
+
+</pre><br/>
+Docker 사용하지 않는 이미지 삭제
+<pre class="code">
+
+  docker image prune [option]
+
+  option
+  --all, -a 사용하지 않는 이미지를 모두 삭제
+  --force, -f 이미지를 강제로 삭제
+
+</pre><br/>
+Docker 컨테이너 생성 및 시작
+<pre class="code">
+
+  docker contanier run [option] [이미지 명칭(:version), 태그명] [인수]
+
+  option
+  --attach, -a 표준 입출력, 표준 오류 출력에 어태치한다.
+  --cidfile 컨테이너 ID 를 파일로 출력한다.
+  --detach, -d 컨테이너를 생성하고 백그라운드에서 실행한다.
+  --user, -u 사용자명을 지정한다.
+  --rm 명령 실행 완료 후에 컨테이너를 자동 삭제한다.
+  --restart=[no | on-failure | on-failure:횟수 | always | unless-stopped] 실행 결과에 따라 재시작을 한다.
+  --interactive, -i 컨테이너의 표준 입력을 연다.
+  --tty, -t 단말기 디바이스를 사용한다.
+
+  --add-host=[호스트명:IP 주소] 컨테이너의 /etc/hosts 에 호스트명과 IP 주소를 정의
+  --dns=[IP 주소] 컨테이너용 DNS 서버의 IP 주소 지정
+  --expose 지정한 범위의 포트 번호를 할당
+  --mac-address=[MAC 주소] 컨테이너의 MAC 주소를 지정
+  --net=[bridge | none | container:<이름 | id>] | host | NETWORK] 컨테이너 네트워크를 지정
+  --hostname, -h 컨테이너 자신의 호스트명을 지정
+  --publish, -p[호스트의 포트번호]:[컨테이너의 포트번호] 호스트와 컨테이너의 포트 매핑
+  --publish-all, -p 호스트의 임의의 포트를 컨테이너에 할당
+
+  --cpu-shares, -c CPU 의 사용 배분 (비율)
+  --memory, -m 사용할 메모리를 제한하여 실행 (단위는 b, k, m, g 중 하나)
+  --volume=[호스트의 디렉토리]:[컨테이너의 디렉토리], -v 호스트와 컨테이너의 디렉토리를 공유
+
+  --env=[환경변수], -e 환경변수를 설정한다.
+  --env-file=[파일명] 환경변수를 파일로부터 설정한다.
+  --read-only=[true | false] 컨테이너의 파일 시스템을 읽기 전용으로 만든다.
+  --workdir=[패스], -w 컨테이너의 작업 디렉토리를 지정한다.
+
+</pre><br/>
+
+Docker 컨테이너 로그 확인
+<pre class="code">
+
+  docker logs -t [이미지 명칭(:version), 태그명]
+
+</pre><br/>
+
+Docker 컨테이너 목록 조회
+<pre class="code">
+
+  docker container ls [option]
+
+  option
+  --all, -a 실행 중/정지 중인 것도 포함하여 모든 컨테이너를 표시
+  --filter, -f 표시할 컨테이너의 필터링
+  --format 표시 포맷을 지정
+  --last, -n 마지막으로 실행된 n건의 컨테이너만 표시
+  --latest, -l 마지막으로 실행된 컨테이너만 표시
+  --no-trunc 정보를 생략하지 않고 표시
+  --quiet, -q 컨테이너 ID 만 표시
+  --size, -s 파일 크기 표시
+
+  --format 특정 값만 반환할 수 있도록 함
+    ex. --format={{ .Os}}, --format={{ .ContanierConfig.Image}}
+
+</pre><br/>
+
+Docker 컨테이너 상태
+<pre class="code">
+
+  docker ps [option]
+
+  option
+  -a, --all 모든 컨테이너 노출 (default 실행중인 컨테이너만 노출)
+
+</pre><br/>
+
+Docker 컨테이너 가동 확인
+<pre class="code">
+
+  docker contanier stats [이미지 명칭(:version), 태그명]
+
+</pre><br/>
+
+Docker 컨테이너 재시작, 정지/ 가동
+<pre class="code">
+
+  docker contanier stop [option] [이미지 명칭(:version), 태그명]
+  docker contanier restart [option] [이미지 명칭(:version), 태그명]
+
+  option
+  --time, -t 컨테이너의 정지 시간을 지정 (default 10s)
+
+  docker contanier start [option] [이미지 명칭(:version), 태그명]
+
+  option
+  --attach, -a 표준 입출력, 표준 오류 출력에 어태치한다.
+  --interactive, -i 컨테이너의 표준 입력을 연다.
+
+</pre><br/>
+
+Docker 컨테이너 삭제
+<pre class="code">
+
+  docker contanier rm [option] [이미지 명칭(:version), 태그명]
+
+  option
+  --force, -f 실행중인 컨테이너를 강제로 삭제
+  --volumes, -v 할당한 볼륨을 삭제
+
+</pre><br/>
+
+Docker 컨테이너 중단/ 재개
+<pre class="code">
+
+  docker contanier pause [이미지 명칭(:version), 태그명]
+  docker contanier unpause [이미지 명칭(:version), 태그명]
+
+</pre><br/>
+
+<hr><br/>
+지금까지 Docker 의 기본 명령어와 그 옵션들에 대해서 정리해보았다.
+추가되거나 작성되지 않은 옵션은 -h 를 활용하자!
+<br/>
+이제 Docker 컨테이너별 통신에 대해서 알아보자.
+<br/><br/>
+Docker 네트워크 목록
+<pre class="code">
+
+  docker network ls [option]
+
+  option
+  -f, --filter=[] 출력을 필터링한다.
+  --no-trunc 상세 정보를 출력한다.
+  -q, --quiet 네트워크 ID 만 표시한다.
+
+</pre><br/>
+
+Docker 네트워크 작성
+<pre class="code">
+
+  docker network create [option] [네트워크]
+
+  option
+  --drive, -d 네트워크 브리지 또는 오버레이 (default bridge)
+  --ip-range 컨테이너에 할당하는 IP 주소의 범위를 지정
+  --subnet 서브넷을 CIDR 형식으로 지정
+  --ipv6 IPv6 네트워크를 유효화할지 말지 (true | false)
+  -label 네트워크에 설정하는 라벨
+
+</pre><br/>
+
+Docker 네트워크 연결
+<pre class="code">
+
+  docker network connect [option] [네트워크]
+  docker network disconnect [option] [네트워크]
+
+  option
+  --ip IPv4 주소
+  --ip6 IPv6 주소
+  --alias 앨리어스명
+  --link 다른 컨테이너에 대한 링크
+
+</pre><br/>
+
+Docker 네트워크 정보 확인
+<pre class="code">
+
+  docker network inspect [option] [네트워크]
+
+</pre><br/>
+
+Docker 네트워크 삭제
+<pre class="code">
+
+  docker network rm [option] [네트워크]
+
+</pre><br/>
+
+<hr><br/>
+이제 간단하게 <b>nginx 이미지를 활용하여 웹 서버</b>로 운영할 수 있는 컨테이너를 만들고 조작해보자.
+
+<pre class="code">
+
+  docker contanier run \
+    --name webserver \
+    -d \
+    -p 80:80 \
+    nginx
+
+</pre><br/>
+
+이처럼 원하는 이미지로 간단하게 컨테이너를 실행을 시킬 수 있으며,<br/>
+Docker 레포지토리에 공개되어 있는 많은 이미지 또한 활용할 수도 있다.<br/>
+<br/>
+<a href="https://hub.docker.com/" style="color: #5F00FF" target="_blank">https://hub.docker.com/</a>
+<br/><br/>
+Official Image 또는 Verified Publisher Image 등의 많은 이미지가 존재하며 명령어를 활용하여 받을 수도 있다.
+<br/><br/>
+Docker Hub 로그인/ 로그아웃
+<pre class="code">
+
+  docker login [option] [server]
+
+  option
+  --password, -p 비밀번호
+  --username, -u 사용자명
+
+  docker logout [server]
+
+  server
+  default 지정하지 않았을 경우에는 Docker Hub
+
+</pre>
+Docker 이미지 검색 (by Docker Hub)
+<pre class="code">
+
+  docker search [option] [keyword]
+
+  option
+  --no-trunc 결과를 모두 표시
+  --limit n건의 검색 결과를 표시
+  --filter=stars=n 즐겨찾기의 수 (n 이상) 지정
+
+</pre>
+
+Docker <b>이미지 생성 및 푸시</b>는 아래와 같은 방법으로 가능하다.
+
+Docker 이미지 생성 
+<pre class="code">
+
+  docker image commit [option] <컨테이너 식별자> [태그명]
+
+  option
+  --author, -a 작성자를 지정한다. (ex. KIJIN KIM<이메일>)
+  --message, -m 메세지를 지정한다.
+  --change, -c 커밋할 경우 Dockerfiler 명령을 지정한다.
+  --pause, -p 컨테이너를 일시 정지하고 커밋한다.
+
+</pre>
+Docker 컨테이너를 tar 파일로 출력
+<pre class="code">
+
+  docker image export [태그명]
+
+</pre>
+tar 파일로부터 Docker 이미지 작성
+<pre class="code">
+
+  docker image import <파일 또는 URL> | - [태그명]
+
+</pre>
+Docker 이미지 저장
+<pre class="code">
+
+  docker image save <저장 파일명> [이미지명]
+
+</pre>
+Docker 이미지 읽어들이기
+<pre class="code">
+
+  docker image load [option]
+
+</pre>
+Docker 이미지 푸시
+<pre class="code">
+
+  docker image push [태그명]
+
+</pre>
+
+<b>다운받은 이미지의 위장이나 변조를 막으려면?</b>
+Docker Content Trust (DCT) 라는 기능을 사용하면 Docker 이미지의 정당성을 확인할 수 있다.
+@Todo (P.99)
+
+Docker 컨테이너 조작
+<pre class="code">
+
+  docker container exec [option] [태그명] [실행할 명령어] [인수]
+
+  option
+  --detach, -d 명령을 백그라운드에서 실행한다.
+  --interactive, -i 컨테이너의 표준 입력을 연다.
+  --tty, -t 단말기 디바이스를 사용한다.
+  --user, -u 사용자명을 지정한다.
+
+  ex.
+  docker contanier exec -it webserver /bin/echo "hello world!"
+
+</pre>
+Docker 컨테이너 가동 프로세스 확인
+<pre class="code">
+
+  docker contaniter top [태그명]
+
+</pre>
+Docker 컨테이너 포트 전송 확인
+<pre class="code">
+
+  docker contaniter port [태그명]
+
+</pre>
+Docker 컨테이너 이름 변경
+<pre class="code">
+
+  docker contaniter rename old new
+
+</pre>
+Docker 컨테이너 안의 파일 복사
+<pre class="code">
+
+  docker contaniter cp [태그명]:[컨테이너 안의 파일 경로] [호스트의 디렉터리 경로]
+  docker contaniter cp [호스트의 파일 경로] [태그명]:[컨테이너 안의 디렉터리 경로]
+
+</pre>
+Docker 컨테이너 비교
+<pre class="code">
+
+  docker contaniter diff [태그명]
+
+  result.
+  A 파일 추가
+  D 파일 삭제
+  C 파일 수정
+
+</pre>
+<hr><br/>
+이제 <b>Dockerfile 을 사용한 코드에 의한 서버 구축</b>을 해보고자 한다.
+<br/><br/>
+@Todo
+<br/><br/>
+</pre>
+</div>
+</section>
+</body>
+</html>
+<!--
+sudo docker run --name apacheServer -p 80:80 -t -i ubuntu:16.04 /bin/bash
+
+apt-get update
+apt-get install apache2
+service apache2 start
+
+docker exec -it apacheServer2 service apache2 start -->

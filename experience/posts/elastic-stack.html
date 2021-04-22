@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">ELK Stack (With FileBeat)</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container kakao" style="margin-top: 50px; margin-bottom: 300px;">
+ELK Stack 을 활용하여 로그 시스템을 구축해보려고 한다.<br/><br/>
+<font style="color:#5F00FF;">ELK Stack 은 ElasticSearch, LogStash, Kibana 를 뜻하는 것이며 데이터 수집을 편하게 하기 위해 FileBeat 까지 사용</font>해보겠다.<br/>
+
+클러스터 구성은 <a href="http://kimjmin.net/2018/01/2018-01-setting-es-cluster-1/">Jongmin's Blog</a> 를 참고하여 아래와 같이 구성해보고자 한다.
+<br/><br/>
+<img src="http://kimjmin.net/2018/01/2018-01-setting-es-cluster-1/es-demo-architecture.png" style="width: 80%;">
+<br/><br/>
+<ul><li>3개의 데이터 전용 노드, 1개의 마스터 전용 노드로 구성합니다.</li><li>Master Node가 설치된 서버에는 Kibana, Logstash 및 기타 프로그램들을 같이 설치합니다.</li><li>마스터 노드만 HTTP REST API를 열고, Data Node 들은 Transport 통신만을 합니다.</li><li>Kibana, Logstash 및 기타 프로그램은 Master Node 와 REST로 통신합니다.</li><li>데이터는 Master Node 를 통해서만 색인됩니다.</li></ul>
+일단 하나하나씩 설치해보겠다.
+<br/><br/>
+<h4>ElasticSearch</h4><br/>
+- ElasticSearch 는 <a href="https://krr-b.github.io/posts/elastic-search.html" target="_blank" style="color:#5F00FF;">여기</a> 를 참고하자.
+<br/><br/><br/>
+<h4>LogStash (Only Master Node)</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    wget https://artifacts.elastic.co/downloads/logstash/logstash-6.1.1.deb
+    dpkg -i logstash-6.1.1.deb
+
+</xmp>
+<br/><br/>
+<h4>Kibana (Only Master Node)</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    wget https://artifacts.elastic.co/downloads/kibana/kibana-6.1.1-amd64.deb
+    dpkg -i kibana-6.1.1-amd64.deb
+
+</xmp>
+<br/><br/>
+<h4>FileBeat (Only Service Server)</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.6.0-amd64.deb
+    dpkg -i filebeat-6.6.0-amd64.deb
+
+</xmp><br/>
+
+위 방법대로 설치를 완료하였다면 이제 세부 설정 및 클러스터 구성을 해보자
+<br/>
+<br/>
+<h4>ElasticSearch</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    경로: /etc/elasticsearch/elasticsearch.yml
+
+    cluster.name: ${HOSTNAME}
+
+    network.host: "0.0.0.0"
+    <font style="color:#6799FF;">테스트를 위해 모든 요청에 대한 접근을 허용하자.</font>
+    <font style="color:#6799FF;">간편하게 _local_, _site_, _global_ 같은 값 들을 이용할 수도 있다.</font>
+
+    bootstrap 설정은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/important-settings.html" target="_blank" style="color:#6799FF;">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/important-settings.html</a> 를 참고하자
+
+    bootstrap.memory_lock: true
+    <font style="color:#6799FF;">bootstrap.memory_lock JVM 메모리 swapping lock 여부</font>
+
+    node.master: false
+    node.data: true
+    <font style="color:#6799FF;">노드 종류에 따라 값 변경하여 설정 (마스터 노드는 true, false)</font>
+
+    ...
+
+    경로: /etc/elasticsearch/jvm.options
+
+    -Xms8g
+    -Xmx8g
+    <font style="color:#6799FF;">마스터노드 4G, 데이터노드 8G 설정 예정</font>
+    <font style="color:#6799FF;">Java Heap 외에 시스템 메모리의 절반은 루씬 파일 캐시를 위해 남겨둬야 한다.</font>
+
+    경로: /etc/security/limits.conf
+
+    elasticsearch soft memlock unlimited
+    elasticsearch hard memlock unlimited 
+    <font style="color:#6799FF;">가장 하단에 위 내용을 추가</font>
+
+</xmp><br/>
+<h4>Unicast</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    discovery.zen.ping.unicast.hosts: ["${마스터 노드 IP}:9300"]
+
+    <font style="color:#6799FF;">다른 노드들이 마스터 노드와 연결될 수 있도록 discovery.zen.ping.unicast.hosts 부분을 마스터노드의 ip 주소로 입력</font>
+
+</xmp><br/>
+위 설정까지 마무리했다면 EC2 Image 를 AMIs 로 저장해서 동일한 설정의 인스턴스를 만들 수 있다.<br/>
+인스턴스 이미지를 사용하여 3개의 데이터 노드용 인스턴스를 생성하고 elasticsearch.yml 의 설정을 바꿔서 데이터 노드로 만들어주자.<br/>
+<br/>
+위 작업이 끝났다면 마스터노드에 설치한 Kibana 도 간단하게 설정을 해보자.<br/>
+<br/>
+<h4>Kibana</h4>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+    경로: /etc/kibana/kibana.yml
+
+    server.host: "0.0.0.0" (For Testing)
+
+</xmp>
+
+여기까지 설정을 했다면 아래와 같은 구조가 나올 것이다.<br/>
+제대로 연결이 되었나 확인을 해보고 싶다면 ${URL}/_nodes/stats?pretty 또는 ${UTL}/_cat/health?v&pretty 에서 확인할 수 있을 것이다.<br/>
+(노드 정보는 ${URL}/_cat/nodes?v&pretty 에서 확인바람)<br/><br/>
+<br/><br/>
+<img src="http://kimjmin.net/2018/01/2018-01-setting-es-cluster-1/es-demo-architecture.png" style="width: 80%;">
+<br/><br/>
+이제 구축한 ELK Stack 을 로그 분석, 검색 등의 서비스에 활용할 수 있을 것이다.<br/>
+(네트워크 설정 변경은 필수!)<br/><br/>
+
+<h6><font style="color:#5F00FF;">+ FileBeat 를 추가적으로 활용하여 로그 분석 시스템을 만들어보자.</font></h6>
+
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+    <font style="color:#6799FF;">FileBeat 를 설치한 웹 서버에서 다음 행동을 취한다.</font>
+
+    vi /etc/filebeat/filebeat.yml
+
+    <font style="color:#6799FF;">여러가지 Output 방식이 있지만, 부하가 적은 Logstash 를 활용하기로 한다.
+    분석하고 싶은 로그 경로를 지정해주고 Logstash 정보를 적어주면 된다.</font>
+    
+    #----------------------------- Logstash output -------------------------------- 
+    output.logstash: 
+    <font style="color:#6799FF;"># 마스터 노드의 IP 를 적는다.</font>
+    hosts: ["ES_MASTER_NODE_IP:5044"]
+    
+    ...
+    #================================ Logging ===================================== 
+  
+    <font style="color:#6799FF;">Filebeat 를 실행시키자.</font>
+
+    sudo ./usr/share/bin/filebeat -e -c /etc/filebeat/filebeat.yml -d "publish"
+
+</pre>
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+    <font style="color:#6799FF;">마스터 노드의 Logstash 에 filebeat output 을 받기 위한 conf 파일을 추가한다.
+    ES_IP:5044 로 들어온 데이터는 정해진 패턴으로 정제되어 Elasticsearch 에 적재& 인덱싱된다.</font>
+
+    input{
+        beats {
+            port => 5044
+        }
+    }
+    filter { 
+        grok {
+                match => { "message" => ["%{IPORHOST:clientip} (?:-|%{USER:ident}) (?:-|%{USER:auth}) \[%{HTTPDATE:timestamp}\] \"(?:%{WORD:httpMethod} %{NOTSPACE:uri}(?: HTTP/%{NUMBER:httpversion})?|-)\" %{NUMBER:responseCode} (?:-|%{NUMBER:bytes}) (?:-|%{NUMBER:bytes2})( \"%{DATA:referrer}\")?( \"%{DATA:user-agent}\")?"] }
+                remove_field => ["timestamp","@version","path","tags","httpversion","bytes2"]
+        }
+        useragent {
+                source => "user-agent"
+        }
+        if [os_major]  {
+                mutate {
+                        add_field => {
+                                os_combine => "%{os} %{os_major}.%{os_minor}"
+                        }
+                }
+        } else {
+                 mutate {
+                        add_field => {
+                                os_combine => "%{os}"
+                        }
+                }
+        }
+        if [os] =~ "Windows" {
+                mutate {
+                        update => {
+                                "os_name" => "Windows"
+                        }
+                }
+        }
+        if [os] =~ "Mac" {
+                mutate {
+                        update => {
+                                "os_name" => "Mac"
+                        }
+                }
+        }
+        geoip {
+                source => "clientip"
+                target => "geoip"
+        }
+    }
+    output {
+        elasticsearch {
+            hosts => ["localhost:9200"]
+            sniffing => true
+            manage_template => false
+            index => "access-%{+YYYY.MM.dd}"
+            document_type => "%{[@metadata][type]}"
+        }
+    }
+
+    <font style="color:#6799FF;">백그라운드로 돌려야 하기 때문에 마지막에 ‘&’ 를 붙여서 실행시킨다.</font>
+
+    ./usr/share/bin/logstash -f filebeat-conf.conf &
+
+</pre>
+설명이 굉장히 부실했지만,<br/>
+이러한 방식대로 설정을 하고 실행을 시킨다면 로그 데이터가 logstash 를 통하여 쌓일 것이며 Kibana 를 통한 Visualization 도 가능할 것이다.<br/>
+
+<font style="color:#5F00FF;">+ 데이터베이스의 데이터를 활용하려면 mysql library 를 받고, Logstash conf 파일을 새롭게 정의하면 된다.</font>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+    <font style="color:#6799FF;">jdbc_driver_library 를 다운받고 그 위치를 입력해주면 된다.
+    그 외에는 필요로 하는 데이터에 맞는 JDBC 설정을 해주면 된다.</font>
+
+    wget http://central.maven.org/maven2/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar
+
+    input {
+      jdbc {
+        jdbc_driver_library => "/usr/share/logstash/lib/mysql-connector-java-6.0.6.jar"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_connection_string => "jdbc:mysql://localhost:3306/sampledb?useSSL=true&useUnicode=true&characterEncoding=utf8"
+        jdbc_user => "user_id"
+        jdbc_password => "user_password"
+        
+        schedule => "* * * * *"
+        
+        parameters => {"param1" : "abc"}
+        statement => "SELECT idx, mycolumn1, mycolumn2 FROM my_table WHERE idx > :sql_last_value AND :param1"
+        use_column_value => true
+        tracking_column => "idx"
+            
+        jdbc_pool_timeout => 10
+        jdbc_paging_enabled => true
+        jdbc_page_size => 10000
+      }
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["localhost:9200"]
+        index => "index"
+        document_type => "type"
+      }
+      
+      stdout {
+        codec => rubydebug
+      }
+    }
+
+</xmp>
+
+logstash log4j2.properties
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">  
+    status = error
+    name = LogstashPropertiesConfig
+
+    appender.console.type = Console
+    appender.console.name = plain_console
+    appender.console.layout.type = PatternLayout
+    appender.console.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %m%n
+
+    appender.json_console.type = Console
+    appender.json_console.name = json_console
+    appender.json_console.layout.type = JSONLayout
+    appender.json_console.layout.compact = true
+    appender.json_console.layout.eventEol = true
+
+    appender.rolling.type = RollingFile
+    appender.rolling.name = plain_rolling
+    appender.rolling.fileName = ${sys:ls.logs}/logstash-${sys:ls.log.format}.log
+    appender.rolling.filePattern = ${sys:ls.logs}/logstash-${sys:ls.log.format}-%d{yyyy-MM-dd}-%i.log.gz
+    appender.rolling.policies.type = Policies
+    appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+    appender.rolling.policies.time.interval = 1
+    appender.rolling.policies.time.modulate = true
+    appender.rolling.layout.type = PatternLayout
+    appender.rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %-.10000m%n
+    appender.rolling.policies.size.type = SizeBasedTriggeringPolicy
+    appender.rolling.policies.size.size = 100MB
+    appender.rolling.strategy.type = DefaultRolloverStrategy
+    appender.rolling.strategy.max = 30
+
+    appender.json_rolling.type = RollingFile
+    appender.json_rolling.name = json_rolling
+    appender.json_rolling.fileName = ${sys:ls.logs}/logstash-${sys:ls.log.format}.log
+    appender.json_rolling.filePattern = ${sys:ls.logs}/logstash-${sys:ls.log.format}-%d{yyyy-MM-dd}-%i.log.gz
+    appender.json_rolling.policies.type = Policies
+    appender.json_rolling.policies.time.type = TimeBasedTriggeringPolicy
+    appender.json_rolling.policies.time.interval = 1
+    appender.json_rolling.policies.time.modulate = true
+    appender.json_rolling.layout.type = JSONLayout
+    appender.json_rolling.layout.compact = true
+    appender.json_rolling.layout.eventEol = true
+    appender.json_rolling.policies.size.type = SizeBasedTriggeringPolicy
+    appender.json_rolling.policies.size.size = 100MB
+    appender.json_rolling.strategy.type = DefaultRolloverStrategy
+    appender.json_rolling.strategy.max = 30
+
+    rootLogger.level = ${sys:ls.log.level}
+    rootLogger.appenderRef.console.ref = ${sys:ls.log.format}_console
+    rootLogger.appenderRef.rolling.ref = ${sys:ls.log.format}_rolling
+
+    # Slowlog
+
+    appender.console_slowlog.type = Console
+    appender.console_slowlog.name = plain_console_slowlog
+    appender.console_slowlog.layout.type = PatternLayout
+    appender.console_slowlog.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %m%n
+
+    appender.json_console_slowlog.type = Console
+    appender.json_console_slowlog.name = json_console_slowlog
+    appender.json_console_slowlog.layout.type = JSONLayout
+    appender.json_console_slowlog.layout.compact = true
+    appender.json_console_slowlog.layout.eventEol = true
+
+    appender.rolling_slowlog.type = RollingFile
+    appender.rolling_slowlog.name = plain_rolling_slowlog
+    appender.rolling_slowlog.fileName = ${sys:ls.logs}/logstash-slowlog-${sys:ls.log.format}.log
+    appender.rolling_slowlog.filePattern = ${sys:ls.logs}/logstash-slowlog-${sys:ls.log.format}-%d{yyyy-MM-dd}-%i.log.gz
+    appender.rolling_slowlog.policies.type = Policies
+    appender.rolling_slowlog.policies.time.type = TimeBasedTriggeringPolicy
+    appender.rolling_slowlog.policies.time.interval = 1
+    appender.rolling_slowlog.policies.time.modulate = true
+    appender.rolling_slowlog.layout.type = PatternLayout
+    appender.rolling_slowlog.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %.10000m%n
+    appender.rolling_slowlog.policies.size.type = SizeBasedTriggeringPolicy
+    appender.rolling_slowlog.policies.size.size = 100MB
+    appender.rolling_slowlog.strategy.type = DefaultRolloverStrategy
+    appender.rolling_slowlog.strategy.max = 30
+
+    appender.json_rolling_slowlog.type = RollingFile
+    appender.json_rolling_slowlog.name = json_rolling_slowlog
+    appender.json_rolling_slowlog.fileName = ${sys:ls.logs}/logstash-slowlog-${sys:ls.log.format}.log
+    appender.json_rolling_slowlog.filePattern = ${sys:ls.logs}/logstash-slowlog-${sys:ls.log.format}-%d{yyyy-MM-dd}-%i.log.gz
+    appender.json_rolling_slowlog.policies.type = Policies
+    appender.json_rolling_slowlog.policies.time.type = TimeBasedTriggeringPolicy
+    appender.json_rolling_slowlog.policies.time.interval = 1
+    appender.json_rolling_slowlog.policies.time.modulate = true
+    appender.json_rolling_slowlog.layout.type = JSONLayout
+    appender.json_rolling_slowlog.layout.compact = true
+    appender.json_rolling_slowlog.layout.eventEol = true
+    appender.json_rolling_slowlog.policies.size.type = SizeBasedTriggeringPolicy
+    appender.json_rolling_slowlog.policies.size.size = 100MB
+    appender.json_rolling_slowlog.strategy.type = DefaultRolloverStrategy
+    appender.json_rolling_slowlog.strategy.max = 30
+
+    logger.slowlog.name = slowlog
+    logger.slowlog.level = trace
+    logger.slowlog.appenderRef.console_slowlog.ref = ${sys:ls.log.format}_console_slowlog
+    logger.slowlog.appenderRef.rolling_slowlog.ref = ${sys:ls.log.format}_rolling_slowlog
+    logger.slowlog.additivity = false
+
+    logger.licensereader.name = logstash.licensechecker.licensereader
+    logger.licensereader.level = error
+
+</xmp>
+<br/><br/>
+참고: https://semode.tistory.com/38?category=662337
+<br/><br/>
+</div>
+</section>
+</body>
+</html>

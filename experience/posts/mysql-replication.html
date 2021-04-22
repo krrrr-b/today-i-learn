@@ -1,0 +1,41 @@
+SSH 접속
+
+/etc/mysql/mysql.conf.d/ 경로의 mysqld.cnf 파일에 아래 내용 작성
+(이미 작성되어 있다. 주석만 제거해주자.)
+
+# Master
+[mysqld]
+server-id = 1
+log-bin =  /var/log/mysql/mysql-bin.log
+
+# Slave
+[mysqld]
+server-id = 2
+----
+Master, Slave 에 동일한 Database 생성
+
+create database TABLE;
+show TABLE;
+----
+만약 작업중인 테이블, 데이터가 있다면 Export -> Import 할 것
+(dump file 떠서 옮겨도 됨!)
+----
+Master Mysql 재시작;
+
+mysql 콘솔에서 show master status; 입력
+
+노출되는 파일명과 Pos 번호 기억해두기
+----
+Slave Mysql 재시작;
+
+mysql 콘솔에서 CHANGE MASTER TO 입력
+
+master_host = '13.209.70.221', master_user = 'benjaminservice', master_password = 'benjaminservice!!', master_log_file = 'mysql-bin.000001', master_log_pos = 154;
+
+와 같이 내용 넣어서 입력
+----
+Slave Mysql 재시작
+
+mysql 콘솔에서 show slave status; 입력
+----
+완료

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">Elasticsearch 기초</h1>
+      </div>
+    </div>
+  </header>
+  
+  <section>
+    <div class="container kakao" style="margin-top: 50px; margin-bottom: 300px;">
+@TODO READ. https://brunch.co.kr/@alden
+<br/>
+<hr>
+<br/>
+<h4>검색엔진이란?</h4>
+컴퓨터 시스템에 저장된 정보를 찾아주는 것을 도와주도록 설계된 정보 검색 시스템<br/>
+<br/>
+<h6>검색 서비스 구축 프로세스</h6>
+    1) 데이터 확보 단계<br/>
+    - 사용자 컨텐츠 생성<br/>
+    - 제휴 데이터<br/>
+    - 오픈 API<br/>
+    - 데이터 수집<br/>
+<br/>
+    2) 데이터 정제 단계<br/>
+    - 데이터 정규화<br/>
+    - 데이터 표준화<br/>
+    - 데이터 클린징<br/>
+<br/>
+    3) 데이터 색인 단계<br/>
+    - 검색 색인 생성<br/>
+<br/>
+    4) 데이터 이용 단계<br/>
+    - 서비스 이용<br/>
+    - 모바일/ 웹 디바이스<br/>
+<br/>
+<h6>검색엔진의 구성요소</h6>
+    1) 텍스트 데이터, 검색 질의<br/>
+    (사용자가 요청한 데이터)<br/>
+<br/>
+    2) 형태소 분석기<br/>
+    (검색 Term 을 결정하는 모듈)<br/>
+    - 입력 텍스트<br/>
+    - 형태소 분석<br/>
+    - Term 결정<br/>
+    - 색인 생성<br/>
+<br/>
+    3) 인덱서<br/>
+    (색인기)<br/>
+<br/>
+    4) 검색기<br/>
+<br/>
+        4-1) 쿼리 파서<br/>
+        - 사용자의 검색 질의를 분석<br/>
+<br/>
+        4-2) 랭커<br/>
+        - 검색 결과들 랭킹 모델 적용<br/>
+        - 여러 알고리즘이 있음<br/>
+<br/>
+    5) 형태소 분석기<br/>
+    <br/>
+<b>※ 형태소의 정의</b><br/>
+    - 의미를 가지고 있는 최소 문자열<br/>
+    - 사전기반 형태소 분석기 발전<br/>
+<br/>
+    - openkoreantext-analyzer 추천<br/>
+    <br/>
+<hr><br/>
+<h4>ElasticSearch</h4>
+    ElasticSearch (이하 "ES" 함) 는 Apache Lucene 을 바탕으로 개발한 검색, 분산엔진이다.<br/>
+    특징으로는 아래와 같은 요소들이 있다.<br/><br/>
+    <ul><li>검색</li>
+ES 의 핵심 강점으로 텍스트 처리 기능이다. ES 는 검색 분야, 특히 전문 텍스트 검색 (Full-Text Search) 에 특화되었다. 데이터뿐 아니라 숫자, 날짜, 위치, IP Address 등 다양한 데이터 타입을 제공해준다.<br/><br/>
+    <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+
+    전문 텍스트 검색이란, 
+    데이터베이스에서 사용할 수 있는 모든 도큐먼트에 대해 어떤 조건이라도 검색할 수 있다는 것을 의미한다.
+    </pre><br/>
+    <li>분석</li>
+ES 는 분석을 위해 폭넓고 다양한 집계 (Aggregation) 기능을 지원한다.<br/>
+<br/>
+    <li>NRT(Near Realtime)</li>
+데이터는 일반적으로 저장 및 색인 후에 1초 이내에 쿼리를 통해 이용할 수 있다.<br/>
+<br/>
+    <li>운영 및 확장 용이</li>
+ES 는 단일 노드에서 실행할 수 있고 수백 개의 노드로 쉽게 확장할 수 있다.<br/><br/>
+    <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    
+    수평 확장성 (Scale out) 이란,
+    단일 인스턴스 성능을 더 강력하게 만드는 방법이라기 보다 같은 타입의 인스턴스를 여러개 시작해 시스템을 수평적으로 확장하는 방법
+
+    수직 확장성 (Scale up) 이란,
+    CPU 의 개수나 CPU 코어를 늘려 처리량을 증가시키거나 메모리, 저장 용량을 추가해 단일 인스턴스 성능을 업그레이드하는 방법
+    </pre>
+    <li>Cluster</li>
+클러스터는 하나 이상의 노드(서버)가 모인 것이며, 이를 통해 전체 데이터를 저장하고 모든 노드를 포괄하는 통합 색인화 및 검색 기능을 제공<br/>
+<br/>
+    <li>Node</li>
+클러스터에 포함된 단일 서버로서 데이터를 저장하고 클러스터의 색인화 및 검색 기능에 참여<br/>
+<br/>
+    <li>Shard & Replica</li>
+색인은 방대한 양의 데이터를 저장할 수 있는데, 이 데이터가 단일 노드의 하드웨어 한도를 초과할 수도 있습니다. 예를 들어 10억 개의 문서로 구성된 하나의 색인에 1TB의 디스크 공간이 필요할 경우, 단일 노드의 디스크에서 수용하지 못하거나 단일 노드에서 검색 요청 처리 시 속도가 너무 느려질 수 있습니다.<br/>
+<br/>
+Elasticsearch는 이러한 문제를 해결하고자 색인을 이른바 샤드(shard)라는 조각으로 분할하는 기능을 제공합니다. 색인을 생성할 때 원하는 샤드 수를 간단히 정의할 수 있습니다. 각 샤드는 그 자체가 온전한 기능을 가진 독립적인 "색인"이며, 클러스터의 어떤 노드에서도 호스팅할 수 있습니다.<br/>
+<br/>
+    <li>풍부한 클라이언트 라이브러리와 REST API 지원</li>
+ES 는 다양한 프로그래밍 언어에서 사용할 수 있도록 풍부한 클라이언트 라이브러리를 제공해준다.
+게다가 HTTP 프로토콜에서 동작하는 표현 상태 전이, 즉 풍부한 REST API 를 갖고 있다.<br/>
+<br/>
+    <li>신속성</li>
+    ES 는 아파치 루씬 기반 기술을 사용한다. 기본적으로 도큐먼트의 모든 필드에 대해 색인을 생성한다.
+    즉, 레코드에 있는 어떤 필드든 검색할 수 있으므로 무척 유용하다.<br/>
+<br/>
+    <li>스키마리스와 도큐먼트 지향</li>
+</ul><br/>
+<b>핵심 용어</b><br/><br/>
+    <ul><li>Index</li>
+ES 에서 단일 타입의 도큐먼트를 저장하고 관리하는 컨테이너다.<br/>
+Index 는 여러개의 단일 타입 도큐먼트를 가질 수 있다.<br/><br/>
+    <li>Type</li>
+타입은 논리적으로 인덱스 내에 같은 도큐먼트 종류를 그룹화하고 구성하는데 유용하다.<br/><br/>
+    <li>Document</li>
+ES 에서 저장된 정보의 기본 단위이다.<br/>
+ES 에서 도큐먼트는 사용자가 정의한 필드 외에도 다음과 같은 메타 필드를 갖고 있다.<br/>
+<br/>
+_id: 데이터베이스 테이블의 기본키처럼 타입 내 도큐먼트의 고유 식별자이다. 자동 생성되거나 사용자가 정의할 수 있다.<br/>
+_type: 도큐먼트의 타입을 포함한다.<br/>
+_index: 도큐먼트의 인덱스 이름을 포함한다.<br/><br/>
+    <li>Node</li>
+ES 는 분산 시스템이다. 네트워크에 위치한 각 시스템에서 실행되고, 다른 프로세스와 통신하는 다중 프로세스로 구성된다.<br/><br/>
+
+Node 는 대형 클러스터 노드의 부분 집합이 될 수 있는 단일 서버를 말한다. 해당 Node 는 ES 에서 지원하는 색인, 검색 및 기타 연산 작업을 수행한다. 모든 ES Node 는 시작할 때 고유 Id 와 이름이 지정된다. 가장 낮은 레벨에서 ES 프로세스의 단일 인스턴스로 데이터 공유 또한 담당한다. <br/><br/>
+    <li>Cluster</li>
+Cluster 는 단일 혹은 다중 인덱스를 호스팅하며 검색, 색인, 집계와 같은 연산을 제공하며 하나 이상의 Node 로 구성된다.<br/><br/>
+
+모든 ES Node 는 항상 Cluster 의 부분 집합이다. 단일 Node Cluster 라 하더라도 해당 Node 는 Cluster 의 일부라고 볼 수 있다.<br/><br/>
+
+* 기본적으로 ES Node 는 'elasticsearch' 라는 이름으로 Cluster 에 참여하려고 시도한다. 그렇기 때문에 같은 네트워크에서 Node 가 다른 Cluster 에 강제로 참여하는 것을 방지하기 위해서 cluster.name 속성을 변경해줘야 한다.<br/><br/>
+    <li>Shard, Replica</li>
+Shard 는 Cluster 에서 Index 를 분배하고 단일 Index 의 Document 를 여러 Node 로 분할하는데 유용하다.<br/>
+단일 Node 에 저장할 수 있는 데이터양에는 제한이 있으며, 그 한계는 Node 의 저장소, 메모리, 처리 용량에 따라 결정된다. 따라서 Shard 를 활용하면 Cluster 에서 단일 Index 데이터를 분할해 Cluster 의 저장소와 메모리, 처리 용량을 적절히 활용할 수 있다.<br/><br/>
+
+Shard 에 위치한 데이터를 분할하는 과정을 Sharding 이라고 한다. 이는 ES 에 내장된 고유 기능이며, 다음과 같이 확장 및 병렬화 기능을 담당한다.<br/><br/>
+<ul>
+  <li>Cluster 에 위치한 여러 Node 의 저장소 활용을 돕는다.</li>
+  <li>Cluster 에 위치한 여러 Node 의 처리 능력 활용을 돕는다.</li>
+</ul><br/>
+기본적으로 모든 Index 는 ES 에서 5개의 Shard 를 갖도록 구성된다. Index 생성 시점에 Index 의 데이터를 나눌 Shard 개수를 지정할 수 있다. Index 를 생성하고 나면 Shard 개수는 변경할 수 없다.<br/><br/>
+
+ES 와 같은 분산 시스템에서는 하드웨어 장애 상황에서도 문제 없이 실행되어야 한다. ES 에서는 Replica Shard 또는 Replica 라고 부르는 복제본으로 이러한 문제를 해결할 수 있다. Index 의 각 Shard 는 0개 이상의 복제본을 가질 수 있다.<br/><br/>
+    <li>Mapping</li>
+ES 는 스키마가 존재하지 않는다. 즉, 필드와 필드 타입 없이도 얼마든지 Document 를 저장할 수 있다. <br/>하지만 실제 운영 환경에서 사용하는 데이터는 스키마가 존재하고 체계화된 구조를 갖는다. 실제로 Index 타입은 공통 필드를 기반으로 생성해야 한다. <br/>일반적으로 Index 에서 하나의 타입을 가진 도큐먼트는 몇가지 공통 필드를 공유한다.<br/>
+<br/>
+또한 ES 는 다양한 데이터 타입을 지원한다.<br/><br/>
+
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;"><ul>
+  <li>문자열 데이터 타입
+    <ul><li>text</li>
+설명이나 길이가 긴 텍스트 값을 포함한 필드에서 Full-Text Search 를 할 때 유용하다.
+      <li>keyword</li>
+문자열 필드 분석이 가능한 데이터 타입이다. 해당 타입을 가진 필드는 정렬, 필터링, 집계 기능을 지원한다.</ul>
+  </li><li>숫자 데이터 타입</li>
+  <ul><li>byte, short, integer, long</li>
+      <li>float, double</li>
+      <li>half_float, scaled_float</li>
+    </ul><li>날짜 데이터 타입
+    <ul><li>date</li>
+밀리 초 단위로 정밀한 Timestamp 를 저장할 수 있는 데이터 타입</ul>
+  </li>
+  <li>논리 데이터 타입
+    <ul><li>boolean</li></ul>
+  </li><li>이진 데이터 타입
+    <ul><li>binary</li>
+Base64 인코딩을 수행한 후, 임의의 이진값을 저장할 수 있는 데이터 타입</ul>
+  </li><li>범위 데이터 타입
+    <ul><li>integer_range, float_range, long_range, double_range, date_range</li>
+      정수, 실수 등 다양한 범위를 정의하는 데이터 타입</ul>
+  </li><li>복합 데이터 타입
+    <ul><li>배열 데이터 타입</li>
+문자열, 정수 등 같은 타입을 가진 인스턴스 배열이다. 하지만 배열에서 데이터 타입을 혼합해 사용할 수 없다.
+    <li>객체 데이터 타입</li>
+JSON Document 안에 내부 객체가 위치할 수 있다.
+    <li>중첩 데이터 타입</li>
+내부 객체의 배열을 지원하는 데 유용하다. 각 내부 객체는 독립적으로 쿼리할 수 있어야 한다.</ul>
+  </li><li>기타 데이터 타입</li>
+<ul><li>지리 데이터 타입</li>
+경도와 위도를 저장하는데 사용한다. 지리 데이터 타입을 사용하면 특정 지점에서 2KM 내에 위치한 모든 ATM 을 검색하는 것과 같은 쿼리를 사용할 수 있다.</ul>
+      <li>지형 데이터 타입</li>
+다각형, 지도 등 기하학 지형을 저장하는데 사용한다.
+
+</ul></pre><br/>
+<li>Inverted Index (역색인)</li>
+관계형 데이터베이스가 일반적인 CRUD 연산에 적합한 B-트리를 만들고 관리하는 것과 달리 ES 는 아파치 루씬 기능을 사용하여 역색인이라는 완전히 다른 데이터 구조로 데이터를 관리한다는 점을 명심하자.<br/><br/>
+
+</ul><br/><h6>관계형 데이터베이스 <font style="color:#5F00FF;">(ES)</font> 스키마 용어 비교</h6>
+    - Database <font style="color:#5F00FF;">(Index)</font><br/>
+    - Table <font style="color:#5F00FF;">(Type)</font><br/>
+    - Row <font style="color:#5F00FF;">(Document)</font><br/>
+    - Column <font style="color:#5F00FF;">(Field)</font><br/>
+    - Schema <font style="color:#5F00FF;">(Mapping)</font><br/>
+    - Index <font style="color:#5F00FF;">(EveryThing is Indexed)</font><br/>
+    - SQL <font style="color:#5F00FF;">(Query DSL)</font><br/><br/>
+
+<b>마스터 노드와 데이터 노드</b><br/>
+    1) 데이터 노드<br/>
+        데이터가 저장되는 노드<br/>
+        인덱싱 및 검색 작업 수행<br/>
+        Transport 모듈로 통신하기 때문에 http 모듈은 비활성화<br/>
+        (node.data: true, node.master: false)<br/><br/>
+<br/>
+    2) 마스터 노드<br/>
+        - 마스터 전용 노드<br/>
+            샤드에 맵핑 정보를 담고있는 노드<br/>
+            클러스터 관리 명령 수행하는 노드 (가벼움)<br/>
+            런타임 시 클러스터 멤버 중 마스터 노드로 적합한 노드 자동 선출<br/>
+            (node.data: false, node.master: true)<br/><br/>
+
+        - 클라이언트 노드<br/>
+            노드의 앞단에서 로드 밸런서 역할<br/>
+            HTTP 쿼리 파싱, 검색 요청에 대한 setter/ getter 네트워크 뿌리 담당<br/>
+            데이터 저장, 클러스터 관리 명령은 수행하지 않음<br/>
+            (node.data: false, node.master: false)<br/><br/>
+<br/>
+<h5>구축 방법 * Ubuntu 기준</h5>
+<br/>
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;"> 
+    서버의 초기 시간 변경
+    <font style="color:#B2CCFF;">sudo cp -p /usr/share/zoneinfo/Asia/Seoul /etc/localtime</font>
+
+    호스트 데이터 변경 (es-master, es-data-1, es-data-2...)
+
+    나중에 설정 및 모니터링을 편하게 하기 위함이며 생성하는 각 인스턴스 별로 HOSTNAME=es-master, HOSTNAME=es-data-1, HOSTNAME=es-data-2 등과 같이 설정 해 줍니다. 호스트명을 변경 한 후에는 인스턴스를 재시작 해야 한다.
+
+    <font style="color:#B2CCFF;">sudo vi /etc/hostname
+    sudo reboot</font>
+
+    서버 설정
+    <font style="color:#B2CCFF;">sudo apt-get update && sudo apt-get -y upgrade
+    sudo add-apt-repository ppa:webupd8team/java
+    sudo apt-get update
+    
+    sudo apt-get install oracle-java8-installer</font>
+    
+    ES 설치
+    <font style="color:#B2CCFF;">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.deb
+    sudo dpkg -i elasticsearch-6.1.1.deb</font>
+
+    <font style="color:#B2CCFF;">home : /usr/share/elasticsearch
+    conf : /etc/elasticsearch
+    data : /var/lib/elasticsearch
+    logs : /var/log/elasticsearch</font>
+    
+    형태소 설정
+    <font style="color:#B2CCFF;">cd /usr/share/elasticsearch
+
+    bin/elasticsearch-plugin install https://github.com/open-korean-text/elasticsearch-analysis-openkoreantext/releases/download/6.1.1/elasticsearch-analysis-openkoreantext-6.1.1.2-plugin.zip</font>
+  
+    ES 재시작
+    <font style="color:#B2CCFF;">sudo service elasticsearch restart</font>
+
+    sudo systemctl enable elasticsearch
+    sudo systemctl start elasticsearch
+    sudo systemctl status elasticsearch
+
+</pre><br/>
+<h5>주요 설정</h5><br/>
+    1) 클러스터 이름 설정<br/>
+    cluster.name: es<br/><br/>
+
+    2) 노드 설정<br/>
+    node.name: ${HOSTNAME}<br/><br/>
+    
+    node.master: true<br/>
+    node.data: false<br/>
+    (마스터 노드, 데이터 노드에 따라 값 변경)<br/>
+<br/>
+    3) 샤드 및 리플리카 개수 설정<br/>
+    index.number_of_shards: 5<br/>
+    index.number_of_replicas: 1<br/>
+<br/>
+    4) 데이터 경로 설정<br/>
+    5) 필수 플러그인 설정<br/>
+    6) 메모리 설정<br/>
+    7) 네트워크 바인딩 주소 설정<br/>
+    8) 게이트웨이 설정<br/>
+<br/>
+<b>데이터 입력, 삭제, 수정, 조회</b><br/><br/>
+  1) 데이터 입력<br/>
+      POST, PUT<br/>
+<br/>
+  2) 데이터 삭제<br/>
+      DELETE<br/><br/>
+
+  3) 데이터 갱신<br/>
+      PUT<br/><br/>
+
+      _version 필드가 증가<br/>
+      갱신시 created 는 false<br/>
+      이전 버전으로 변경 불가능<br/>
+<br/>
+  4) 데이터 대량 색인<br/>
+      POST ${URL}/_bulk<br/>
+<br/>
+  5) 데이터 조회<br/>
+      GET<br/>
+<br/>
+<b>데이터 맵핑</b><br/>
+    특정 인덱스의 명시적 구조를 정의<br/><br/>
+    
+    <pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+    
+    PUT ${URL}/${INDEX}/${TYPE}/_mapping -d '
+    {
+      ${TYPE}: {
+        "properties": {
+          "key1": {"type": "string", "index": "not_analyzed"},
+          "key2": {"type": "string", "index": "analyzed", "index_analyzer": "openkoreantext-analyzer"}
+          "key3": {"type": "date"}
+        }
+      }
+    }'
+
+    Tips!
+      1) 선 mapping - 후 index
+      Elasticsearch의 자동 mapping 생성을 믿지 말자. 먼저 내가 어떤 데이터를 넣을 지 분석해서 mapping을 확실하게 먼저 정의한다.
+
+      2) Mapping template, indexing script는 꼭 저장
+      내가 분석해서 정의한 mapping은 json 파일 등의 자신이 편한 방법으로 저장해 놓자. 그리고 데이터를 갈아넣으려면 코딩을 하게 되므로 그 코드도 저장하자. 추후에 mapping 변경으로 인해 데이터를 옮기게 될 때에 사용하게 된다.
+
+      3) Alias를 지정해 놓으면 index를 이리 저리 옮길 때 검색하기 편해진다
+
+      4) Index의 하나의 type을 초기화하고 싶으면 delete_by_query 기능을 이용해서 해당 type의 내용물만 지울 수 있다
+    </pre>
+
+<pre style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+ 
+  <b>데이터 검색 (QueryDSL)</b>
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+
+  <b>데이터 집계 (Aggregations)</b>
+    https://www.elastic.co/guide/kr/elasticsearch/reference/current/gs-executing-aggregations.html
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-avg-aggregation.html
+    
+</pre>
+
+</div>
+</section>
+</body>
+</html>

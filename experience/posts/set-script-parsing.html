@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="krr-b 기술블로그">
+  <meta name="author" content="krr-b">
+  <title>민웅이서점</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/Kakao.css"/>
+  <link rel="stylesheet" type="text/css" crossorigin="anonymous" href="http://meta-kage.kakaocdn.net/dn/osa/blog/assets/fonts/SpoqaHanSans.css"/>
+
+  <style>
+    a {
+      color: #000;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      color: #5F00FF;
+    }
+
+    .container {
+      font-family: 'Spoqa Han Sans' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    h2.display-5 {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .kakao {
+      font-family: 'Kakao' !important, sans-serif;
+      font-weight: lighter;
+    }
+
+    .spoqa {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: lighter !important;
+    }
+
+    .spoqa-bold {
+      font-family: 'Spoqa Han Sans' !important, sans-serif; 
+      font-weight: bold !important;
+    }
+
+  </style>
+</head>
+
+<body style="width: 1076px !important; margin-right: 15% !important; margin-left: 15% !important;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="margin-right: 15% !important; margin-left: 15% !important; width: 1076px !important">
+    <div class="container">
+      <a class="navbar-brand spoqa" href="https://krr-b.github.io">민웅이서점</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white" style="background-image: url(../notebook.jpg);">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0 spoqa">HTML Content 저장할 때, 스크립트 코드 파싱 처리</h1>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container" style="margin-top: 50px; margin-bottom: 300px;">
+<b><a href="http://krr-b.github.io/posts/connect-sticky.html" style="color: #6799FF;" target="_blank">모바일 추천 STICKY</a> 작업 중에 발생한 이슈</b>이다.<br/><br/>
+각 조건별로 다른 페이지를 불러와서 생성해둔 div 영역에 HTML Contents 코드 자체를 넣어주는 기능을 구현하였다.<br/>
+동일한 페이지에 각각의 다른 페이지를 불러와서 넣어주기 때문에 의존성 및 충돌 가능성을 최소한으로 하고자 페이지별 소소를 HTMl 파일으로 분리하였다.<br/>
+하지만 <b>HTML 파일의 코드 전체를 가져와서 생성해둔 div 영역에 바로 넣어주다보니 Script 코드도 문자열로 잡혀서 Script 이벤트가 실행되지 않는 이슈</b>가 발생하였다.<br/>
+이슈 해결법을 찾아본 결과 HTML Contents 자체를 넣어주기 전이나 또는 넣어준 뒤에 Script 를 다시 파싱하면 해결된다는 것을 알게되었다.<br/><br/>
+
+참고: <a href="https://developer.mozilla.org/ko/docs/Web/API/Element/innerHTML" target="_blank" style="color: #6799FF;">https://developer.mozilla.org/ko/docs/Web/API/Element/innerHTML</a><br/>
+<br>
+<b>아래는 이번 이슈의 대상인 STICKY.PopupLayer.js 파일의 일부이다.</b><br/>
+<b>해당 파일은 Webpack 으로 Build 시킨다.</b><br/>
+
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+  /**
+   * STICKY PopupLayer
+   */
+  window.STICKY = STICKY || {};
+
+  (function ($, window) {
+      var _self = {};
+
+      var PopupLayer = function() {
+          _self = this;
+
+          _self.version = '1.0.0';
+
+          _self.rcmd_wrap          = $('#__sticky_recommend');
+          _self.floating_layer     = $('.floating_layer');
+          _self.dim_floating       = $('.dim_floating');
+          _self.wrap_moreinfo      = $('.wrap_sticky #wrap_moreinfo');
+          _self.first_care_wrap    = $('#__sticky_first_care_layer');
+          _self.rcmd_recruit_layer = $('#quick_recommend_layer');
+      };
+
+      PopupLayer.prototype = {
+
+          /**
+           * @description STICKY 추천 URL 데이터 노출
+           *
+           * @param data
+           */
+          run: function (data) {
+              _self.rcmd_wrap.addClass('hidden');
+
+              console.log(data.link);
+              if (typeof data.link === "undefined" || !data.link) {
+                  STICKY.Main.hideTabs();
+                  return false;
+              }
+
+              try {
+                  _self.setContents(data);
+              } catch (ex) {
+                  STICKY.Main.hideTabs();
+              }
+
+              STICKY.during_process = false;
+              return false;
+          },
+
+          /**
+           * @description STICKY 추천 URL 데이터 컨텐츠 노출
+           *
+           * @param data
+           */
+          setContents: function (data) {
+              $.ajax({
+                  url : data.link,
+                  type: 'POST'
+              }).done(function (response) {
+                  if (typeof response === "undefined" || !response) {
+                      alert('1분만 채용공고를 확인하시면 공고를 추천해드립니다.');
+
+                      STICKY.Main.hideTabs();
+                      return false;
+                  }
+
+                  setLayerContent(isFirstCare(data.link) ?
+                      _self.first_care_wrap : _self.rcmd_recruit_layer, response);
+
+                  if (!isFirstCare(data.link)) {
+                      initJobListSwiper();
+                  }
+
+              }).error(function () {
+                  alert('요청을 처리하는 도중에 실패하였습니다. 잠시 후 다시 시도하여 주시기 바랍니다.');
+
+                  STICKY.Main.hideTabs();
+                  return false;
+              });
+
+              /**
+               * @description STICKY 추천 URL 데이터 컨텐츠 삽입
+               */
+              function setLayerContent (el, content) {
+                  if (typeof el === "undefined") {
+                      el = _self.floating_layer;
+                  }
+
+                  _self.dim_floating.addClass('on');<font style="color: #F15F5F;">
+                                  el.html(content);</font>
+                  el.removeClass('hidden');
+                  <font style="color: #F15F5F;">/* 
+                                    [AS-IS] 
+                                    단순하게 innerHTML 에 content 소스 자체만 넣다보니 script 태그를 문자열로 파싱한다. 
+                                 */</font>
+                  </font> <font style="color: #6799FF;">
+                                  el.html(content);
+                                  setScriptParsing(el);
+
+                                  var setScriptParsing = function (el) {
+                                      var scripts = el.find('script'),
+                                          scripts_length = scripts.length;
+
+                                      for (var idx = 0; idx < scripts_length; idx++) {
+                                          eval(scripts[idx].html());
+                                      }
+                                  };
+                                  </font><font style="color: #6799FF;">/* 
+                                    [TO-BE]
+                                    위에서 처리하던 innerHTML 에 content 소스를 넣는 것은 함수로 만들어서 기존대로 적용하였고,
+                                    추가로 script 태그만을 eval 함수를 이용하여 parsing 하도록 하는 함수를 생성해서 적용시켰다.
+                                  */</font></font>
+
+                  setCloseButtonEvent();
+              }
+
+              /**
+               * @description 첫고객 케어 요청 여부 반환
+               *
+               * @param link
+               * @return boolean
+               */
+              function isFirstCare (link) {
+                  return link.indexOf('/connect/welcome-star') !== -1;
+              }
+
+              function setCloseButtonEvent () {
+                  $('.btn_floating_close').on('click', function () {
+                      STICKY.Main.hiddenElementAll();
+                      return false;
+                  });
+              }
+
+              function initJobListSwiper () {
+                  if (typeof Swiper === "undefined") {
+                      return false;
+                  }
+
+                  new Swiper('.job_list', {
+                      slidesPerView: 'auto'
+                  });
+              }
+          }
+      };
+
+      $(document).ready(function() {
+          STICKY.PopupLayer = new PopupLayer();
+      });
+
+  }(jQuery, window));
+
+</xmp>
+
+<b>번외. 또 다른 해결 방법</b>
+<b>(eval 을 사용하는 것은 올바르지 않기 때문에)</b>
+<br/>
+<xmp style="font-family: 'Kakao'; font-weight: lighter; font-size: 12pt; background-color: #5D5D5D; color: #FFF;">
+  let parentNode = /* your node */ void 0
+  let observer = new MutationObserver(mutations=>{
+      mutations.map(mutation=>{
+          Array.from(mutation.addedNodes).map(node=>{
+              if ( node.parentNode == parentNode ) {
+                  let scripts = node.getElementsByTagName('script')
+                  Array.from(scripts).map(script=>{
+                      let src = script.src
+                      script = document.createElement('script')
+                      script.src = src
+                      return script
+                  })
+              }
+          })
+      })
+  })
+
+  observer.observe(document.body, {childList: true, subtree: true});
+</xmp><br/>
+해결! 끄읕-<br/>
+</div>
+</section>
+</body>
+</html>
