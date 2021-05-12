@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-12T15:54:14.711Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="kTUf3xFEec0TnIrcP-u3" version="14.6.12" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-12T15:54:36.925Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="2ua86ttV2HHr8GQePRbW" version="14.6.12" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1773" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -313,7 +313,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="xMfNHaJi8qfaiqYtk1ZG-90" value="DIG&lt;br&gt;(수기검증)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="1000" y="994" width="120" height="40" as="geometry" />
+          <mxGeometry x="980" y="994" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="xMfNHaJi8qfaiqYtk1ZG-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="xMfNHaJi8qfaiqYtk1ZG-96" target="xMfNHaJi8qfaiqYtk1ZG-85">
           <mxGeometry relative="1" as="geometry" />
