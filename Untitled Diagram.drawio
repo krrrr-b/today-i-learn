@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-12T15:52:05.133Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="onHHKtFopy29TPvtooYS" version="14.6.12" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-12T15:52:45.612Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="KVzgywCpxUrt9Lirxg01" version="14.6.12" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2013" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -32,7 +32,7 @@
             <mxPoint x="-22" y="2" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xMfNHaJi8qfaiqYtk1ZG-3" value="토스코어 정보와 &lt;br&gt;비교하여 검증&lt;br&gt;&lt;b&gt;(생년월일, 이름)&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="xMfNHaJi8qfaiqYtk1ZG-3" value="데이터 형식 및&amp;nbsp;&lt;br&gt;토스코어 정보와 &lt;br&gt;비교하여 검증&lt;br&gt;&lt;b&gt;(생년월일, 이름)&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="172.5" y="245" width="125" height="125" as="geometry" />
         </mxCell>
         <mxCell id="xMfNHaJi8qfaiqYtk1ZG-10" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="xMfNHaJi8qfaiqYtk1ZG-5" target="xMfNHaJi8qfaiqYtk1ZG-9">
