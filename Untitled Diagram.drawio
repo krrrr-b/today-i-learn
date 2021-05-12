@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-12T15:55:40.757Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="bHKRqG6rwoqvbLgPrTlk" version="14.6.12" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-12T15:56:04.908Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="BqGrhjZc7iKLgaw1shId" version="14.6.12" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1773" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -178,7 +178,7 @@
             <mxPoint x="330" y="1180" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xMfNHaJi8qfaiqYtk1ZG-68" value="실패" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="xMfNHaJi8qfaiqYtk1ZG-66">
+        <mxCell id="xMfNHaJi8qfaiqYtk1ZG-68" value="실패 / 점검중" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="xMfNHaJi8qfaiqYtk1ZG-66">
           <mxGeometry x="-0.0181" y="1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
