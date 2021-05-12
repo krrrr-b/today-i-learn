@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-12T15:50:37.823Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="WZyeNInheTpxoStvfPBX" version="14.6.12" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-12T15:51:26.635Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15" etag="4viOFTWK9aXjp-QZa6iS" version="14.6.12" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2013" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -338,6 +338,9 @@
         </mxCell>
         <mxCell id="xMfNHaJi8qfaiqYtk1ZG-105" value="(애초에 못받게 배너로 안내)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF0000;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="-130" y="1225" width="160" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="xMfNHaJi8qfaiqYtk1ZG-106" value="금결원 점검중일 때에는 사전 안내" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF0000;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="242" y="1070" width="176" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
